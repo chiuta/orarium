@@ -508,8 +508,18 @@ function T(k){
 const nm=b=>T(b.n);
 
 // ---------- formatare ----------
-const DEC=()=>LANG==='en'?'.':',';
-const f=(x,d)=>x.toFixed(d===undefined?1:d).replace('.',DEC());
+// separatori numerici per limbă: [zecimal, mii, grupare minimă a cifrelor întregi]
+const NUMSEP={ro:[',','\u00a0',1],en:['.',',',1],fr:[',','\u202f',1],it:[',','.',1],es:[',','.',2],pt:[',','\u00a0',2],de:[',','.',1],hu:[',','\u00a0',2]};
+const SEP=()=>NUMSEP[LANG]||NUMSEP.en;
+const DEC=()=>SEP()[0];
+// formatează un număr (șir cu punct zecimal, ex. din toFixed) cu separatorii limbii curente
+function locNum(str){
+ const m=/^(-?)(\d+)(?:\.(\d+))?$/.exec(str);if(!m)return str.replace('.',DEC());
+ const sp=SEP();let ip=m[2];
+ if(ip.length>=3+sp[2])ip=ip.replace(/\B(?=(\d{3})+(?!\d))/g,sp[1]);
+ return (m[1]?'\u2212':'')+ip+(m[3]!==undefined?sp[0]+m[3]:'');
+}
+const f=(x,d)=>locNum(x.toFixed(d===undefined?1:d));
 const pad=n=>String(Math.floor(n)).padStart(2,'0');
 function hms(h){const s=Math.floor(h*3600+1e-6);return pad(Math.floor(s/3600)%24)+':'+pad(s%3600/60)+':'+pad(s%60)}
 function fmtSec(s){
@@ -532,8 +542,8 @@ const fmtRate=us=>(us>=0?'+':'')+fmtMicro(us)+U('per');
 const cls=us=>us>=0?'pos':'neg';
 function fmtDayLen(b){return b.Psol?fmtSec(b.Psol*DAYS):'—'}
 function fmtRange(r){return r[0]<=0?'≈0–'+fmtSec(r[1]):'≈'+fmtSec(r[0])+' – '+fmtSec(r[1])}
-const nf=x=>Math.round(x).toLocaleString(LOC());
-const fg=(x,d)=>x.toLocaleString(LOC(),{minimumFractionDigits:d,maximumFractionDigits:d});
+const nf=x=>locNum(String(Math.round(x)));
+const fg=(x,d)=>locNum(x.toFixed(d));
 const DIST_U=[['Kilometri',t=>nf(t*299792.458)+' km'],['Mile',t=>nf(t*299792.458/1.609344)+' mi'],['Unități astronomice',t=>f(t/LTAU,t/LTAU<0.01?5:4)+' '+U('ua')],['Distanțe Pământ–Lună',t=>{const x=t*299792.458/384399;return f(x,x<10?2:1)+' '+U('ld')}],['Secunde-lumină',t=>(t<100?f(t,2):nf(t))+' '+U('ls')],['Minute-lumină',t=>f(t/60,t<60?3:2)+' '+U('lm')],['Ore-lumină',t=>f(t/3600,t<360?5:3)+' '+U('lh')],['Ani-lumină',t=>(t/(YJ*DAYS)).toExponential(3).replace('.',DEC()).replace('e+','·10^').replace('e-','·10^−')+' '+U('ly')]];
 function distRows(b,ms,prefix){
  if(b.id==='terra')return '';
