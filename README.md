@@ -1,0 +1,65 @@
+# ORARIUM
+
+**English** · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
+
+**Time on every world**
+
+ORARIUM is a single-file, offline web app (`index.html`, no server, no account, no tracking) that proposes one consistent way to tell time on the Moon, Mars, all planets, dwarf planets, asteroids, comets and moons of the Solar System. It was inspired by the debate on lunar time (a ≈56 µs/day clock offset, the CGPM resolution on a lunar reference time scale, and the open questions on "altitude zero" and clock networks).
+
+Interface languages: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**.
+
+## The idea: four clocks, two formulas
+
+| Clock | What it answers |
+|---|---|
+| **Standard Clock** | How fast does an atomic clock run there? SI second, proper time on the body's reference equipotential surface ("Local Surface Time", TLS), with a rate ρ relative to Earth. |
+| **Rhythm Clock** | The local solar day split into 24 local hours of *P*<sub>sol</sub>/24 SI seconds, so noon is 12:00 on every world. |
+| **Phase Clock** | What is the actual local hour? From IAU orientation + a Keplerian ephemeris (planets), mean elongation (Moon), MSD/MTC (Mars). Elsewhere the rhythm is exact and the origin is set by convention. |
+| **Bridge Clock** | Every message carries (TLS, UTC, ρ); the receiver subtracts light time and applies ρ. |
+
+```
+ρ = (Φ⊕ − Φ_b) / c²          Φ = 3·GM☉/2a☉ + 3·GM_p/2a_s + GM_b/R + ½ω²R²
+P_sol = 1 / | 1/P_sid ∓ 1/P_year |
+```
+
+## What is in the app
+
+- **Now** — live local time on 45 bodies (planets, 22 moons, dwarf planets, asteroids, a comet, a Venus aerostat), with clock rate ρ, day length, **live Earth distance** (km, mi, AU, light-seconds/minutes/hours/years, lunar distances) and **round-trip communication time**.
+- **Body sheets** — physical quantities in several units, clock-rate breakdown, worked examples, an altitude calculator, anchoring of the clock origin for bodies without an accepted one, and a colonization assessment.
+- **Method** — the four clocks, the formulas, a live recomputation of the Moon's +56 µs/day, answers to the open questions, honest limits.
+- **Converter** — "what time is it there when it is … here?" for any body and longitude, with any Earth time zone (DST gaps/overlaps flagged).
+- **Colonies** — an indicative, user-weighted ranking of colonization candidates (7 factors, vital-factor gate).
+- **Maps** — schematic maps of optimal colonization zones for each body with day/night terminator, local time versus the Earth reference clock, and next local noon.
+- **Scenarios** — concrete examples (Apollo 11 site, Jezero, Titan, Bennu, Venus, Mercury, Pluto–Charon, round-trip table).
+- **Earth reference clock** — UTC or any IANA time zone (e.g. Bucharest), used throughout.
+
+## Honest limits
+
+First-order clock-rate model (e.g. ≈488 µs/day for Mars vs ≈477 µs/day in full models); "real" local hours use mean IAU orientations and simplified Keplerian ephemerides (error of the order of minutes, checked against Mars24 for Mars); light time ≈0.5 %; maps are schematic; colonization index is indicative, not a scientific assessment. For real navigation use full numerical ephemerides.
+
+## Use
+
+Open `index.html` in any modern browser (works from `file://`), or publish it with GitHub Pages (a workflow is included: **Settings → Pages → Source: GitHub Actions**).
+
+## Develop
+
+`index.html` is generated from `src/template.html` (engine + UI, Romanian source strings) and the translation dictionaries in `src/i18n/`.
+
+```bash
+python3 tools/validate.py     # translations: same keys, {n} placeholders and HTML tags as the source
+python3 tools/build.py        # regenerates index.html
+npm install && npm test       # jsdom walk-through of every screen/body (per language), reports missing keys/errors/NaN
+node tools/exercise.js index.html fr   # one language only
+```
+
+**Translations.** In the code, every user-visible string is `T('romanian source text', …args)`; `src/i18n/keys.json` lists all keys and `tr_<lang>.json` holds the translation of each key. To add a language: add its entry to `LANGS` and `UNITS` in `src/template.html`, create `tr_<lang>.json` with the same keys, run `validate.py` and `build.py`. Corrections to existing translations are very welcome. This README is also available in every interface language (`README.<lang>.md`); `README.md` (English) is the reference version.
+
+## Sources and credits
+
+- Article that prompted the project: "[What time is it on the Moon…](https://www.stiripesurse.ro/cat-este-ceasul-pe-luna_3928805)" (in Romanian; AFP/Agerpres, stiripesurse.ro, 18.10.2026).
+- Pole and prime-meridian orientations: IAU WGCCRE 2009. Mean Keplerian elements: JPL (Standish). Martian time MSD/MTC: Allison & McEwen. Lunar distance series: J. Meeus, *Astronomical Algorithms*.
+- Physical values are the usual literature figures, rounded. Colonization data are qualitative and indicative.
+
+## License
+
+[MIT](LICENSE) © 2026 Alexandru-Ionuț Chiuță (Alexio).

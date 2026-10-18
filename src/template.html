@@ -1,0 +1,1028 @@
+<!doctype html>
+<!-- ORARIUM — Copyright (c) 2026 Alexandru-Ionuț Chiuță (Alexio). SPDX-License-Identifier: MIT -->
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ORARIUM — Timpul pe toate lumile</title>
+<style>
+:root{--bg:#070b16;--card:#111a33;--card2:#16213f;--line:#26345a;--tx:#e8eefc;--mut:#8fa0c4;--acc:#6ee7ff;--acc2:#ffcf6e;--ok:#7dffb0;--bad:#ff9a9a;--r:14px}
+*{box-sizing:border-box}
+html,body{margin:0;color:var(--tx);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg)}
+body{background:radial-gradient(1100px 520px at 85% -8%,#18295a 0,transparent 62%),radial-gradient(800px 400px at -10% 30%,#10224a55 0,transparent 60%),var(--bg);background-attachment:fixed;min-height:100vh}
+header{padding:22px 16px 6px;max-width:1100px;margin:auto}
+h1{margin:0;font-size:28px;letter-spacing:.32em;font-weight:700;background:linear-gradient(90deg,var(--acc),var(--acc2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.refbar{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin-top:12px}.refbar label{font-size:12.5px;color:var(--mut)}.refbar select{width:auto;min-width:200px;max-width:100%}#ref-now{font-variant-numeric:tabular-nums;font-size:13.5px}
+header p{margin:4px 0 0;color:var(--mut);font-size:13.5px}
+nav{position:sticky;top:0;z-index:5;background:#070b16ee;backdrop-filter:blur(8px);border-bottom:1px solid var(--line);margin-top:12px}
+nav .in{max-width:1100px;margin:auto;display:flex;gap:4px;padding:6px 10px;overflow-x:auto}
+nav button{flex:1;min-width:84px;background:none;border:0;color:var(--mut);padding:9px 10px;border-radius:10px;font:600 13px system-ui;letter-spacing:.06em;text-transform:uppercase;cursor:pointer}
+nav button.on{background:var(--card2);color:var(--acc)}
+main{max-width:1100px;margin:auto;padding:14px 12px 60px}
+.view{display:none}.view.on{display:block}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:4px 0 12px}
+.chip{border:1px solid var(--line);background:none;color:var(--mut);padding:5px 12px;border-radius:99px;font:13px system-ui;cursor:pointer}
+.chip.on{border-color:var(--acc);color:var(--acc)}
+h2{font-size:12.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--acc2);margin:20px 0 8px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(158px,1fr));gap:9px}
+.card{background:linear-gradient(160deg,var(--card2),var(--card));border:1px solid var(--line);border-radius:var(--r);padding:11px 12px;cursor:pointer;transition:.15s}
+.card:active,.card:hover{border-color:var(--acc);transform:translateY(-1px)}
+.nm{font-weight:600;font-size:14px;display:flex;justify-content:space-between;align-items:center;gap:6px}
+.tag{font-style:normal;font-size:10px;padding:1px 6px;border-radius:99px;border:1px solid var(--line);color:var(--mut);white-space:nowrap}
+.tag.re{color:var(--ok);border-color:#2c6b4b}
+.clk{font:600 24px ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--acc);margin:3px 0 2px;letter-spacing:.02em}
+.sub{display:flex;flex-direction:column;font-size:11.5px;color:var(--mut);gap:1px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px;margin-bottom:12px}
+.panel h3{margin:0 0 6px;font-size:16px}
+.panel p{margin:6px 0;color:#c9d4ee}
+.formula{font:14px ui-monospace,Menlo,monospace;background:#0a1228;border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:8px 0;overflow-x:auto;color:var(--acc2);white-space:pre}
+.four{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}
+.four .panel{margin:0}
+.ico{font-size:22px}
+label{display:block;font-size:12px;color:var(--mut);margin:10px 0 3px;letter-spacing:.05em;text-transform:uppercase}
+input,select{width:100%;background:#0a1228;border:1px solid var(--line);color:var(--tx);border-radius:10px;padding:10px;font:15px system-ui}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+button.btn{background:var(--card2);border:1px solid var(--acc);color:var(--acc);border-radius:10px;padding:9px 14px;font:600 13px system-ui;cursor:pointer;margin:8px 6px 0 0}
+.big{font:700 34px ui-monospace,Menlo,monospace;color:var(--acc);margin:6px 0}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+td,th{padding:6px 4px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{color:var(--mut);font-weight:500;font-size:12px}
+td.r{text-align:right;font-family:ui-monospace,Menlo,monospace}
+.pos{color:var(--ok)}.neg{color:var(--bad)}
+#ov{position:fixed;inset:0;background:#030510dd;z-index:20;display:none;align-items:flex-end;justify-content:center}
+#ov.on{display:flex}
+.sheet{background:var(--bg);border:1px solid var(--line);border-radius:18px 18px 0 0;width:100%;max-width:720px;max-height:92vh;overflow:auto;padding:16px 16px 40px;position:relative}
+#x{position:absolute;right:12px;top:10px;background:none;border:0;color:var(--mut);font-size:24px;cursor:pointer}
+.sheet h3{margin:0 40px 2px 0;font-size:22px}
+.note{background:#0a1228;border-left:3px solid var(--acc2);padding:8px 12px;border-radius:0 10px 10px 0;margin:10px 0;color:#d6def4;font-size:14px}
+.ex li{margin:6px 0;color:#d0daf2}
+small,.mut{color:var(--mut)}
+footer{max-width:1100px;margin:auto;padding:10px 16px 40px;color:var(--mut);font-size:12.5px}
+footer a{color:var(--acc)}
+input[type=range]{padding:0;accent-color:var(--acc2)}
+.crow{display:grid;grid-template-columns:30px 1fr 54px;gap:8px;align-items:center;padding:9px 11px;border:1px solid var(--line);border-radius:12px;margin-bottom:7px;cursor:pointer;background:linear-gradient(160deg,var(--card2),var(--card))}
+.crow:hover,.crow:active{border-color:var(--acc)}
+.rk{font:600 15px ui-monospace,Menlo,monospace;color:var(--mut);text-align:center}
+.ci{font:700 18px ui-monospace,Menlo,monospace;color:var(--acc);text-align:right}
+.bars{display:flex;gap:2px;margin-top:5px}
+.bars i{flex:1;height:7px;border-radius:3px;background:#1d2a4d;position:relative;overflow:hidden}
+.bars i b{position:absolute;left:0;top:0;bottom:0;background:var(--acc)}
+.bar{height:8px;border-radius:4px;background:#1d2a4d;position:relative;overflow:hidden;min-width:70px;display:inline-block;width:80px;vertical-align:middle;margin-left:8px}
+.bar b{position:absolute;left:0;top:0;bottom:0;background:var(--acc)}
+.tag.v-primar{color:var(--ok);border-color:#2c6b4b}.tag.v-cond{color:var(--acc2);border-color:#7a6226}.tag.v-excl{color:var(--bad);border-color:#7a3a3a}
+.mz{background:linear-gradient(160deg,var(--card2),var(--card));border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:8px}
+.mz h4{margin:0 0 3px;font-size:15px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.mz .nb{display:inline-flex;width:22px;height:22px;border-radius:50%;align-items:center;justify-content:center;font:700 12px system-ui;color:#06101f}
+.mz p{margin:3px 0;color:#c9d4ee;font-size:13.5px}
+.mz .tl{font:13px ui-monospace,Menlo,monospace;color:var(--acc);margin-top:5px}
+.mz .nx{font-size:12.5px;color:var(--mut)}
+.wl{display:flex;justify-content:space-between;font-size:13px;color:var(--mut);margin-top:6px}
+.wl b{color:var(--acc)}
+@media(min-width:760px){#ov{align-items:center}.sheet{border-radius:18px}}
+</style>
+</head>
+<body>
+<header>
+<h1>ORARIUM</h1>
+<p>Timpul pe toate lumile — un etalon, două formule, patru ceasuri. Fișier unic, offline, fără urmărire.</p>
+<div class="refbar"><label for="lang-z">Limba</label><select id="lang-z"></select></div>
+<div class="refbar"><label for="ref-z">Ora Pământului de referință</label><select id="ref-z"></select><span id="ref-now" class="mut"></span></div>
+</header>
+<nav><div class="in" id="tabs">
+<button data-v="acum" class="on">Acum</button>
+<button data-v="metoda">Metoda</button>
+<button data-v="conv">Convertor</button>
+<button data-v="col">Colonii</button>
+<button data-v="map">Hărți</button>
+<button data-v="scen">Scenarii</button>
+</div></nav>
+<main>
+<section id="v-acum" class="view on">
+<div class="chips" id="chips"></div>
+<div id="board"></div>
+<p class="mut" style="font-size:12.5px;margin-top:14px">Atinge un corp pentru detalii, exemple concrete și calculul ceasului. <b class="pos">fază reală</b> = ora derivată din orientarea corpului și din poziția lui pe orbită; <b>ritm</b> = ziua locală reală, dar cu origine convențională (J2000.0 = miezul nopții la meridianul 0), pe care o poți ancora la ora unei misiuni.</p>
+</section>
+
+<section id="v-metoda" class="view">
+<div class="panel">
+<h3>Ideea: separăm ce bate, ce simțim și ce se sincronizează</h3>
+<p>Pe Pământ „ora” amestecă trei lucruri: <b>cât de repede merge un ceas</b>, <b>unde e soarele pe cer</b> și <b>cât de departe e interlocutorul</b>. Pe alte lumi aceste trei lucruri se despart. Metoda ORARIUM le tratează separat și le recompune cu două formule valabile pentru orice corp, de la Mercur la o cometă.</p>
+</div>
+<div class="four">
+<div class="panel"><div class="ico">⚛️</div><h3>1 · Ceasul-Etalon</h3><p>Secunda SI, aceeași peste tot. Fiecare corp primește un <b>Timp Local de Suprafață (TLS)</b>: timpul propriu al unui ceas atomic de pe suprafața lui echipotențială de referință, analogul lui TT al Pământului. În medie, TLS diferă de UTC printr-o <b>rată ρ</b> calculabilă, la care se adaugă termeni periodici mici și o origine stabilită prin convenție. Pentru Lună, ρ ≈ 56 µs/zi este cifra din articol. Scara oficială discutată acolo („timp coordonat lunar”) este o scară coordonată înrudită, cu rata și originea fixate prin convenție; ORARIUM folosește timpul propriu al suprafeței.</p></div>
+<div class="panel"><div class="ico">🌗</div><h3>2 · Ceasul-Ritm</h3><p>Ziua solară locală se împarte în <b>24 ore locale × 60 min × 60 s locale</b>. Ora locală durează <i>P<sub>sol</sub>/24</i> secunde SI, deci amiaza e la 12:00 pe orice lume. Ceasul corpului nu se atinge, doar numerotarea zilei se adaptează. Un an se exprimă în zile locale.</p></div>
+<div class="panel"><div class="ico">🧭</div><h3>3 · Ceasul-Fază</h3><p>Care e <i>ora</i>, nu doar ritmul? Faza poate veni din orientarea IAU + efemeridă (planete), din elongația medie (Lună), din MTC (Marte) iar la sateliții sincroni, la asteroizi și la planetele pitice fără orientare IAU în aplicație, deocamdată doar ritmul. Faza lor orbitală cere efemeride dedicate; până atunci ritmul rămâne corect, iar ora se ancorează la prima misiune.</p></div>
+<div class="panel"><div class="ico">📡</div><h3>4 · Ceasul-Punte</h3><p>Lumina are nevoie de minute sau ore. Orice mesaj poartă tripletul <b>(TLS, UTC, ρ)</b>; receptorul scade timpul-lumină și aplică ρ, deci reconstruiește evenimentul fără negociere. Pentru Marte, un semnal durează între ≈3 și ≈22 de minute.</p></div>
+</div>
+
+<div class="panel" style="margin-top:12px">
+<h3>Cele două formule</h3>
+<p><b>Rata ceasului</b> față de un ceas terestru (se adună potențialele gravitaționale și energia cinetică, în prim ordin):</p>
+<div class="formula">ρ = (Φ⊕ − Φ_b) / c²
+Φ = 3·GM☉ / 2a☉  +  3·GM_p / 2a_s  +  GM_b / R  +  ½ ω² R²
+     Soare+orbită    planetă-mamă      suprafață    rotație</div>
+<p><b>Ziua solară</b> din rotația siderală și din anul corpului (semnul − pentru rotație directă, + pentru retrogradă):</p>
+<div class="formula">P_sol = 1 / | 1/P_sid ∓ 1/P_an |</div>
+<p>Din cele două formule și din cinci numere (GM, R, P<sub>sid</sub>, a, direcția rotației) ies toate valorile din aplicație. Pentru <b>Hyperion</b>, cu rotație haotică, nu există zi stabilă: metoda degradează grațios și păstrează doar Ceasul-Etalon.</p>
+</div>
+
+<div class="panel">
+<h3>Calculul pentru Lună, în direct</h3>
+<div id="moonCalc"></div>
+<p class="mut" style="font-size:13px">Rezultatul se potrivește cu cele 56 µs/zi din articol. 1 m de precizie de navigare ≈ 3,3 ns, deci o eroare de 56 µs = ≈16,8 km pe zi dacă nu e corectată.</p>
+</div>
+
+<div class="panel">
+<h3>Răspunsuri la întrebările deschise din articol</h3>
+<ul class="ex">
+<li><b>Cine decide?</b> Conferința Generală pentru Măsuri și Greutăți (CGPM, a 28-a, Versailles) a adoptat, potrivit articolului, o rezoluție ce vizează definirea unei scări internaționale de referință a timpului lunar; alegerea concretă a scării rămâne deschisă. ORARIUM propune forma generală: același mecanism, aplicat fiecărui corp.</li>
+<li><b>Altitudine zero?</b> Nu „nivelul mării”, ci <b>suprafața echipotențială medie</b> (geoid generalizat: selenoid, areoid), definită prin potențialul W<sub>0</sub>. Fiecare metru de altitudine adaugă g·h/c² (vezi calculatorul din fișa fiecărui corp).</li>
+<li><b>Rețea de ceasuri?</b> Propunerea ORARIUM: un ansamblu (≥3 ceasuri atomice la sol + relee pe orbită) cu medie ponderată, ca UTC, care produce TLS. Fiecare corp cu prezență umană primește propriul ansamblu.</li>
+<li><b>Sincronizare?</b> Propunerea ORARIUM, prin Ceasul-Punte: (TLS, UTC, ρ) în fiecare pachet, plus timp-lumină (dus și dus-întors) din efemeridă.</li>
+</ul>
+</div>
+<div class="panel"><h3>Limite oneste</h3>
+<p>Calculul e de ordinul întâi (Soare + planeta-mamă + suprafață + rotație, orbite circulare în medie). Pentru Marte obține ≈488 µs/zi, iar modelele complete din literatură dau ≈477 µs/zi, cu variații periodice de sute de µs din cauza excentricității. Orele „reale” folosesc orientări IAU medii (fără librații) și efemeride kepleriene simplificate: ordinul de mărime al erorii e de minute (verificat pe Marte față de formula Mars24, abatere maximă ≈4 min), nu de secunde. Timpul-lumină e exact la ≈0,5 %. TT = UTC + 69,184 s presupune că nu s-au mai introdus secunde intercalare după 2017. Pentru navigație reală se folosesc efemeride numerice complete.</p></div>
+</section>
+
+<section id="v-conv" class="view">
+<div class="panel">
+<h3>Ce oră e acolo când aici e…?</h3>
+<div class="row2">
+<div><label>Data și ora</label><input type="datetime-local" id="cv-t"></div>
+<div><label>Fusul orar</label><select id="cv-z"></select></div>
+</div>
+<div class="row2">
+<div><label>Corp țintă</label><select id="cv-b"></select></div>
+<div><label>Loc (longitudine est, °)</label><input type="number" id="cv-l" value="0" step="0.01"></div>
+</div>
+<label>Locuri cunoscute</label><select id="cv-p"></select>
+<button class="btn" id="cv-now">Acum</button><button class="btn" id="cv-12">Azi 12:00 în fusul ales</button>
+<div id="cv-out"></div>
+</div>
+<div class="panel"><h3>Toate lumile la același moment</h3><div id="cv-all"></div></div>
+</section>
+
+<section id="v-col" class="view">
+<div class="panel">
+<h3>Ce corpuri pot fi colonizate?</h3>
+<p>Toate corpurile cu un loc posibil de așezare: Luna, Marte, Mercur (cratere polare), aerostate în atmosfera Venusului, asteroizi, sateliți de gheață și planete pitice. Clasamentul este un <b>indice orientativ</b>, nu o evaluare științifică oficială: combină șapte factori măsurabili cu ponderile tale. Un factor foarte slab trage tot indicele în jos, pentru că un habitat nu compensează lipsa unui lucru vital cu altul în exces.</p>
+</div>
+<div class="panel"><h3>Ponderile tale</h3><div id="cw"></div><div id="cpre"></div></div>
+<div class="chips" id="cchips"></div>
+<div id="clist"></div>
+<div class="panel"><h3>Cum se calculează</h3>
+<p>Fiecare factor primește un scor 0–1. Indicele este media geometrică ponderată a celor șapte scoruri (minim luat în calcul 0,02), înmulțită cu un <b>factor vital</b> 0,3 + 0,7·min(scor radiație, scor temperatură): un corp prea fierbinte, prea rece sau prea iradiat nu poate urca în clasament prin alte avantaje.</p>
+<div class="formula">Gravitație   g/0,38 g⊕ (max. 1 la ≥0,38 g; scade peste 1 g)
+Radiație     1 − log₁₀(doză/0,05 mSv·zi⁻¹)/3,5
+Temperatură  1 − |T − 290 K|/250 K   (T = echilibru radiativ sau valoare măsurată)
+Presiune     1 − |log₁₀(p/bar)|/3    (vid = 0)
+Resurse      0,4·apă + 0,2·volatile + 0,2·metale + 0,2·atmosferă
+Energie      1 − |log₁₀(flux/1361 W/m²)|/2
+Acces        1 − log₁₀(1 + timp-lumină minute)/log₁₀(301)</div>
+<p class="mut" style="font-size:13px">Dozele și temperaturile sunt valori publicate, rotunjite; pentru corpurile fără măsurători directe, doza este cea a unui corp fără atmosferă în spațiul interplanetar (≈1,4 mSv/zi, ca pe Lună). Accesibilitatea măsoară doar distanța radio, nu Δv. Evaluările de resurse sunt calitative.</p></div>
+</section>
+
+<section id="v-map" class="view">
+<div class="panel"><h3>Hărți ale zonelor de colonizare</h3>
+<p>Alege un corp. Harta e <b>schematică</b> (grilă de latitudine și longitudine, zone marcate, zi și noapte în timp real), nu o imagine a suprafeței. Coordonatele sunt rotunjite, cu longitudine est pozitivă; zonele „generice” sunt criterii fizice, nu situri validate. Pentru fiecare zonă vezi ora locală, ora Pământului de referință (aleasă sus) și când vine următoarea amiază, în ora Pământului.</p>
+<label>Corp</label><select id="mp-b"></select></div>
+<div class="panel" style="padding:8px"><svg id="mp-svg" viewBox="-12 -12 744 384" width="100%" role="img" aria-label="Hartă schematică"></svg><div id="mp-leg" class="mut" style="font-size:12.5px;padding:6px 6px 2px"></div><div id="mp-pol" style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:8px"></div></div>
+<div id="mp-z"></div>
+</section>
+
+<section id="v-scen" class="view"><div id="scen"></div></section>
+</main>
+<footer>Surse și metodă: articolul <a href="https://www.stiripesurse.ro/cat-este-ceasul-pe-luna_3928805" target="_blank" rel="noopener">„Cât este ceasul pe Lună…”</a> (AFP/Agerpres, 18.10.2026); orientări IAU WGCCRE 2009; elemente orbitale kepleriene medii (JPL, Standish); MTC/MSD marțian (Allison & McEwen). Valorile fizice ale corpurilor sunt cele uzuale din literatura de specialitate, rotunjite. Aplicația este trade-free: fără rețea, fără cont, fără urmărire.</footer>
+
+<div id="ov"><div class="sheet"><button id="x" aria-label="Închide">×</button><div id="det"></div></div></div>
+
+<script>
+//<ENGINE>
+const D2R=Math.PI/180,C=299792458,GMS=1.32712440018e20,AUM=1.495978707e11,DAYS=86400,YJ=365.25,J2000=2451545.0,EPS=23.43929111*D2R,LTAU=499.00478384;
+const W0E=62636856.0;
+function clamp(x,a,b){return Math.max(a,Math.min(b,x))}
+const EL={
+mercur:[0.38709927,0.00000037,0.20563593,0.00001906,7.00497902,-0.00594749,252.25032350,149472.67411175,77.45779628,0.16047689,48.33076593,-0.12534081],
+venus:[0.72333566,0.00000390,0.00677672,-0.00004107,3.39467605,-0.00078890,181.97909950,58517.81538729,131.60246718,0.00268329,76.67984255,-0.27769418],
+terra:[1.00000261,0.00000562,0.01671123,-0.00004392,-0.00001531,-0.01294668,100.46457166,35999.37244981,102.93768193,0.32327364,0,0],
+marte:[1.52371034,0.00001847,0.09339410,0.00007882,1.84969142,-0.00813131,-4.55343205,19140.30268499,-23.94362959,0.44441088,49.55953891,-0.29257343],
+jupiter:[5.20288700,-0.00011607,0.04838624,-0.00013253,1.30439695,-0.00183714,34.39644051,3034.74612775,14.72847983,0.21252668,100.47390909,0.20469106],
+saturn:[9.53667594,-0.00125060,0.05386179,-0.00050991,2.48599187,0.00193609,49.95424423,1222.49362201,92.59887831,-0.41897216,113.66242448,-0.28867794],
+uranus:[19.18916464,-0.00196176,0.04725744,-0.00004397,0.77263783,-0.00242939,313.23810451,428.48202785,170.95427630,0.40805281,74.01692503,0.04240589],
+neptun:[30.06992276,0.00026291,0.00859048,0.00005105,1.77004347,0.00035372,-55.12002969,218.45945325,44.96476227,-0.32241464,131.78422574,-0.00508664],
+pluto:[39.48211675,-0.00031596,0.24882730,0.00005170,17.14001206,0.00004818,238.92903833,145.20780515,224.06891629,-0.04062942,110.30393684,-0.01183482]};
+const IAU={
+mercur:[281.01,61.45,329.548,6.1385025],
+venus:[272.76,67.16,160.20,-1.4813688],
+marte:[317.68143,52.8865,176.630,350.89198226],
+jupiter:[268.056595,64.495303,284.95,870.536642],
+saturn:[40.589,83.537,38.90,810.7939024],
+uranus:[257.311,-15.175,203.81,-501.1600928],
+neptun:[299.36,43.46,249.978,541.1397757],
+pluto:[132.993,-6.163,302.695,56.3625225]};
+// GM km3/s2, R km, Prot zile (sateliți sincroni: Porb), a UA, Pyr zile
+const B=[
+{id:'soare',n:'Soarele',cat:'ref',GM:132712440018,R:695700,Prot:25.38,Pyr:365.25636,note:'Referință. Ceasul de la suprafața Soarelui merge mai încet cu ≈182 ms pe zi față de unul terestru. „Ziua” este rotația sinodică văzută de pe Pământ (≈27,3 zile, ciclul Carrington).'},
+{id:'mercur',n:'Mercur',cat:'planeta',GM:22031.78,R:2439.7,Prot:58.6462,a:0.38709927,e:0.2056,Pyr:87.9691,el:1,note:'Rezonanță 3:2: o zi siderală = 2/3 din an, iar ziua solară (≈176 zile) durează exact doi ani mercurieni. Soarele face „bucle” pe cer în jurul periheliului.'},
+{id:'venus',n:'Venus',cat:'planeta',GM:324858.59,R:6051.8,Prot:243.0185,retro:1,a:0.72333566,e:0.0068,Pyr:224.701,el:1,note:'Rotația siderală (243 d) e mai lungă decât anul (224,7 d), dar ziua solară are doar ≈117 zile, pentru că rotația e retrogradă: Soarele răsare la vest.'},
+{id:'terra',n:'Pământ',cat:'planeta',GM:398600.4418,R:6378.137,Prot:0.99726968,a:1.00000261,e:0.0167,Pyr:365.25636,el:1,note:'Etalonul: UTC pe geoid (W₀ = 62 636 856 m²/s²). Ora afișată este UTC, adică ora medie solară la Greenwich.'},
+{id:'marte',n:'Marte',cat:'planeta',GM:42828.375,R:3396.19,Prot:1.025957,a:1.52371034,e:0.0934,Pyr:686.98,el:1,note:'Ziua marțiană („sol”) are 24 h 39 min 35 s. Ora afișată este ora solară adevărată la meridianul 0 (include ecuația timpului, ±51 min); MTC și numărul solului MSD sunt în exemplele de mai jos.'},
+{id:'jupiter',n:'Jupiter',cat:'planeta',GM:126686534,R:71492,Prot:0.413538,a:5.202887,e:0.0484,Pyr:4332.589,el:1,note:'Fără suprafață solidă: „altitudine zero” este nivelul de 1 bar, iar longitudinea e Sistemul III (radio). Cel mai adânc potențial dintre planete, deci ceasul merge mai încet.'},
+{id:'saturn',n:'Saturn',cat:'planeta',GM:37931187,R:60268,Prot:0.44401,a:9.53667594,e:0.0539,Pyr:10759.22,el:1,note:'Referință la nivelul de 1 bar; rotația interioară e dată de convenția IAU (Sistemul III).'},
+{id:'uranus',n:'Uranus',cat:'planeta',GM:5793939,R:25559,Prot:0.71834,retro:1,a:19.18916464,e:0.0473,Pyr:30688.5,el:1,note:'Înclinare axială de ≈98°: aproape întregul glob are zile polare de zeci de ani. Ora locală medie are sens clar doar lângă ecuator.'},
+{id:'neptun',n:'Neptun',cat:'planeta',GM:6836529,R:24764,Prot:0.665264,a:30.06992276,e:0.0086,Pyr:60182,el:1,note:'Un an neptunian are ≈165 de ani terestri, iar ziua are ≈16 ore.'},
+{id:'luna',n:'Luna',cat:'sat',par:'terra',GM:4902.8,R:1737.4,Prot:27.321661,as:384399,sync:1,note:'Ora este ora solară medie lunară la meridianul sub-terestru (din elongația medie). Ziua lunară = luna sinodică (29,53 zile Pământ). Ceasul merge cu ≈56 µs/zi mai repede decât pe Pământ.'},
+{id:'phobos',n:'Phobos',cat:'sat',par:'marte',GM:7.0996e-4,R:11.08,Prot:0.31891,as:9376,sync:1,note:'Orbitează Marte în 7 h 39 min, mai repede decât se rotește Marte. Văzut de pe Marte răsare la vest, o dată la ≈11 h (de ≈2,2 ori pe sol).'},
+{id:'deimos',n:'Deimos',cat:'sat',par:'marte',GM:9.852e-5,R:6.2,Prot:1.2624,as:23463,sync:1,note:'Orbitează în 30,3 h, puțin mai încet decât se rotește Marte: văzut de pe Marte rămâne ≈2,4 sol (≈2,5 zile) deasupra orizontului pentru un observator ecuatorial.'},
+{id:'io',n:'Io',cat:'sat',par:'jupiter',GM:5959.916,R:1821.49,Prot:1.769138,as:421800,sync:1,note:'Ziua solară de 42,5 h (1,77 zile). Încălzirea mareică întreține vulcanismul; ceasul câștigă ≈0,66 ms/zi față de Pământ. Cel mai iradiat dintre sateliții mari ai lui Jupiter.'},
+{id:'europa',n:'Europa',cat:'sat',par:'jupiter',GM:3202.739,R:1560.8,Prot:3.551181,as:671100,sync:1,note:'Zi solară de ≈85 de ore (3,55 zile); ocean sub o crustă de gheață.'},
+{id:'ganimede',n:'Ganimede',cat:'sat',par:'jupiter',GM:9887.834,R:2631.2,Prot:7.154553,as:1070400,sync:1,note:'Cel mai mare satelit: zi de 7,15 zile, noapte de ≈3,6 zile.'},
+{id:'callisto',n:'Callisto',cat:'sat',par:'jupiter',GM:7179.289,R:2410.3,Prot:16.689017,as:1882700,sync:1,note:'Zi de 16,7 zile; în afara centurii de radiații, o țintă calmă pentru baze.'},
+{id:'mimas',n:'Mimas',cat:'sat',par:'saturn',GM:2.5026,R:198.2,Prot:0.942422,as:185540,sync:1,note:'Zi de ≈22,6 ore, aproape ca a Pământului.'},
+{id:'enceladus',n:'Enceladus',cat:'sat',par:'saturn',GM:7.2112,R:252.1,Prot:1.370218,as:238040,sync:1,note:'Zi de ≈32,9 ore; gheizerele de la polul sud aruncă apă din oceanul subteran.'},
+{id:'tethys',n:'Tethys',cat:'sat',par:'saturn',GM:41.2097,R:531.1,Prot:1.887802,as:294670,sync:1,note:'Zi de ≈45,3 ore.'},
+{id:'dione',n:'Dione',cat:'sat',par:'saturn',GM:73.1146,R:561.4,Prot:2.736915,as:377420,sync:1,note:'Zi de ≈65,7 ore.'},
+{id:'rhea',n:'Rhea',cat:'sat',par:'saturn',GM:153.9426,R:763.8,Prot:4.518212,as:527070,sync:1,note:'Zi de ≈108 ore.'},
+{id:'titan',n:'Titan',cat:'sat',par:'saturn',GM:8978.1382,R:2574.7,Prot:15.945421,as:1221870,sync:1,note:'Zi solară de 15,97 zile Pământ (≈8 zile de lumină, ≈8 de noapte). O „oră” locală durează ≈16 ore terestre.'},
+{id:'hyperion',n:'Hyperion',cat:'sat',par:'saturn',GM:0.3727,R:135,Prot:21.2766,as:1481009,sync:1,chaos:1,note:'Rotație haotică (se rostogolește imprevizibil): nu există zi stabilă, deci nu se definește Ceasul-Ritm. Rămâne valabil doar Ceasul-Etalon.'},
+{id:'iapetus',n:'Iapetus',cat:'sat',par:'saturn',GM:120.5,R:734.5,Prot:79.3215,as:3560840,sync:1,note:'Zi solară de ≈80 de zile: o oră locală înseamnă ≈3,3 zile terestre.'},
+{id:'miranda',n:'Miranda',cat:'sat',par:'uranus',GM:4.4,R:235.8,Prot:1.413479,as:129900,sync:1,retro:1,note:'Zi de ≈34 ore, dar înclinarea sistemului uranian face anotimpurile extreme.'},
+{id:'ariel',n:'Ariel',cat:'sat',par:'uranus',GM:83.4,R:578.9,Prot:2.520379,as:190900,sync:1,retro:1,note:'Zi de ≈60,5 ore.'},
+{id:'umbriel',n:'Umbriel',cat:'sat',par:'uranus',GM:85.4,R:584.7,Prot:4.144176,as:266000,sync:1,retro:1,note:'Zi de ≈99,5 ore.'},
+{id:'titania',n:'Titania',cat:'sat',par:'uranus',GM:228.2,R:788.9,Prot:8.705867,as:436300,sync:1,retro:1,note:'Zi de ≈8,7 zile.'},
+{id:'oberon',n:'Oberon',cat:'sat',par:'uranus',GM:192.4,R:761.4,Prot:13.463234,as:583500,sync:1,retro:1,note:'Zi de ≈13,5 zile.'},
+{id:'triton',n:'Triton',cat:'sat',par:'neptun',GM:1428.5,R:1353.4,Prot:5.876854,as:354759,sync:1,retro:1,note:'Singurul mare satelit pe orbită retrogradă; probabil capturat. Zi de 5,88 zile.'},
+{id:'pluto',n:'Pluto',cat:'mic',GM:869.6,R:1188.3,Prot:6.38723,retro:1,a:39.48211675,e:0.2488,Pyr:90560,el:1,note:'Planetă pitică. Ziua de ≈6,39 zile, rotație retrogradă; sistem dublu sincron cu Charon: același emisferă se vede mereu.'},
+{id:'charon',n:'Charon',cat:'sat',par:'pluto',GM:105.9,R:606,Prot:6.38723,as:19596,sync:1,retro:1,note:'Dublu sincron cu Pluto: Pluto stă fix pe cerul lui Charon, deci „ora” lui Charon se leagă de faza Soarelui față de axa Pluto–Charon.'},
+{id:'ceres',n:'Ceres',cat:'mic',GM:62.6284,R:469.73,Prot:0.378091,a:2.7675,e:0.0785,note:'Planetă pitică din centura principală. Ziua de 9,07 ore: ora locală ≈22,7 min terestre.'},
+{id:'vesta',n:'Vesta',cat:'mic',GM:17.288,R:262.7,Prot:0.2225887,a:2.3615,e:0.0887,note:'Zi de 5,34 ore, vizitată de sonda Dawn.'},
+{id:'pallas',n:'Pallas',cat:'mic',GM:13.77,R:256,Prot:0.32555,a:2.7721,e:0.2313,note:'Zi de 7,81 ore; orbită mult înclinată față de planul planetelor.'},
+{id:'haumea',n:'Haumea',cat:'mic',GM:267.4,R:780,Prot:0.163146,a:43.13,e:0.195,note:'Rotația cea mai rapidă dintre corpurile mari cunoscute: zi de 3,92 ore, de aceea e alungită ca o minge de rugby.'},
+{id:'makemake',n:'Makemake',cat:'mic',GM:180,R:715,Prot:0.95125,a:45.5,e:0.16,note:'Planetă pitică; rotația e de ≈22,8 h sau de ≈11,4 h, după cum curba de lumină are unul sau două maxime pe rotație (incert).'},
+{id:'eris',n:'Eris',cat:'mic',GM:1108,R:1163,Prot:15.786,a:67.69,e:0.4407,note:'Rotație de ≈15,8 zile, probabil sincronă cu satelitul Dysnomia (Szakáts et al. 2023); estimările mai vechi dădeau ≈25,9 h. Valoare încă disputată.'},
+{id:'bennu',n:'Bennu',cat:'mic',GM:4.892e-9,R:0.2465,Prot:0.17900,a:1.1264,e:0.2037,note:'Ținta OSIRIS-REx. Zi de 4,30 ore, deci „ora locală” are ≈10,7 min. Gravitația la suprafață e de ≈120 000 de ori mai mică decât pe Pământ.'},
+{id:'ryugu',n:'Ryugu',cat:'mic',GM:3.0e-8,R:0.448,Prot:0.318025,a:1.1896,e:0.1902,note:'Ținta Hayabusa2. Zi de 7,63 ore; ora locală ≈19 min terestre. Gravitația e de ≈65 000 de ori mai mică decât pe Pământ.'},
+{id:'67p',n:'67P/Ciuriumov–Gherasimenko',cat:'mic',GM:6.67e-7,R:1.65,Prot:0.51685,a:3.457,e:0.6405,note:'Cometa vizitată de Rosetta. Rotație de ≈12,4 h, care se schimbă când se activează jeturile. Un nucleu cu gravitație de aproape zero.'},
+{id:'hygiea',n:'Hygiea',cat:'mic',GM:5.78,R:217,Prot:0.57605,a:3.1421,e:0.1146,note:'Cel mai mare asteroid carbonaceu, aproape sferic (posibil o planetă pitică). Zi de 13,8 ore.'},
+{id:'psyche',n:'Psyche',cat:'mic',GM:1.53,R:111,Prot:0.17483,a:2.9233,e:0.1339,note:'Asteroid bogat în metal (fier–nichel); ținta sondei Psyche, sosire planificată în 2029. Zi de 4,2 ore.'},
+{id:'eros',n:'Eros',cat:'mic',GM:4.463e-4,R:8.42,Prot:0.2196,a:1.4583,e:0.2229,note:'Asteroid apropiat de Pământ, alungit (≈34 km). Zi de 5,27 ore. NEAR Shoemaker a aterizat pe el în 2001.'},
+{id:'venus50',n:'Venus — aerostat 50 km',cat:'hab',GM:324858.59,R:6101.8,Prot:6,retro:1,a:0.72333566,e:0.0068,Pyr:224.701,unc:1,note:'Un habitat plutitor în atmosfera Venusului, unde aerul are ≈1 bar și ≈75 °C și gravitația e ≈0,9 g. „Ziua” urmează vânturile (super-rotație de ≈6 zile Pământ, valoare orientativă) și are ≈5,8 zile. Ceasul nu mai are „suprafață”: metoda se aplică la altitudine, cu R = 6 101,8 km.'}
+];
+const byId={};B.forEach(b=>byId[b.id]=b);
+const anchor={};
+function mod(x,m){return ((x%m)+m)%m}
+function frac(x){return x-Math.floor(x)}
+function jdTT(ms){return ms/86400000+2440587.5+69.184/86400}
+function helio(el,T){
+ const a=el[0]+el[1]*T,e=el[2]+el[3]*T,I=(el[4]+el[5]*T)*D2R,L=el[6]+el[7]*T,w=el[8]+el[9]*T,O=(el[10]+el[11]*T)*D2R;
+ const M=mod(L-w,360)*D2R;
+ let E=M+e*Math.sin(M);
+ for(let i=0;i<10;i++)E-=(E-e*Math.sin(E)-M)/(1-e*Math.cos(E));
+ const xp=a*(Math.cos(E)-e),yp=a*Math.sqrt(1-e*e)*Math.sin(E);
+ const om=w*D2R-O,co=Math.cos(om),so=Math.sin(om),cO=Math.cos(O),sO=Math.sin(O),cI=Math.cos(I),sI=Math.sin(I);
+ return [(co*cO-so*sO*cI)*xp+(-so*cO-co*sO*cI)*yp,(co*sO+so*cO*cI)*xp+(-so*sO+co*cO*cI)*yp,(so*sI)*xp+(co*sI)*yp];
+}
+function derive(){
+ B.forEach(b=>{
+  if(b.el)b.el=EL[b.id];
+  const P=b.par?byId[b.par]:null;
+  b.P=P;
+  b.Pyear=b.Pyr||(P?P.Pyear:Math.pow(b.a,1.5)*YJ);
+  b.aH=b.id==='soare'?0:(P?P.aH:b.a);
+  b.ae=P?P.ae:b.e;
+  b.aa=P?P.aa:b.a;
+  const w=2*Math.PI/(b.Prot*DAYS),Rm=b.R*1e3;
+  const surf=b.id==='terra'?W0E:b.GM*1e9/Rm+0.5*Math.pow(w*Rm,2);
+  const sun=b.id==='soare'?0:1.5*GMS/(b.aH*AUM);
+  const par=P?1.5*P.GM*1e9/(b.as*1e3):0;
+  b.t={sun:sun,par:par,surf:surf};
+  b.eps=(sun+par+surf)/(C*C);
+  b.g=b.GM*1e9/(Rm*Rm);
+  if(b.chaos)b.Psol=null;
+  else b.Psol=1/Math.abs(1/b.Prot+(b.retro?1:-1)/b.Pyear);
+  b.hourS=b.Psol?b.Psol*DAYS/24:null;
+  b.yearLoc=b.Psol?b.Pyear/b.Psol:null;
+ });
+ const E=byId.terra;
+ B.forEach(b=>{
+  b.rho=(E.eps-b.eps)*DAYS*1e6;
+  b.rparts={sun:(E.t.sun-b.t.sun)/(C*C)*DAYS*1e6,par:(E.t.par-b.t.par)/(C*C)*DAYS*1e6,surf:(E.t.surf-b.t.surf)/(C*C)*DAYS*1e6};
+ });
+}
+derive();
+function mars(ms){
+ const jd=jdTT(ms);
+ const msd=(jd-2451549.5)/1.0274912517+44796.0-0.0009626;
+ return {msd:msd,mtc:24*frac(msd)};
+}
+function iauGeom(b,d){
+ const k=IAU[b.id],al=k[0]*D2R,de=k[1]*D2R,Wd=k[3];
+ const p=helio(b.el,d/36525);
+ const sx=-p[0],sy=-p[1],sz=-p[2];
+ let s=[sx,sy*Math.cos(EPS)-sz*Math.sin(EPS),sy*Math.sin(EPS)+sz*Math.cos(EPS)];
+ const n=Math.hypot(s[0],s[1],s[2]);s=[s[0]/n,s[1]/n,s[2]/n];
+ const Q=[-Math.sin(al),Math.cos(al),0],P=[Math.cos(de)*Math.cos(al),Math.cos(de)*Math.sin(al),Math.sin(de)];
+ const E2=[P[1]*Q[2]-P[2]*Q[1],P[2]*Q[0]-P[0]*Q[2],P[0]*Q[1]-P[1]*Q[0]];
+ const dot=(u,v)=>u[0]*v[0]+u[1]*v[1]+u[2]*v[2];
+ const phi=Math.atan2(dot(s,E2),dot(s,Q))/D2R;
+ const W=mod(k[2]+Wd*d,360);
+ return {ls:phi-W,dec:Math.asin(clamp(dot(s,P),-1,1))/D2R};
+}
+function iauHour(b,d,lon){
+ const g=iauGeom(b,d);
+ return mod(12+(IAU[b.id][3]>0?1:-1)*(lon-g.ls)/15,24);
+}
+// returnează {h: ora locală (ore), real: bool} sau null
+function localHour(b,ms,lon){
+ lon=lon||0;
+ const d=jdTT(ms)-J2000;
+ if(b.id==='terra')return {h:mod(ms/3600000+lon/15,24),real:true};
+ if(b.id==='luna'){const T=d/36525;const D=297.8501921+445267.1114034*T-0.0018819*T*T;return {h:mod(12+(D-180)/15+lon/15,24),real:true};}
+ if(IAU[b.id])return {h:iauHour(b,d,lon),real:true};
+ if(!b.Psol)return null;
+ return {h:mod(24*frac(d/b.Psol)+lon/15+(anchor[b.id]||0),24),real:false};
+}
+function sunGeom(b,ms){
+ const d=jdTT(ms)-J2000;
+ const src=IAU[b.id]?b:(b.P&&IAU[b.P.id]?b.P:null);
+ let dec=0,dr=false;
+ if(src){const g=iauGeom(src,d);dec=g.dec;dr=true;if(src===b)return {ls:mod(g.ls,360),dec:dec,real:true,decReal:true}}
+ const r=localHour(b,ms,0);if(!r)return null;
+ return {ls:mod((12-r.h)*15,360),dec:dec,real:r.real,decReal:dr};
+}
+function sunElev(lat,lon,sg){
+ const a=lat*D2R,dl=(lon-sg.ls)*D2R,dc=sg.dec*D2R;
+ return Math.asin(clamp(Math.sin(a)*Math.sin(dc)+Math.cos(a)*Math.cos(dc)*Math.cos(dl),-1,1))/D2R;
+}
+function moonDistKm(ms){ // Meeus cap. 47, termeni principali (eroare de ordinul sutelor de km)
+ const T=(jdTT(ms)-J2000)/36525,r=x=>x*D2R;
+ const D=r(297.8501921+445267.1114034*T),M=r(357.5291092+35999.0502909*T),Mp=r(134.9633964+477198.8675055*T),F=r(93.2720950+483202.0175233*T),c=Math.cos;
+ return 385000.56-20905.355*c(Mp)-3699.111*c(2*D-Mp)-2955.968*c(2*D)-569.925*c(2*Mp)+48.888*c(M)-3.149*c(2*F)+246.158*c(2*D-2*Mp)-152.138*c(2*D-M-Mp)-170.733*c(2*D+Mp)-204.586*c(2*D-M)-129.620*c(Mp-M)+108.743*c(D)+104.755*c(Mp+M);
+}
+function lightLive(b,ms){
+ if(b.id==='luna')return moonDistKm(ms)/299792.458;
+ const p=b.P||b;
+ if(b.id==='soare')return LTAU;
+ if(!p.el||p.id==='terra')return null;
+ const T=(jdTT(ms)-J2000)/36525,u=helio(p.el,T),e=helio(EL.terra,T);
+ return Math.hypot(u[0]-e[0],u[1]-e[1],u[2]-e[2])*LTAU;
+}
+function lightRange(b){
+ if(b.id==='terra')return null;
+ if(b.id==='soare')return [LTAU-8,LTAU+8];
+ if(b.id==='luna')return [1.19,1.36];
+ const a=b.aa,e=b.ae,q=a*(1-e),Q=a*(1+e);
+ let mn,mx;
+ if(Q<1){mn=1-Q;mx=1+Q}else if(q<=1){mn=0;mx=Q+1}else{mn=q-1;mx=Q+1}
+ return [mn*LTAU,mx*LTAU];
+}
+function altRate(b,hMeters){return b.g*hMeters/(C*C)*DAYS*1e9} // ns/zi
+
+// ---- colonizare ----
+// A = albedo Bond, rad = doza la suprafață (mSv/zi), p = presiune (bar), res = [apă, volatile C/N, metale/silicați, atmosferă utilă] (0–1), v = verdict
+const VERD={primar:'candidat principal',cond:'condiționat',spec:'speculativ',excl:'exclus'};
+const COL={
+luna:{A:.11,rad:1.37,p:0,res:[.5,0,1,0],v:'primar',haz:'Praf abraziv, zi și noapte de ≈14,8 zile, fără câmp magnetic; radiație ≈1,4 mSv/zi (Chang’e-4).',tip:'Tuburi de lavă și cratere polare cu gheață de apă; ținta programului Artemis.'},
+marte:{A:.25,rad:.67,p:.006,res:[1,1,1,.5],v:'primar',haz:'Perclorați în sol, praf, furtuni globale, efecte necunoscute ale gravitației de 0,38 g.',tip:'Gheață subterană la latitudini medii; CO₂ → O₂ demonstrat de experimentul MOXIE; zi de 24 h 39 min.'},
+mercur:{A:.088,rad:null,p:0,res:[.5,.5,1,0],v:'cond',haz:'Extreme termice (≈100 K în umbră, ≈700 K la soare), flux solar de ≈6,7× al Pământului, Δv mare.',tip:'Cratere polare permanent umbrite cu gheață de apă (radar, MESSENGER).'},
+venus50:{T:348,rad:.01,p:1.07,res:[.5,1,0,1],v:'cond',haz:'Nori de acid sulfuric, vânturi de ≈100 m/s la nivelul norilor, nicio suprafață accesibilă.',tip:'Aerostat în aer respirabil (O₂+N₂ ridică în CO₂ dens), concept NASA HAVOC.'},
+venus:{T:737,rad:.01,p:92,res:[0,1,1,1],v:'excl',haz:'Suprafață la ≈464 °C și ≈92 bar.',tip:'Doar sonde robotice de scurtă durată.'},
+ceres:{A:.034,rad:1.4,p:0,res:[1,1,.5,0],v:'cond',haz:'Microgravitație (0,029 g): doar habitate rotative sau ancorate.',tip:'Gheață, amoniac și saramuri (craterul Occator); cel mai mare corp din centura principală.'},
+vesta:{A:.12,rad:1.4,p:0,res:[0,0,1,0],v:'cond',haz:'Fără volatile; microgravitație.',tip:'Metale și silicați pentru construcții în spațiu.'},
+pallas:{A:.07,rad:1.4,p:0,res:[.5,.5,.5,0],v:'spec',haz:'Orbită mult înclinată (Δv mare); microgravitație.',tip:'Al treilea corp ca masă din centura principală.'},
+hygiea:{A:.03,rad:1.4,p:0,res:[.5,1,.5,0],v:'spec',haz:'Microgravitație; compoziție puțin cunoscută.',tip:'Posibil bogat în apă și compuși organici.'},
+psyche:{A:.12,rad:1.4,p:0,res:[0,0,1,0],v:'spec',haz:'Microgravitație; fără volatile.',tip:'Metale (fier–nichel) pentru industria din spațiu.'},
+eros:{A:.12,rad:1.4,p:0,res:[0,0,1,0],v:'spec',haz:'Gravitație minimă (≈0,0001 g), formă alungită.',tip:'Δv mic față de Pământ; locație pentru extracție de metale.'},
+bennu:{A:.017,rad:1.4,p:0,res:[.5,1,.5,0],v:'spec',haz:'Gravitație ≈ nulă, suprafață de pietriș liber.',tip:'Carbonaceu cu minerale hidratate; mostre aduse de OSIRIS-REx.'},
+ryugu:{A:.014,rad:1.4,p:0,res:[.5,1,.5,0],v:'spec',haz:'Gravitație ≈ nulă, suprafață de bolovani.',tip:'Carbonaceu; mostre aduse de Hayabusa2.'},
+phobos:{A:.02,rad:1.4,p:0,res:[.5,1,.5,0],v:'cond',haz:'Microgravitație, praf; Marte ocupă o parte din cer.',tip:'Bază-releu pe orbita Marte; ținta misiunii JAXA MMX.'},
+deimos:{A:.07,rad:1.4,p:0,res:[.5,1,.5,0],v:'spec',haz:'Microgravitație.',tip:'Observator stabil la 23 460 km de Marte.'},
+europa:{A:.68,rad:5400,p:0,res:[1,1,.5,0],v:'spec',haz:'Radiație letală la suprafață (≈5,4 Sv/zi); doar sub gheață.',tip:'Ocean de apă sub 15–25 km de gheață; baze subglaciale, în teorie.'},
+ganimede:{A:.34,rad:80,p:0,res:[1,.5,.5,0],v:'cond',haz:'Radiație severă (≈0,08 Sv/zi), parțial redusă de câmpul magnetic propriu.',tip:'Cel mai mare satelit din sistem; baze subterane în gheață.'},
+callisto:{A:.05,rad:.1,p:0,res:[1,.5,.5,0],v:'cond',haz:'Gravitație mică (0,126 g), foarte departe (≈45 min lumină).',tip:'În afara centurilor de radiații ale lui Jupiter; baze propuse în studiul NASA HOPE.'},
+io:{A:.52,rad:36000,p:0,res:[0,0,1,0],v:'excl',haz:'Radiație ≈36 Sv/zi și vulcani activi.',tip:'Doar sonde.'},
+titan:{T:94,rad:.01,p:1.467,res:[1,1,.5,1],v:'cond',haz:'≈94 K, metan și etan lichide, fără O₂ în atmosferă.',tip:'Presiune ≈1,45 bar: nu cere costume presurizate, doar izolație termică; sonda Dragonfly e planificată spre 2034.'},
+enceladus:{A:.8,rad:1.4,p:0,res:[1,1,.5,0],v:'spec',haz:'Microgravitație (0,011 g), ≈75 K.',tip:'Gheizere cu apă din ocean subteran: resurse fără foraj.'},
+mimas:{A:.6,rad:1.4,p:0,res:[1,.5,.5,0],v:'spec',haz:'Microgravitație.',tip:'Aproape pur gheață de apă.'},
+tethys:{A:.6,rad:1.4,p:0,res:[1,.5,.5,0],v:'spec',haz:'Microgravitație.',tip:'Gheață de apă.'},
+dione:{A:.6,rad:1.4,p:0,res:[1,.5,.5,0],v:'spec',haz:'Microgravitație.',tip:'Gheață de apă și nucleu stâncos.'},
+rhea:{A:.6,rad:1.4,p:0,res:[1,.5,.5,0],v:'spec',haz:'Microgravitație.',tip:'Al doilea satelit al lui Saturn ca mărime.'},
+iapetus:{A:.3,rad:1.4,p:0,res:[1,.5,.5,0],v:'spec',haz:'Zi de ≈80 de zile, ≈1,3 h lumină-timp de la Pământ.',tip:'Gheață; orbită înclinată departe de Saturn.'},
+miranda:{A:.23,rad:1.4,p:0,res:[1,.5,.5,0],v:'spec',haz:'Microgravitație; anotimpuri extreme.',tip:'Gheață și silicați.'},
+ariel:{A:.23,rad:1.4,p:0,res:[1,.5,.5,0],v:'spec',haz:'Gravitație mică; anotimpuri extreme.',tip:'Gheață cu posibile urme de CO₂.'},
+umbriel:{A:.1,rad:1.4,p:0,res:[1,.5,.5,0],v:'spec',haz:'Gravitație mică; anotimpuri extreme.',tip:'Gheață întunecată.'},
+titania:{A:.17,rad:1.4,p:0,res:[1,.5,.5,0],v:'spec',haz:'Gravitație mică; anotimpuri extreme.',tip:'Cel mai mare satelit al lui Uranus.'},
+oberon:{A:.14,rad:1.4,p:0,res:[1,.5,.5,0],v:'spec',haz:'Gravitație mică; anotimpuri extreme.',tip:'Gheață și silicați.'},
+triton:{A:.85,rad:1.4,p:1.4e-5,res:[1,1,.5,0],v:'spec',haz:'≈38 K, orbită retrogradă, criovulcanism.',tip:'Gheață de azot și apă.'},
+pluto:{A:.72,rad:1.4,p:1e-5,res:[1,1,.5,0],v:'spec',haz:'≈44 K; timp-lumină de ≈5 h.',tip:'Gheață de azot, metan și apă; sistem dublu cu Charon.'},
+charon:{A:.25,rad:1.4,p:0,res:[1,.5,.5,0],v:'spec',haz:'≈40 K; timp-lumină de ≈5 h.',tip:'Gheață de apă; Pluto fix pe cer.'},
+haumea:{A:.5,rad:1.4,p:0,res:[1,1,.5,0],v:'spec',haz:'Rotație foarte rapidă, foarte departe.',tip:'Gheață de apă cristalină.'},
+makemake:{A:.6,rad:1.4,p:0,res:[1,1,.5,0],v:'spec',haz:'Foarte departe (≈7 h lumină).',tip:'Gheață de metan.'},
+eris:{A:.9,rad:1.4,p:0,res:[1,1,.5,0],v:'spec',haz:'Foarte departe (≈9 h lumină); rotație încă disputată.',tip:'Gheață de metan și azot.'},
+'67p':{A:.012,rad:1.4,p:0,res:[.5,1,0,0],v:'spec',haz:'Gravitație ≈ nulă, jeturi de gaz și praf.',tip:'Gheață și compuși organici; vizitată de Rosetta.'},
+jupiter:{T:165,rad:null,p:1,res:[0,1,0,1],v:'excl',haz:'Gravitație ≈2,5 g la 1 bar, furtuni, centuri de radiații deasupra.',tip:'Fără suprafață.'},
+saturn:{T:134,rad:null,p:1,res:[0,1,0,1],v:'spec',haz:'≈1,06 g la 1 bar, dar ≈134 K; fără suprafață.',tip:'Aerostat speculativ.'},
+uranus:{T:76,rad:null,p:1,res:[0,1,0,1],v:'excl',haz:'≈76 K la 1 bar; fără suprafață.',tip:'Fără suprafață.'},
+neptun:{T:72,rad:null,p:1,res:[0,1,0,1],v:'excl',haz:'≈72 K la 1 bar; fără suprafață.',tip:'Fără suprafață.'}
+};
+const FACT=['Gravitație','Radiație','Temperatură','Presiune','Resurse','Energie solară','Accesibilitate'];
+const W0=[1,1.5,1,0.5,1.5,0.75,1];
+function colFactors(b){
+ const c=COL[b.id];if(!c)return null;
+ const flux=1361/(b.aH*b.aH);
+ const T=c.T!==undefined?c.T:279*Math.pow(1-c.A,0.25)/Math.sqrt(b.aH);
+ const gE=b.g/9.80665;
+ const lr=lightRange(b),lt=(lr[0]+lr[1])/2/60;
+ const s=[
+  gE<=1?clamp(gE/0.38,0,1):clamp(1-(gE-1)/1.5,0,1),
+  c.rad===null?0.5:clamp(1-Math.log10(c.rad/0.05)/3.5,0,1),
+  clamp(1-Math.abs(T-290)/250,0,1),
+  c.p>0?clamp(1-Math.abs(Math.log10(c.p))/3,0,1):0,
+  0.4*c.res[0]+0.2*c.res[1]+0.2*c.res[2]+0.2*c.res[3],
+  clamp(1-Math.abs(Math.log10(flux/1361))/2,0,1),
+  clamp(1-Math.log10(1+lt)/Math.log10(301),0,1)];
+ return {T:T,gE:gE,flux:flux,lt:lt,s:s,c:c};
+}
+function colIndex(b,w){
+ const cf=colFactors(b);let sw=0,sl=0;
+ for(let i=0;i<7;i++){sw+=w[i];sl+=w[i]*Math.log(Math.max(cf.s[i],0.02))}
+ const gate=0.3+0.7*Math.min(cf.s[1],cf.s[2]);
+ return sw>0?Math.exp(sl/sw)*gate:0;
+}
+
+// ---- zone de colonizare (coordonate rotunjite; est pozitiv; hărți schematice) ----
+const ZT={ice:['gheață / apă','#6ee7ff'],shield:['adăpost natural','#7dffb0'],energy:['energie solară','#ffcf6e'],flat:['teren / acces','#c9a7ff'],atm:['atmosferă','#ff9a9a'],gen:['zonă generică','#8fa0c4']};
+const GP=[{n:'Calota polară nordică',band:[60,90],t:'gen',why:'Temperatură stabilă și posibile capcane reci; nu există un sit identificat.'},{n:'Calota polară sudică',band:[-90,-60],t:'gen',why:'Temperatură stabilă și posibile capcane reci; nu există un sit identificat.'}];
+const GE=[{n:'Banda ecuatorială',band:[-30,30],t:'gen',why:'Insolație mai regulată și acces mai ușor; nu există un sit identificat.'}];
+const ZONES={
+luna:[{n:'Creasta Shackleton',lat:-89.9,lon:129.8,t:'energy',why:'Lumină solară aproape continuă, lângă cratere umbrite cu gheață.'},{n:'Masivul Malapert',lat:-86,lon:0.1,t:'energy',why:'Lumină solară mare parte din an și vedere directă spre Pământ (releu radio).'},{n:'Craterul Faustini',lat:-87.3,lon:77,t:'ice',why:'Cratere polare umbrite: gheață de apă probabilă.'},{n:'Craterul Cabeus',lat:-84.9,lon:-35.5,t:'ice',why:'Ținta impactului LCROSS: apă detectată în penumbră.'},{n:'Craterul Haworth',lat:-87.5,lon:-5,t:'ice',why:'Umbră permanentă și frig extrem, gheață probabilă.'},{n:'Craterul Peary',lat:88.6,lon:33,t:'ice',why:'Polul nord: umbră permanentă și creste însorite în apropiere.'},{n:'Groapa Marius Hills',lat:14.1,lon:-56.7,t:'shield',why:'Lucarnă într-un tub de lavă: adăpost de radiații și de extreme termice.'},{n:'Groapa Mării Liniștii',lat:8.3,lon:33.2,t:'shield',why:'Lucarnă spre o peșteră de lavă, lângă locul Apollo 11.'},{n:'Apollo 11',lat:0.7,lon:23.5,t:'flat',why:'Câmpie netedă ecuatorială, aterizare ușoară, sit istoric.'}],
+marte:[{n:'Deuteronilus Mensae',lat:44,lon:25,t:'ice',why:'Ghețari îngropați la latitudine medie, mai aproape de ecuator decât calotele.'},{n:'Utopia Planitia',lat:46,lon:118,t:'ice',why:'Depozite întinse de gheață la mică adâncime (radar SHARAD).'},{n:'Arcadia Planitia',lat:47,lon:184,t:'ice',why:'Gheață aproape de suprafață pe teren plat.'},{n:'Fundul bazinului Hellas',lat:-42.7,lon:70,t:'flat',why:'Cel mai adânc loc: presiune mai mare (≈1,2 kPa) și protecție termică.'},{n:'Arsia Mons (lucarne)',lat:-8.3,lon:239.9,t:'shield',why:'Tuburi de lavă: adăpost natural de radiații.'},{n:'Craterul Jezero',lat:18.4,lon:77.5,t:'flat',why:'Fost lac cu deltă; argile și apă legată; studiat de Perseverance.'}],
+mercur:[{n:'Craterul Prokofiev',lat:85.8,lon:-63.5,t:'ice',why:'Cratere polare umbrite cu gheață de apă (radar, MESSENGER).'},{n:'Craterul Chao Meng-Fu',lat:-87.4,lon:-134.8,t:'ice',why:'Pol sud: umbră permanentă și gheață probabilă.'}],
+venus50:[{n:'Latitudini mici și medii (50 km)',band:[-60,60],t:'atm',why:'Circulație zonală regulată; aerostatul urmează vântul pe partea însorită.'}],
+ceres:[{n:'Craterul Occator',lat:19.8,lon:239.3,t:'ice',why:'Saramuri și carbonați (pete luminoase): apă accesibilă.'},{n:'Ahuna Mons',lat:-10.5,lon:316.2,t:'ice',why:'Criovulcan: material cu apă expus la suprafață.'}],
+vesta:[{n:'Bazinul Rheasilvia',band:[-90,-55],t:'gen',why:'Material profund expus de impact; nevalidat ca sit.'}],
+pallas:GP,hygiea:GP,psyche:GP,eros:GP,ryugu:GP,'67p':GP,deimos:[{n:'Fața spre Marte',lat:0,lon:0,t:'flat',why:'Marte rămâne fix pe cer: releu radio și observare permanentă.'}],
+bennu:[{n:'Nightingale',lat:56,lon:43,t:'flat',why:'Locul de eșantionare OSIRIS-REx, cu material fin accesibil.'}],
+phobos:[{n:'Craterul Stickney',lat:1,lon:-49,t:'flat',why:'Cel mai mare crater (≈9 km), cu margini înalte ca adăpost.'},{n:'Fața spre Marte',lat:0,lon:0,t:'flat',why:'Marte rămâne fix pe cer: releu radio și observare permanentă.'}],
+europa:[{n:'Calota nordică',band:[60,90],t:'shield',why:'Radiație mai mică la latitudini înalte (modele); gheață groasă deasupra oceanului.'},{n:'Calota sudică',band:[-90,-60],t:'shield',why:'Radiație mai mică la latitudini înalte (modele).'}],
+ganimede:[{n:'Latitudini mici',band:[-30,30],t:'shield',why:'Liniile de câmp magnetic închise protejează de radiația lui Jupiter.'}],
+callisto:[{n:'Bazinul Valhalla',lat:14.7,lon:-56.6,t:'flat',why:'Cel mai mare bazin de impact; locul propus în studiul NASA HOPE.'}],
+titan:[{n:'Craterul Selk',lat:7,lon:199,t:'ice',why:'Amestec de apă topită și organice; ținta sondei Dragonfly.'},{n:'Dunele ecuatoriale',band:[-30,30],t:'energy',why:'Zonă mai caldă, cu materiale organice granulare.'}],
+enceladus:[{n:'Terenul polar sudic',band:[-90,-60],t:'ice',why:'Gheizere cu apă din oceanul subteran: resurse fără foraj.'}],
+mimas:GP,tethys:GP,dione:GP,rhea:GP,iapetus:GP,charon:GP,
+miranda:GE,ariel:GE,umbriel:GE,titania:GE,oberon:GE,triton:GE,haumea:GE,makemake:GE,eris:GE,
+pluto:[{n:'Sputnik Planitia',lat:25,lon:175,t:'ice',why:'Bazin adânc de gheață de azot: presiune și temperatură ușor mai mari.'}],
+jupiter:[{n:'Nivelul de 1 bar',band:[-30,30],t:'atm',why:'Latitudini mici, vânturi zonale regulate (speculativ).'}],
+saturn:[{n:'Nivelul de 1 bar',band:[-30,30],t:'atm',why:'Latitudini mici, vânturi zonale regulate (speculativ).'}],
+uranus:[{n:'Nivelul de 1 bar',band:[-30,30],t:'atm',why:'Latitudini mici (speculativ).'}],
+neptun:[{n:'Nivelul de 1 bar',band:[-30,30],t:'atm',why:'Latitudini mici (speculativ).'}],
+venus:[],io:[]
+};
+//</ENGINE>
+
+
+// ---------- limbi / i18n ----------
+const LANGS=[['ro','Română','ro-RO'],['en','English','en-GB'],['fr','Français','fr-FR'],['it','Italiano','it-IT'],['es','Español','es-ES'],['pt','Português','pt-PT'],['de','Deutsch','de-DE'],['hu','Magyar','hu-HU']];
+const DICT=/*__DICT__*/{};
+const UNITS={
+ ro:{d:'d',h:'h',min:'min',s:'s',per:'/zi',ua:'UA',ls:'s-l',lm:'min-l',lh:'h-l',ly:'al',ld:'DL',mio:'mil.',N:'N',S:'S',E:'E',W:'V'},
+ en:{d:'d',h:'h',min:'min',s:'s',per:'/day',ua:'AU',ls:'ls',lm:'lmin',lh:'lh',ly:'ly',ld:'LD',mio:'M',N:'N',S:'S',E:'E',W:'W'},
+ fr:{d:'j',h:'h',min:'min',s:'s',per:'/jour',ua:'UA',ls:'s-l',lm:'min-l',lh:'h-l',ly:'a.l.',ld:'DL',mio:'M',N:'N',S:'S',E:'E',W:'O'},
+ it:{d:'g',h:'h',min:'min',s:'s',per:'/giorno',ua:'UA',ls:'s-l',lm:'min-l',lh:'h-l',ly:'a.l.',ld:'DL',mio:'Mln',N:'N',S:'S',E:'E',W:'O'},
+ es:{d:'d',h:'h',min:'min',s:'s',per:'/día',ua:'UA',ls:'s-l',lm:'min-l',lh:'h-l',ly:'a.l.',ld:'DL',mio:'M',N:'N',S:'S',E:'E',W:'O'},
+ pt:{d:'d',h:'h',min:'min',s:'s',per:'/dia',ua:'UA',ls:'s-l',lm:'min-l',lh:'h-l',ly:'a.l.',ld:'DL',mio:'M',N:'N',S:'S',E:'L',W:'O'},
+ de:{d:'T',h:'h',min:'min',s:'s',per:'/Tag',ua:'AE',ls:'Ls',lm:'Lmin',lh:'Lh',ly:'Lj',ld:'MD',mio:'Mio.',N:'N',S:'S',E:'O',W:'W'},
+ hu:{d:'n',h:'ó',min:'p',s:'mp',per:'/nap',ua:'CSE',ls:'fmp',lm:'fp',lh:'fó',ly:'fé',ld:'HT',mio:'M',N:'É',S:'D',E:'K',W:'Ny'}
+};
+let LANG='ro';
+const U=k=>UNITS[LANG][k];
+const LOC=()=>{for(const l of LANGS)if(l[0]===LANG)return l[2];return 'ro-RO'};
+const MISS=new Set();
+function T(k){
+ let s=k;
+ if(LANG!=='ro'){const d=DICT[LANG];if(d&&Object.prototype.hasOwnProperty.call(d,k))s=d[k];else MISS.add(k)}
+ if(arguments.length>1){const a=arguments;s=s.replace(/\{(\d+)\}/g,(m,i)=>(+i+1)<a.length?a[+i+1]:m)}
+ return s;
+}
+const nm=b=>T(b.n);
+
+// ---------- formatare ----------
+const DEC=()=>LANG==='en'?'.':',';
+const f=(x,d)=>x.toFixed(d===undefined?1:d).replace('.',DEC());
+const pad=n=>String(Math.floor(n)).padStart(2,'0');
+function hms(h){const s=Math.floor(h*3600+1e-6);return pad(Math.floor(s/3600)%24)+':'+pad(s%3600/60)+':'+pad(s%60)}
+function fmtSec(s){
+ if(s<1)return f(s*1000,0)+' ms';
+ if(s<90)return f(s,1)+' '+U('s');
+ if(s<5400){s=Math.round(s);return Math.floor(s/60)+' '+U('min')+' '+pad(s%60)+' '+U('s')}
+ if(s<172800){const m=Math.round(s/60);return Math.floor(m/60)+' '+U('h')+' '+pad(m%60)+' '+U('min')}
+ const hh=Math.round(s/3600);return Math.floor(hh/24)+' '+U('d')+' '+(hh%24)+' '+U('h');
+}
+function fmtMicro(us){
+ const a=Math.abs(us),sg=us<0?'−':'';
+ if(a<1e3)return sg+f(a,a<10?2:a<100?1:0)+' µs';
+ if(a<1e6)return sg+f(a/1e3,a<1e4?2:a<1e5?1:0)+' ms';
+ const s=a/1e6;
+ if(s<60)return sg+f(s,2)+' '+U('s');
+ if(s<3600)return sg+f(s/60,1)+' '+U('min');
+ return sg+f(s/3600,2)+' '+U('h');
+}
+const fmtRate=us=>(us>=0?'+':'')+fmtMicro(us)+U('per');
+const cls=us=>us>=0?'pos':'neg';
+function fmtDayLen(b){return b.Psol?fmtSec(b.Psol*DAYS):'—'}
+function fmtRange(r){return r[0]<=0?'≈0–'+fmtSec(r[1]):'≈'+fmtSec(r[0])+' – '+fmtSec(r[1])}
+const nf=x=>Math.round(x).toLocaleString(LOC());
+const fg=(x,d)=>x.toLocaleString(LOC(),{minimumFractionDigits:d,maximumFractionDigits:d});
+const DIST_U=[['Kilometri',t=>nf(t*299792.458)+' km'],['Mile',t=>nf(t*299792.458/1.609344)+' mi'],['Unități astronomice',t=>f(t/LTAU,t/LTAU<0.01?5:4)+' '+U('ua')],['Distanțe Pământ–Lună',t=>{const x=t*299792.458/384399;return f(x,x<10?2:1)+' '+U('ld')}],['Secunde-lumină',t=>(t<100?f(t,2):nf(t))+' '+U('ls')],['Minute-lumină',t=>f(t/60,t<60?3:2)+' '+U('lm')],['Ore-lumină',t=>f(t/3600,t<360?5:3)+' '+U('lh')],['Ani-lumină',t=>(t/(YJ*DAYS)).toExponential(3).replace('.',DEC()).replace('e+','·10^').replace('e-','·10^−')+' '+U('ly')]];
+function distRows(b,ms,prefix){
+ if(b.id==='terra')return '';
+ const l=lightLive(b,ms),lr=lightRange(b);
+ return DIST_U.map(u=>'<tr><th>'+(prefix?T('Distanță · {0}',T(u[0])):T(u[0]))+'</th><td class="r">'+(l!==null?u[1](l):lr?u[1](lr[0])+' – '+u[1](lr[1]):'—')+'</td></tr>').join('');
+}
+function distShort(b,ms){
+ if(b.id==='terra')return '';
+ const l=lightLive(b,ms),lr=lightRange(b),g=t=>f(t/LTAU,t/LTAU<0.01?4:3);
+ return l!==null?g(l)+' '+U('ua')+' · '+(l<100?f(l,1):nf(l))+' '+U('ls'):lr?g(lr[0])+'–'+g(lr[1])+' '+U('ua'):'—';
+}
+const sci=(x,d)=>{const e=Math.floor(Math.log10(Math.abs(x)));return f(x/Math.pow(10,e),d===undefined?3:d)+'·10^'+(e<0?'−'+(-e):e)};
+const nfs=x=>x>=1e6?sci(x,2):nf(x);
+function physRows(b){
+ const G=6.6743e-11,R=b.R,Rm=R*1e3,GMm=b.GM*1e9,M=GMm/G,KM=1/1.609344;
+ const rows=[];
+ const add=(k,v)=>{if(v&&!/NaN|Infinity|undefined/.test(v))rows.push('<tr><th>'+T(k)+'</th><td class="r" style="font-size:12.5px">'+v+'</td></tr>')};
+ const fx=(x,d)=>x<10?f(x,d===undefined?2:d):x<1000?f(x,1):nf(x);
+ add('Rază',nf(R*1000)+' m · '+fx(R)+' km · '+fx(R*KM)+' mi · '+f(R/6378.137,R<600?4:3)+' R⊕');
+ add('Diametru',fx(2*R)+' km · '+fx(2*R*KM)+' mi');
+ add('Circumferință (ecuator)',fx(2*Math.PI*R)+' km · '+fx(2*Math.PI*R*KM)+' mi');
+ add('Suprafață',nfs(4*Math.PI*R*R)+' km² · '+nfs(4*Math.PI*R*R*KM*KM)+' mi² · '+sci(4*Math.PI*R*R/5.1007e8,2)+' '+T('suprafețe Pământ'));
+ add('Masă',sci(M,3)+' kg · '+sci(M/5.9722e24,3)+' M⊕');
+ add('Densitate medie',f(M/(4/3*Math.PI*Rm*Rm*Rm)/1000,2)+' g/cm³ · '+nf(M/(4/3*Math.PI*Rm*Rm*Rm))+' kg/m³');
+ add('Gravitație la suprafață',f(b.g,b.g<0.01?5:3)+' m/s² · '+f(b.g/9.80665,b.g<0.01?5:3)+' g · '+f(b.g/0.3048,b.g<0.01?4:2)+' ft/s² · '+f(b.g*100,b.g<0.01?3:1)+' cm/s²');
+ const ve=Math.sqrt(2*GMm/Rm);
+ add('Viteză de evadare',f(ve/1000,ve<1000?4:2)+' km/s · '+nf(ve*3.6)+' km/h · '+nf(ve*2.2369363)+' mph');
+ const vr=2*Math.PI*Rm/(b.Prot*DAYS);
+ add('Viteză de rotație la ecuator',f(vr,vr<10?3:1)+' m/s · '+f(vr*3.6,1)+' km/h · '+f(vr*2.2369363,1)+' mph');
+ if(b.P&&b.as){
+  const a=b.as,v=Math.sqrt(b.P.GM*1e9/(a*1e3));
+  rows.push('<tr><th>'+T('Orbită în jurul lui {0}',nm(b.P))+'</th><td class="r" style="font-size:12.5px">'+nf(a)+' km · '+nf(a*KM)+' mi · '+T('{0} raze {1}',f(a/b.P.R,1),nm(b.P))+' · '+f(a/299792.458,a/299792.458<10?3:1)+' '+U('ls')+'</td></tr>');
+  add('Viteză orbitală',f(v/1000,3)+' km/s · '+nf(v*3.6)+' km/h · '+nf(v*2.2369363)+' mph');
+ }else if(b.aH>0){
+  const a=b.aH,km=a*AUM/1000,v=Math.sqrt(GMS/(a*AUM));
+  add('Distanță medie față de Soare',f(a,a<10?3:2)+' '+U('ua')+' · '+f(km/1e6,1)+' '+U('mio')+' km · '+f(km*KM/1e6,1)+' '+U('mio')+' mi · '+f(a*LTAU/60,a<1?2:1)+' '+U('lm'));
+  add('Viteză orbitală medie',f(v/1000,2)+' km/s · '+nf(v*3.6)+' km/h · '+nf(v*2.2369363)+' mph');
+ }
+ add('Rotație siderală',f(b.Prot,b.Prot<1?4:2)+' '+T('zile')+' · '+f(b.Prot*24,2)+' '+U('h')+' · '+nf(b.Prot*DAYS)+' '+U('s'));
+ add('An (revoluție)',f(b.Pyear,b.Pyear<10?3:1)+' '+T('zile')+' · '+f(b.Pyear/YJ,b.Pyear/YJ<10?3:2)+' '+T('ani')+' · '+sci(b.Pyear*DAYS,3)+' '+U('s'));
+ let cf=null;try{cf=colFactors(b)}catch(e){}
+ if(cf)add('Temperatură medie (suprafață)',f(cf.T,0)+' K · '+f(cf.T-273.15,0)+' °C · '+f((cf.T-273.15)*1.8+32,0)+' °F');
+ if(cf&&cf.c.p>0)add('Presiune la suprafață',(cf.c.p*1e5>=1e5?f(cf.c.p,2)+' bar · ':'')+nf(cf.c.p*1e5)+' Pa · '+f(cf.c.p*1e5/6894.757,cf.c.p*1e5/6894.757<10?3:1)+' psi · '+f(cf.c.p/1.01325,3)+' atm');
+ return rows.join('');
+}
+function rtStr(b,ms){const l=lightLive(b,ms);if(l!==null)return fmtSec(2*l);const r=lightRange(b);return r?fmtRange(r.map(x=>2*x)):'—'}
+const catName={planeta:'Planete',sat:'Sateliți',mic:'Pitice și corpuri mici',hab:'Habitate în atmosferă',ref:'Referință'};
+
+// ---------- UI ----------
+const $=id=>document.getElementById(id);
+let filter='toate',curView='acum',openId=null;
+try{const s=JSON.parse(localStorage.getItem('orarium-anchor')||'{}');Object.assign(anchor,s)}catch(e){}
+function saveAnchor(){try{localStorage.setItem('orarium-anchor',JSON.stringify(anchor))}catch(e){}}
+
+function buildChips(){
+ const opts=[['toate','Toate'],['planeta','Planete'],['sat','Sateliți'],['mic','Pitice și mici'],['hab','Aerostat']];
+ $('chips').innerHTML=opts.map(o=>'<button class="chip'+(filter===o[0]?' on':'')+'" data-f="'+o[0]+'">'+T(o[1])+'</button>').join('');
+ $('chips').querySelectorAll('button').forEach(bt=>bt.onclick=()=>{filter=bt.dataset.f;buildChips();buildBoard();tickBoard()});
+}
+function buildBoard(){
+ const order=['planeta','sat','mic','hab','ref'];
+ let h='';
+ order.forEach(c=>{
+  if(filter!=='toate'&&filter!==c)return;
+  const list=B.filter(b=>b.cat===c);
+  if(!list.length)return;
+  h+='<h2>'+T(catName[c])+'</h2><div class="grid">'+list.map(b=>'<div class="card" data-id="'+b.id+'"><div class="nm"><span>'+nm(b)+'</span><i class="tag" data-tag="'+b.id+'"></i></div><div class="clk" data-clk="'+b.id+'">--:--:--</div><div class="sub"><span class="'+cls(b.rho)+'">ρ '+fmtRate(b.rho)+'</span><span>'+T('zi {0}',fmtDayLen(b))+'</span></div>'+(b.id==='terra'?'':'<div class="sub"><span class="mut">'+T('↔ dus-întors')+' <b data-rt="'+b.id+'"></b></span></div><div class="sub"><span class="mut">'+T('distanță')+' <b data-ds="'+b.id+'"></b></span></div>')+'</div>').join('')+'</div>';
+ });
+ $('board').innerHTML=h;
+ $('board').querySelectorAll('.card').forEach(c=>c.onclick=()=>openDetail(c.dataset.id));
+}
+function tickBoard(){
+ const ms=Date.now();
+ B.forEach(b=>{
+  const el=document.querySelector('[data-clk="'+b.id+'"]');
+  if(!el)return;
+  const r=localHour(b,ms,0);
+  const isE=b.id==='terra'&&REF!=='UTC';
+  el.textContent=isE?refHMS(ms):r?hms(r.h):'—';
+  const rt=document.querySelector('[data-rt="'+b.id+'"]');if(rt)rt.textContent=rtStr(b,ms);
+  const ds=document.querySelector('[data-ds="'+b.id+'"]');if(ds)ds.textContent=distShort(b,ms);
+  const tg=document.querySelector('[data-tag="'+b.id+'"]');
+  if(tg){tg.textContent=isE?refLabel()+' · '+refOff(ms):!r?T('doar etalon'):r.real?T('fază reală'):T('ritm');tg.className='tag'+(r&&r.real?' re':'')}
+ });
+}
+
+// ----- fișa corpului -----
+function openDetail(id){
+ const b=byId[id];openId=id;
+ const ms=Date.now(),lr=lightRange(b);
+ const mm=id==='marte'?mars(ms):null;
+ let h='<h3>'+nm(b)+'</h3><div class="mut">'+(b.P?T('satelit al corpului: {0}',nm(b.P)):b.cat==='planeta'?T('planetă'):b.cat==='mic'?T('pitică / corp mic'):b.cat==='hab'?T('habitat în atmosferă'):T('referință'))+'</div>';
+ h+='<div class="clk" style="font-size:38px;margin:10px 0 0" id="d-clk">--:--:--</div><div class="mut" id="d-sub"></div>';
+ h+='<div class="note">'+T(b.note)+'</div>';
+ h+='<table>';
+ h+='<tr><th>'+T('Rază / gravitație')+'</th><td class="r">'+f(b.R,b.R<10?2:1)+' km · '+f(b.g,b.g<0.01?5:3)+' m/s²</td></tr>';
+ h+='<tr><th>'+T('Rotație siderală')+'</th><td class="r">'+fmtSec(b.Prot*DAYS)+(b.retro?' '+T('(retrogradă)'):'')+'</td></tr>';
+ h+='<tr><th>'+T('Zi solară (24 ore locale)')+'</th><td class="r">'+fmtDayLen(b)+'</td></tr>';
+ h+='<tr><th>'+T('1 oră locală')+'</th><td class="r">'+(b.hourS?fmtSec(b.hourS):'—')+'</td></tr>';
+ h+='<tr><th>'+T('An (perioada de revoluție)')+'</th><td class="r">'+T('{0} ani Pământ',f(b.Pyear/YJ,b.Pyear/YJ<10?3:1))+(b.yearLoc?' = '+T('{0} zile locale',f(b.yearLoc,b.yearLoc<10?2:0)):'')+'</td></tr>';
+ h+='<tr><th>'+T('Semnal radio Pământ→corp')+'</th><td class="r" id="d-lt">'+(lr?fmtRange(lr):'—')+'</td></tr>';
+ h+='<tr><th>'+T('Dus-întors cu Pământul (ping, ×2)')+'</th><td class="r" id="d-rt">'+(lr?fmtRange(lr.map(x=>2*x)):'—')+'</td></tr>';
+ h+='</table>';
+ if(b.id!=='terra')h+='<h2>'+T('Distanța de la Pământ, acum')+'</h2><table id="d-dist">'+distRows(b,ms)+'</table><p class="mut" style="margin:4px 0 0">'+(lightLive(b,ms)!==null?(b.id==='luna'?T('Calculată live din poziția Keplerian-medie a planetelor (pentru sateliți: distanța până la planeta-mamă) și din seria lunară principală; precizie ≈0,5 %. {0} = distanța medie Pământ–Lună (384 399 km); {1}, {2}, {3}, {4} = secundă, minut, oră, an lumină.',U('ld'),U('ls'),U('lm'),U('lh'),U('ly')):T('Calculată live din poziția Keplerian-medie a planetelor (pentru sateliți: distanța până la planeta-mamă); precizie ≈0,5 %. {0} = distanța medie Pământ–Lună (384 399 km); {1}, {2}, {3}, {4} = secundă, minut, oră, an lumină.',U('ld'),U('ls'),U('lm'),U('lh'),U('ly'))):T('Corp fără poziție calculată în timp real: sunt date distanța minimă și maximă posibile (din a și e).'))+'</p>';
+ h+='<h2>'+T('Mărimi fizice, în mai multe unități')+'</h2><table>'+physRows(b)+'</table><p class="mut" style="margin:4px 0 0">'+T('R⊕ = rază Pământ (6 378,137 km); M⊕ = masă Pământ; g = 9,80665 m/s²; {0}, {1} = secundă și minut-lumină.',U('ls'),U('lm'))+'</p>';
+ h+='<h2>'+T('Ceasul-Etalon: cum merge ceasul atomic')+'</h2>';
+ h+='<p style="margin:4px 0">'+T('Față de un ceas terestru: <b class="{0}">{1}</b>',cls(b.rho),fmtRate(b.rho))+'</p><table>';
+ h+='<tr><th>'+T('Din Soare + mișcarea pe orbită')+'</th><td class="r '+cls(b.rparts.sun)+'">'+(b.rparts.sun>=0?'+':'')+fmtMicro(b.rparts.sun)+'</td></tr>';
+ if(b.P)h+='<tr><th>'+T('Din planeta-mamă (potențial + viteză)')+'</th><td class="r '+cls(b.rparts.par)+'">'+(b.rparts.par>=0?'+':'')+fmtMicro(b.rparts.par)+'</td></tr>';
+ h+='<tr><th>'+T('Din suprafață + rotație')+'</th><td class="r '+cls(b.rparts.surf)+'">'+(b.rparts.surf>=0?'+':'')+fmtMicro(b.rparts.surf)+'</td></tr>';
+ h+='</table>';
+ h+='<h2>'+T('Exemple concrete')+'</h2><ul class="ex">';
+ const drift=b.rho*YJ,errKm=Math.abs(b.rho)*1e-6*299792.458;
+ h+='<li>'+T('Două ceasuri sincronizate azi, unul pe Pământ și unul pe {0}, diferă peste un an cu <b>{1}</b> ({2}).',nm(b),fmtMicro(Math.abs(drift)),drift>=0?T('ceasul de pe {0} merge înainte',nm(b)):T('ceasul de pe {0} rămâne în urmă',nm(b)))+'</li>';
+ h+='<li>'+T('Fără corecție, o eroare de timp de o zi se traduce în navigație prin <b>{0} km</b> (≈{1} mi; c·Δt).',f(errKm,errKm<10?2:1),f(errKm/1.609344,errKm/1.609344<10?2:1))+'</li>';
+ if(b.Psol)h+='<li>'+T('O zi de lucru de 8 „ore locale” înseamnă <b>{0}</b> terestre. O săptămână de 7 zile locale durează <b>{1}</b>.',fmtSec(8*b.hourS),fmtSec(7*b.Psol*DAYS))+'</li>';
+ if(mm)h+='<li>'+T('Acum pe Marte: sol <b>MSD {0}</b>, ora medie MTC (Airy) <b>{1}</b>.',f(mm.msd,3),hms(mm.mtc))+'</li>';
+ if(id==='luna')h+='<li>'+T('Ora locală la Marea Liniștii (Apollo 11, {0}° E): <b id="d-ap">--:--</b>.',f(23.47,2))+'</li>';
+ if(id==='marte')h+='<li>'+T('Ora locală în craterul Jezero ({0}° E): <b id="d-jz">--:--</b>.',f(77.45,2))+'</li>';
+ h+='<li id="d-noon"></li></ul>';
+ h+=colSection(b);
+ h+='<h2>'+T('Altitudine zero?')+'</h2><p style="margin:4px 0" class="mut">'+T('Ceasul merge mai repede la altitudine. Alege înălțimea față de suprafața echipotențială de referință:')+'</p>';
+ h+='<input type="range" id="d-alt" min="0" max="'+(b.id==='terra'?9000:b.R<10?Math.max(1,Math.round(b.R*500)):b.R*1000>20000?9000:Math.round(b.R*500))+'" value="0" step="1"><div id="d-altv" class="mut"></div>';
+ if(b.Psol&&!(IAU[b.id]||id==='luna'||id==='terra')){
+  h+='<h2>'+T('Ancorare (origine convențională)')+'</h2><p class="mut" style="margin:4px 0">'+T('Ritmul zilei e real, dar nu există încă o origine acceptată. Spune ce oră locală e <i>acum</i> la meridianul 0 și ceasul se aliniază.')+'</p><div class="row2"><input type="time" step="1" id="d-an"><div><button class="btn" id="d-anb" style="margin-top:0">'+T('Ancorează')+'</button><button class="btn" id="d-anr" style="margin-top:0">'+T('Resetează')+'</button></div></div>';
+ }
+ $('det').innerHTML=h;
+ $('ov').classList.add('on');
+ const upd=()=>{const v=+$('d-alt').value,ar=altRate(b,v),pe=ar*1e-9*299792458;$('d-altv').textContent=T('Înălțime {0} m ({1} km · {2} ft · {3} mi) → ceasul câștigă {4} ns pe zi (≈{5} m de eroare de poziție pe zi)',nf(v),f(v/1000,3),nf(v/0.3048),f(v/1609.344,3),f(ar,ar<10?3:1),f(pe,pe<1?2:1))};
+ $('d-alt').oninput=upd;upd();
+ const ab=$('d-anb');
+ if(ab){
+  ab.onclick=()=>{
+   const v=$('d-an').value;if(!v)return;
+   const p=v.split(':').map(Number),want=p[0]+(p[1]||0)/60+(p[2]||0)/3600;
+   delete anchor[id];
+   const cur=localHour(b,Date.now(),0).h;
+   anchor[id]=mod(want-cur,24);saveAnchor();tickDetail();tickBoard();
+  };
+  $('d-anr').onclick=()=>{delete anchor[id];saveAnchor();tickDetail();tickBoard()};
+ }
+ tickDetail();
+}
+function tickDetail(){
+ if(!openId)return;
+ const b=byId[openId],ms=Date.now(),r=localHour(b,ms,0);
+ if(!$('d-clk'))return;
+ $('d-clk').textContent=r?hms(r.h):'—';
+ $('d-sub').textContent=b.id==='terra'?T('UTC (meridianul 0)')+(REF!=='UTC'?' · '+refLabel()+' ('+refOff(ms)+'): '+refHMS(ms):''):r?(r.real?T('ora locală la meridianul 0 · fază reală'):T('ora locală la meridianul 0 · ritm cu origine convențională'))+' · '+T('{0} zile locale de la J2000.0',f((jdTT(ms)-J2000)/(b.Psol||1),1)):T('rotație haotică: nu există zi locală stabilă');
+ const l=lightLive(b,ms);
+ if(l!==null&&$('d-lt'))$('d-lt').textContent=T('acum {0} (interval {1})',fmtSec(l),fmtRange(lightRange(b)));
+ if($('d-dist'))$('d-dist').innerHTML=distRows(b,ms);
+ if(l!==null&&$('d-rt'))$('d-rt').textContent=T('acum {0} (interval {1})',fmtSec(2*l),fmtRange(lightRange(b).map(x=>2*x)));
+ if($('d-ap')){const q=localHour(b,ms,23.47);$('d-ap').textContent=hms(q.h)}
+ if($('d-jz')){const q=localHour(b,ms,77.45);$('d-jz').textContent=hms(q.h)}
+ if(r&&b.Psol&&$('d-noon')){
+  const rem=mod(12-r.h,24)/24*b.Psol*DAYS;
+  $('d-noon').innerHTML=T('Următoarea amiază locală (12:00) la meridianul 0: peste <b>{0}</b> (timp terestru).',fmtSec(rem));
+ }
+}
+function closeDetail(){$('ov').classList.remove('on');openId=null}
+$('x').onclick=closeDetail;
+$('ov').onclick=e=>{if(e.target===$('ov'))closeDetail()};
+
+// ----- Metoda: Luna în direct -----
+function buildMoon(){
+ const b=byId.luna,e=byId.terra;
+ const row=(a,v)=>'<tr><th>'+T(a)+'</th><td class="r">'+v+'</td></tr>';
+ $('moonCalc').innerHTML='<table>'+
+  row('GM<sub>Lună</sub> / R',fg(b.GM,1)+' km³/s² / '+fg(b.R,1)+' km')+
+  row('Φ suprafață Lună (GM/R + ½ω²R²)',f(b.t.surf/1e6,3)+' MJ/kg')+
+  row('Φ Pământ (geoid W₀)',f(e.t.surf/1e6,3)+' MJ/kg')+
+  row('Termen planetă-mamă (3GM⊕/2a)',f(b.t.par/1e6,3)+' MJ/kg')+
+  row('Termen Soare + orbită (comun Pământ–Lună)',f(b.t.sun/1e6,0)+' MJ/kg')+
+  row('<b>ρ = ΔΦ / c²</b>','<b class="pos">'+fmtRate(b.rho)+'</b>')+
+  row('Peste un an','<b>'+fmtMicro(b.rho*YJ)+'</b>')+
+  row('Eroare de poziție dacă e necorectat','<b>'+f(b.rho*1e-6*299792.458,1)+' km'+U('per')+'</b>')+'</table>';
+}
+
+// ----- Convertor -----
+const REF_PRE=[['UTC','UTC'],['Europe/Bucharest','București'],['Europe/London','Londra'],['Europe/Paris','Paris'],['Europe/Berlin','Berlin'],['Europe/Athens','Atena'],['Europe/Moscow','Moscova'],['America/New_York','New York'],['America/Chicago','Chicago'],['America/Los_Angeles','Los Angeles'],['America/Sao_Paulo','São Paulo'],['Africa/Cairo','Cairo'],['Asia/Dubai','Dubai'],['Asia/Kolkata','Mumbai / Delhi'],['Asia/Shanghai','Beijing / Shanghai'],['Asia/Tokyo','Tokyo'],['Australia/Sydney','Sydney'],['Pacific/Auckland','Auckland']];
+const REF_LAB={};REF_PRE.forEach(p=>REF_LAB[p[0]]=p[1]);
+function tzOK(z){try{new Intl.DateTimeFormat('en-US',{timeZone:z});return true}catch(e){return false}}
+let DEVTZ='';try{DEVTZ=Intl.DateTimeFormat().resolvedOptions().timeZone||''}catch(e){}
+let REF='UTC';try{const sv=localStorage.getItem('orarium.ref');if(sv&&tzOK(sv))REF=sv}catch(e){}
+function tzLabel(z){return REF_LAB[z]?T(REF_LAB[z]):z.split('/').pop().replace(/_/g,' ')}
+function refLabel(){return tzLabel(REF)}
+function offStr(ms,tz){const m=Math.round(tzOff(ms,tz)/60000);if(!m)return 'UTC';const a=Math.abs(m);return 'UTC'+(m<0?'−':'+')+Math.floor(a/60)+(a%60?':'+String(a%60).padStart(2,'0'):'')}
+function refOff(ms){return offStr(ms,REF)}
+function tzOptionsHtml(){
+ let h='';
+ if(DEVTZ&&tzOK(DEVTZ))h+='<optgroup label="'+T('Dispozitivul tău')+'"><option value="'+DEVTZ+'">'+tzLabel(DEVTZ)+' ('+DEVTZ+')</option></optgroup>';
+ h+='<optgroup label="'+T('Uzuale')+'">'+REF_PRE.map(p=>'<option value="'+p[0]+'">'+T(p[1])+'</option>').join('')+'</optgroup>';
+ let all=[];try{all=Intl.supportedValuesOf('timeZone')}catch(e){}
+ all=all.filter(z=>!REF_LAB[z]&&z!=='UTC');
+ if(all.length)h+='<optgroup label="'+T('Toate fusurile (IANA)')+'">'+all.map(z=>'<option value="'+z+'">'+z.replace(/_/g,' ')+'</option>').join('')+'</optgroup>';
+ return h;
+}
+function refFmt(ms){return new Intl.DateTimeFormat(LOC(),{timeZone:REF,weekday:'short',day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).format(ms)}
+function refHMS(ms){return new Intl.DateTimeFormat('en-GB',{timeZone:REF,hour:'2-digit',minute:'2-digit',second:'2-digit',hourCycle:'h23'}).format(ms)}
+function refH(ms){const p=refHMS(ms).split(':').map(Number);return p[0]+p[1]/60+p[2]/3600}
+function refFull(ms,tz){tz=tz||REF;return new Intl.DateTimeFormat(LOC(),{timeZone:tz,year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',hourCycle:'h23'}).format(ms)}
+function refTick(){const ms=Date.now();$('ref-now').textContent=refLabel()+' · '+refHMS(ms)+' · '+refOff(ms)+' · UTC '+new Date(ms).toISOString().slice(11,19)}
+function setRef(z){
+ if(!tzOK(z))return;
+ const oldZ=$('cv-z').value;let msKeep=null;
+ if($('cv-t').value&&tzOK(oldZ))msKeep=wallInfo($('cv-t').value,oldZ).ms;
+ REF=z;try{localStorage.setItem('orarium.ref',z)}catch(e){}
+ $('ref-z').value=z;$('cv-z').value=z;
+ if(msKeep!==null)$('cv-t').value=zoneNowStr(z,msKeep);
+ refTick();tickBoard();convCalc();
+ if(curView==='scen')buildScen();
+ if(curView==='map')tickMap();
+}
+const TZ_PRESETS={luna:[['Meridian 0 (sub-terestru)',0],['Marea Liniștii · Apollo 11',23.47],['Chang’e 4 · Bazinul Aitken',177.6]],marte:[['Meridian 0 (Airy-0)',0],['Jezero · Perseverance',77.45],['Gale · Curiosity',137.44],['Elysium · InSight',135.62]]};
+function tzOff(ms,tz){
+ const fm=new Intl.DateTimeFormat('en-US',{timeZone:tz,hourCycle:'h23',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit'});
+ const p={};fm.formatToParts(ms).forEach(x=>p[x.type]=x.value);
+ return Date.UTC(+p.year,+p.month-1,+p.day,+p.hour,+p.minute,+p.second)-Math.floor(ms/1000)*1000;
+}
+function wallInfo(str,tz){
+ const a=str.split('T'),d=a[0].split('-').map(Number),t=a[1].split(':').map(Number);
+ const wall=Date.UTC(d[0],d[1]-1,d[2],t[0],t[1],t[2]||0);
+ const cand=[tzOff(wall-864e5,tz),tzOff(wall+864e5,tz)].filter((o,i,arr)=>arr.indexOf(o)===i).filter(o=>tzOff(wall-o,tz)===o);
+ let g=wall;for(let i=0;i<3;i++)g=wall-tzOff(g,tz);
+ return {ms:cand.length?wall-cand[0]:g,gap:cand.length===0,amb:cand.length>1};
+}
+function wallToUTC(str,tz){return wallInfo(str,tz).ms}
+function zoneNowStr(tz,ms,hm){
+ const fm=new Intl.DateTimeFormat('en-CA',{timeZone:tz,hourCycle:'h23',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'});
+ const p={};fm.formatToParts(ms).forEach(x=>p[x.type]=x.value);
+ return p.year+'-'+p.month+'-'+p.day+'T'+(hm||(p.hour+':'+p.minute));
+}
+function fillBodySelects(){
+ const keepC=$('cv-b').value||'luna',keepM=$('mp-b').value||mapId;
+ $('cv-b').innerHTML=B.map(b=>'<option value="'+b.id+'">'+nm(b)+'</option>').join('');
+ $('cv-b').value=keepC;
+ $('mp-b').innerHTML=B.filter(b=>COL[b.id]).map(b=>'<option value="'+b.id+'">'+nm(b)+'</option>').join('');
+ $('mp-b').value=keepM;
+}
+function buildConv(){
+ fillBodySelects();
+ $('cv-b').onchange=()=>{fillPresets();convCalc()};
+ $('cv-p').onchange=()=>{$('cv-l').value=$('cv-p').value;convCalc()};
+ ['cv-t','cv-z','cv-l'].forEach(i=>{$(i).oninput=convCalc;$(i).onchange=convCalc});
+ $('cv-now').onclick=()=>{$('cv-t').value=zoneNowStr($('cv-z').value,Date.now());convCalc()};
+ $('cv-12').onclick=()=>{$('cv-t').value=zoneNowStr($('cv-z').value,Date.now(),'12:00');convCalc()};
+ $('cv-z').innerHTML=tzOptionsHtml();$('ref-z').innerHTML=tzOptionsHtml();
+ $('cv-z').value=REF;$('ref-z').value=REF;
+ $('ref-z').onchange=()=>setRef($('ref-z').value);
+ $('cv-t').value=zoneNowStr(REF,Date.now(),'12:00');
+ fillPresets();convCalc();
+}
+function fillPresets(){
+ const id=$('cv-b').value,pr=TZ_PRESETS[id]||[['Meridian 0',0]];
+ $('cv-p').innerHTML=pr.map(p=>'<option value="'+p[1]+'">'+T(p[0])+'</option>').join('');
+ $('cv-l').value=pr[0][1];
+}
+function convCalc(){
+ const v=$('cv-t').value;if(!v)return;
+ const wi=wallInfo(v,$('cv-z').value),ms=wi.ms,b=byId[$('cv-b').value],lon=+$('cv-l').value||0;
+ const u=new Date(ms),r=localHour(b,ms,lon);
+ const sync=Date.UTC(2026,0,1),dd=(ms-sync)/86400000,drift=b.rho*dd;
+ const l=lightLive(b,ms),lr=lightRange(b);
+ let h=(wi.gap?'<div class="note">'+T('Ora aleasă nu există în fusul ales (salt de oră de vară); calculul folosește cea mai apropiată oră validă.')+'</div>':wi.amb?'<div class="note">'+T('Ora aleasă apare de două ori în fusul ales (trecerea la ora de iarnă); calculul folosește prima apariție.')+'</div>':'')+'<div class="mut" style="margin-top:12px">UTC: '+u.toISOString().replace('T',' ').slice(0,19)+' · TT = UTC + '+f(69.184,3)+' '+U('s')+'</div>'+(REF!=='UTC'?'<div class="mut">'+refLabel()+' ('+offStr(ms,REF)+'): '+refFull(ms)+'</div>':'');
+ h+='<div class="big">'+(r?hms(r.h):'—')+'</div><div class="mut">'+T('ora locală pe {0}',nm(b))+' '+(lon?T('(longitudine {0}° E)',f(lon,2)):T('(meridianul 0)'))+' · '+(r?(r.real?T('fază reală'):T('ritm, origine convențională')):T('fără zi stabilă'))+'</div>';
+ h+='<table style="margin-top:8px">';
+ h+='<tr><th>'+T('Rata ceasului față de Pământ')+'</th><td class="r '+cls(b.rho)+'">'+fmtRate(b.rho)+'</td></tr>';
+ h+='<tr><th>'+T('Decalaj acumulat dacă erau sincronizate la 1 ian 2026')+'</th><td class="r">'+(drift<0?'−':'')+fmtMicro(Math.abs(drift))+'</td></tr>';
+ h+='<tr><th>'+T('Timp-lumină Pământ→corp')+'</th><td class="r">'+(l!==null?T('{0} acum',fmtSec(l)):lr?fmtRange(lr):'—')+'</td></tr>';
+ h+=distRows(b,ms,true);
+ h+='<tr><th>'+T('Dus-întors cu Pământul (ping)')+'</th><td class="r">'+(b.id==='terra'?'—':rtStr(b,ms))+'</td></tr>';
+ h+='<tr><th>'+T('Ziua locală')+'</th><td class="r">'+fmtDayLen(b)+'</td></tr>';
+ h+='</table>';
+ $('cv-out').innerHTML=h;
+ $('cv-all').innerHTML='<table>'+B.map(x=>{const q=localHour(x,ms,0);return '<tr><th>'+nm(x)+'</th><td class="r">'+(q?hms(q.h):'—')+'</td><td class="r '+cls(x.rho)+'">'+fmtRate(x.rho)+'</td></tr>'}).join('')+'</table>';
+}
+
+// ----- Scenarii -----
+function buildScen(){
+ const ms=Date.now(),L=byId.luna,M=byId.marte,Ti=byId.titan,Bn=byId.bennu,V=byId.venus,Me=byId.mercur,Pl=byId.pluto,S=byId.soare;
+ const refNoon=wallToUTC(zoneNowStr(REF,ms,'12:00'),REF),RL=refLabel();
+ const ap=localHour(L,refNoon,23.47).h;
+ const jz=localHour(M,ms,77.45).h;
+ const lt=lightLive(Pl,ms);
+ const mm=mars(ms);
+ const card=(t,x)=>'<div class="panel"><h3>'+t+'</h3>'+x+'</div>';
+ let h='';
+ h+=card(T('1 · Luna: când în {0} e 12:00',RL),
+  T('<p>Azi, la ora 12:00 ({0}, {1}), pe Marea Liniștii (Apollo 11) ora solară locală medie este <b>{2}</b>. Ziua lunară ține {3} zile, deci „amiaza” vine o dată pe lună.</p>',RL,refOff(refNoon),hms(ap),f(29.53,2))+
+  T('<p>Ceasul atomic de acolo ar merge cu <b>{0}</b>: ≈<b>{1}</b> pe an. Neglijat, produce <b>{2} km</b> eroare de poziție pe zi.</p>',fmtRate(L.rho),fmtMicro(L.rho*YJ),f(L.rho*1e-6*299792.458,1)));
+ h+=card(T('2 · Marte: o zi de lucru la Jezero'),
+  T('<p>Acum în craterul Jezero e ora locală <b>{0}</b> (MSD {1}, MTC {2}). Programul 09:00–17:00 local înseamnă <b>{3}</b> terestre, iar o oră locală durează <b>{4}</b>.</p>',hms(jz),f(mm.msd,2),hms(mm.mtc),fmtSec(8*M.hourS),fmtSec(M.hourS))+
+  T('<p>Ceasul marțian câștigă ≈<b>{0}</b> pe zi, adică ≈<b>{1}</b> pe an. Un semnal Pământ–Marte durează acum <b>{2}</b> (între {3}); un schimb întrebare–răspuns durează <b>{4}</b>.</p>',fmtMicro(M.rho),fmtMicro(M.rho*YJ),fmtSec(lightLive(M,ms)),fmtRange(lightRange(M)),rtStr(M,ms)));
+ h+=card(T('3 · Titan: zi de 16 zile'),
+  T('<p>O zi pe Titan are <b>{0}</b>; o oră locală înseamnă <b>{1}</b>. Un an titanian = anul lui Saturn = {2} zile locale. Ceasul de pe Titan merge cu <b>{3}</b> (Saturn îl „coboară” în potențial, Soarele îl „ridică”).</p>',fmtSec(Ti.Psol*DAYS),fmtSec(Ti.hourS),f(Ti.yearLoc,0),fmtRate(Ti.rho)));
+ h+=card(T('4 · Bennu: ziua de 4,3 ore'),
+  T('<p>Sonda OSIRIS-REx a lucrat pe un corp cu zi de <b>{0}</b>. Ora locală are <b>{1}</b>. Gravitația e de ≈{2} de ori mai mică decât pe Pământ; ceasul merge cu <b>{3}</b>.</p>',fmtSec(Bn.Psol*DAYS),fmtSec(Bn.hourS),nf(9.80665/Bn.g),fmtRate(Bn.rho)));
+ h+=card(T('5 · Venus: ziua e mai scurtă decât rotația'),
+  T('<p>Rotație siderală {0}, an {1} zile, dar <b>ziua solară durează {2} zile</b>, pentru că rotația e retrogradă. Soarele răsare la vest, iar anul venusian are doar {3} zile locale.</p>',fmtSec(V.Prot*DAYS),f(V.Pyear,1),f(V.Psol,2),f(V.yearLoc,2)));
+ h+=card(T('6 · Mercur: doi ani într-o zi'),
+  T('<p>Ziua solară mercuriană are <b>{0} zile</b> Pământ = <b>{1} ani mercurieni</b>. Anul mercurian are doar {2} zile locale: o „dimineață” începe și se termină în același an.</p>',f(Me.Psol,2),f(Me.Psol/Me.Pyear,2),f(Me.yearLoc,2)));
+ h+=card(T('7 · Pluto și Charon: dublu sincron'),
+  T('<p>Pluto și Charon se rotesc în <b>{0} zile</b>, iar semnalul radio de la Pluto durează acum <b>{1}</b> (între {2}); dus-întors <b>{3}</b>. Ceasul de pe Pluto merge cu <b>{4}</b>, adică ≈<b>{5}</b> pe an înainte față de Pământ.</p>',f(Pl.Psol,3),lt!==null?fmtSec(lt):'—',fmtRange(lightRange(Pl)),rtStr(Pl,ms),fmtRate(Pl.rho),fmtMicro(Pl.rho*YJ)));
+ {const ids=['luna','venus','marte','ceres','jupiter','europa','saturn','titan','uranus','neptun','pluto'].filter(i=>byId[i]);
+  h+=card(T('8 · Conversație cu Pământul: dus-întors'),
+  '<p>'+T('Timpul în care o întrebare ajunge la corp și răspunsul revine (2 × timp-lumină, fără întârzieri de procesare), calculat acum din pozițiile planetelor:')+'</p><table>'+ids.map(i=>'<tr><th>'+nm(byId[i])+'</th><td class="r mut">'+distShort(byId[i],ms)+'</td><td class="r">'+rtStr(byId[i],ms)+'</td></tr>').join('')+'</table><p class="mut">'+T('Peste ≈10 minute de dus-întors nu mai există dialog: se trimit pachete (TLS, UTC, ρ) și răspunsuri programate. Pe Lună (≈2,6 s) conversația rămâne posibilă, cu pauză vizibilă.')+'</p>');}
+ h+=card(T('9 · Soarele ca etalon extrem'),
+  T('<p>Un ceas la suprafața Soarelui ar rămâne în urmă cu <b>{0}</b> pe zi, adică ≈{1} minute pe an. Potențialul gravitațional domină tot restul.</p>',fmtMicro(Math.abs(S.rho)),f(Math.abs(S.rho)*YJ/1e6/60,1)));
+ $('scen').innerHTML=h;
+}
+
+
+// ----- colonizare: UI -----
+let cw=W0.slice(),cfilter='toate';
+function fmtDose(x){const u=' mSv'+U('per');return x<1?f(x,2)+u:x<1000?f(x,x<10?1:0)+u:f(x/1000,1)+' Sv'+U('per')}
+function fmtP(bar){return bar>=0.1?f(bar,bar<10?2:0)+' bar':f(bar*1e5,bar*1e5<10?1:0)+' Pa'}
+const bar=v=>'<span class="bar"><b style="width:'+Math.round(v*100)+'%"></b></span>';
+function colSection(b){
+ const cf=colFactors(b);if(!cf)return '';
+ const c=cf.c,idx=colIndex(b,cw),hh=b.Psol?b.Psol*24:null;
+ let h='<h2>'+T('Colonizare')+'</h2><p style="margin:4px 0"><i class="tag v-'+c.v+'">'+T(VERD[c.v])+'</i> '+T('indice orientativ <b>{0} %</b> (cu ponderile din fila Colonii)',f(idx*100,0))+'</p><table>';
+ const vals=[f(cf.gE,3)+' '+T('g Pământ'),c.rad===null?T('necunoscută'):fmtDose(c.rad),f(cf.T,0)+' K ('+f(cf.T-273.15,0)+' °C · '+f((cf.T-273.15)*1.8+32,0)+' °F)',c.p>0?fmtP(c.p):T('practic vid'),T('apă {0}% · volatile {1}% · metale {2}% · atmosferă {3}%',f(c.res[0]*100,0),f(c.res[1]*100,0),f(c.res[2]*100,0),f(c.res[3]*100,0)),f(cf.flux,cf.flux<10?2:0)+' W/m²',T('{0} într-un sens',fmtSec(cf.lt*60))];
+ for(let i=0;i<7;i++)h+='<tr><th>'+T(FACT[i])+'</th><td class="r" style="font-size:12px">'+vals[i]+bar(cf.s[i])+'</td></tr>';
+ h+='</table><div class="note"><b>'+T('Riscuri:')+'</b> '+T(c.haz)+'<br><b>'+T('Idee de așezare:')+'</b> '+T(c.tip)+'</div><ul class="ex">';
+ if(hh!==null){
+  if(Math.abs(hh-24)<=1.5)h+='<li>'+T('<b>Ritm circadian:</b> ziua de {0} h e aproape de ritmul uman, deci coloniștii pot lucra direct pe ora locală.',f(hh,2))+'</li>';
+  else h+='<li>'+T('<b>Ritm circadian:</b> ziua de {0} nu se potrivește cu ritmul uman. Habitatul folosește un ciclu intern de 24 h SI cu iluminat artificial, iar Ceasul-Ritm urmărește cerul real.',fmtSec(b.Psol*DAYS))+'</li>';
+ }
+ const r=Math.abs(b.rho);
+ if(r>1e-6){const sec=3.34e-9/(r*1e-6/DAYS);h+='<li>'+T('<b>Sincronizare:</b> ceasul merge cu {0}. Fără corecție, o precizie de navigație de 1 m (≈3,3 ns) se pierde în ≈{1}, iar o abatere de 1 ms apare în ≈{2} zile.',fmtRate(b.rho),fmtSec(sec),f(1000/r,r>1000?3:1))+'</li>'}
+ const rtt=2*cf.lt*60;
+ h+='<li>'+T('<b>Comunicații:</b> un schimb de mesaje durează ≈{0}.',fmtSec(rtt))+' '+(rtt<5?T('Conversația rămâne aproape în timp real.'):T('Comunicarea e asincronă (mesagerie, nu telefon).'))+'</li></ul>';
+ return h;
+}
+function buildCol(){
+ const names=['Gravitație','Radiație','Temperatură','Presiune','Resurse','Energie','Acces'];
+ $('cw').innerHTML=names.map((n,i)=>'<div class="wl"><span>'+T(n)+'</span><b id="cwv'+i+'">'+f(cw[i],2)+'</b></div><input type="range" min="0" max="3" step="0.25" value="'+cw[i]+'" data-i="'+i+'">').join('');
+ $('cw').querySelectorAll('input').forEach(inp=>inp.oninput=()=>{cw[+inp.dataset.i]=+inp.value;$('cwv'+inp.dataset.i).textContent=f(cw[+inp.dataset.i],2);renderCol()});
+ const pre=[['Echilibrat',W0],['Siguranță (radiație ×3)',[1,3,1,.5,1.5,.75,1]],['Resurse ×3',[1,1.5,1,.5,3,.75,1]],['Acces ×3',[1,1.5,1,.5,1.5,.75,3]],['Confort fizic',[2,1.5,2,1.5,1,.5,.5]],['Autonomie energetică',[1,1.5,1,.5,1.5,3,1]]];
+ $('cpre').innerHTML=pre.map((p,i)=>'<button class="btn" data-p="'+i+'">'+T(p[0])+'</button>').join('');
+ $('cpre').querySelectorAll('button').forEach(bt=>bt.onclick=()=>{cw=pre[+bt.dataset.p][1].slice();buildCol()});
+ const ops=[['toate','Toate'],['primar','Principale'],['cond','Condiționate'],['spec','Speculative'],['excl','Excluse']];
+ $('cchips').innerHTML=ops.map(o=>'<button class="chip'+(cfilter===o[0]?' on':'')+'" data-f="'+o[0]+'">'+T(o[1])+'</button>').join('');
+ $('cchips').querySelectorAll('button').forEach(bt=>bt.onclick=()=>{cfilter=bt.dataset.f;buildCol()});
+ renderCol();
+}
+function renderCol(){
+ const list=B.filter(b=>COL[b.id]&&(cfilter==='toate'||COL[b.id].v===cfilter)).map(b=>({b:b,i:colIndex(b,cw),cf:colFactors(b)})).sort((x,y)=>y.i-x.i);
+ $('clist').innerHTML=list.map((o,k)=>{
+  const wk=o.cf.s.indexOf(Math.min.apply(null,o.cf.s));
+  return '<div class="crow" data-id="'+o.b.id+'"><span class="rk">'+(k+1)+'</span><div><b>'+nm(o.b)+'</b> <i class="tag v-'+o.cf.c.v+'">'+T(VERD[o.cf.c.v])+'</i><div class="bars">'+o.cf.s.map((v,j)=>'<i title="'+T(FACT[j])+': '+f(v*100,0)+'%"><b style="width:'+Math.round(v*100)+'%"></b></i>').join('')+'</div><div class="mut" style="font-size:11.5px;margin-top:3px">'+T('cel mai slab: {0} · zi {1} · ρ {2}',T(FACT[wk]),fmtDayLen(o.b),fmtRate(o.b.rho))+'</div></div><span class="ci">'+f(o.i*100,0)+'%</span></div>';
+ }).join('')||'<p class="mut">'+T('Niciun corp în această categorie.')+'</p>';
+ $('clist').querySelectorAll('.crow').forEach(r=>r.onclick=()=>openDetail(r.dataset.id));
+}
+
+
+// ----- hărți -----
+let mapId='luna';
+function fmtDH(dh){const sg=dh<0?'−':'+',a=Math.abs(dh),h=Math.floor(a),m=Math.round((a-h)*60);return sg+h+' '+U('h')+' '+pad(m)+' '+U('min')}
+const mx=lon=>(mod(lon+180,360))*2,my=lat=>(90-lat)*2;
+function mapLon(l){return mod(l+180,360)-180}
+function buildMapSel(){
+ fillBodySelects();
+ $('mp-b').value=mapId;
+ $('mp-b').onchange=()=>{mapId=$('mp-b').value;buildMap()};
+}
+
+function polarSvg(zs,north){
+ const R=118,cx=135,cy=135;
+ let g='<circle cx="'+cx+'" cy="'+cy+'" r="'+R+'" fill="#0d1730" stroke="#26345a"/>';
+ [85,80].forEach(la=>{const r=(90-la)/10*R;g+='<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="none" stroke="#26345a" stroke-width=".7"/><text x="'+(cx+3)+'" y="'+(cy-r+10)+'" font-size="9" fill="#8fa0c4">'+(north?'':'−')+la+'°</text>'});
+ for(let lo=0;lo<360;lo+=45){const a=lo*D2R,sx=north?-1:1;g+='<line x1="'+cx+'" y1="'+cy+'" x2="'+(cx+sx*R*Math.sin(a))+'" y2="'+(cy-R*Math.cos(a))+'" stroke="#26345a" stroke-width=".6"/>'}
+ zs.forEach((z,i)=>{
+  if(z.lat===undefined||(north?z.lat<80:z.lat>-80))return;
+  const r=(90-Math.abs(z.lat))/10*R,a=z.lon*D2R,sx=north?-1:1,x=cx+sx*r*Math.sin(a),y=cy-r*Math.cos(a),col=ZT[z.t][1];
+  g+='<circle cx="'+x+'" cy="'+y+'" r="8" fill="'+col+'" stroke="#06101f" stroke-width="1.5"/><text x="'+x+'" y="'+(y+4)+'" font-size="11" font-weight="700" text-anchor="middle" fill="#06101f">'+(i+1)+'</text>';
+ });
+ return '<div style="text-align:center"><svg viewBox="0 0 270 270" width="250" role="img" aria-label="'+T('Inset polar')+'">'+g+'</svg><div class="mut" style="font-size:12px">'+(north?T('Polul nord, privit de deasupra, longitudine 0° în sus'):T('Polul sud, privit de deasupra, longitudine 0° în sus'))+'</div></div>';
+}
+function buildMap(){
+ const b=byId[mapId],zs=ZONES[mapId]||[];
+ let g='<rect x="0" y="0" width="720" height="360" fill="#0d1730"/>';
+ g+='<path id="mp-night" d="" fill="#000" opacity=".5"/>';
+ for(let lo=-180;lo<=180;lo+=30){g+='<line x1="'+mx(lo)+'" y1="0" x2="'+mx(lo)+'" y2="360" stroke="#26345a" stroke-width="'+(lo===0?1.4:.6)+'"/>';if(lo<180)g+='<text x="'+(mx(lo)+3)+'" y="355" font-size="9" fill="#8fa0c4">'+lo+'°</text>'}
+ for(let la=-60;la<=60;la+=30){g+='<line x1="0" y1="'+my(la)+'" x2="720" y2="'+my(la)+'" stroke="#26345a" stroke-width="'+(la===0?1.4:.6)+'"/><text x="3" y="'+(my(la)-3)+'" font-size="9" fill="#8fa0c4">'+la+'°</text>'}
+ zs.forEach((z,i)=>{
+  const col=ZT[z.t][1];
+  if(z.band){g+='<rect x="0" y="'+my(z.band[1])+'" width="720" height="'+(my(z.band[0])-my(z.band[1]))+'" fill="'+col+'" opacity=".16" stroke="'+col+'" stroke-dasharray="4 3" stroke-width="1"/><text x="716" y="'+(my(z.band[1])+12)+'" font-size="11" font-weight="700" text-anchor="end" fill="'+col+'">'+(i+1)+'</text>'}
+  else{const x=mx(mapLon(z.lon)),y=my(z.lat);g+='<circle cx="'+x+'" cy="'+y+'" r="8" fill="'+col+'" stroke="#06101f" stroke-width="1.5"/><text x="'+x+'" y="'+(y+4)+'" font-size="11" font-weight="700" text-anchor="middle" fill="#06101f">'+(i+1)+'</text>'}
+ });
+ g+='<g id="mp-sun"><circle r="9" fill="#ffd34d" stroke="#fff" stroke-width="1.2"/><text y="4" font-size="12" text-anchor="middle">☀</text></g>';
+ $('mp-svg').innerHTML=g;
+ $('mp-svg').setAttribute('aria-label',T('Hartă schematică'));
+ let pol='';
+ if(zs.some(z=>z.lat!==undefined&&z.lat>=80))pol+=polarSvg(zs,true);
+ if(zs.some(z=>z.lat!==undefined&&z.lat<=-80))pol+=polarSvg(zs,false);
+ $('mp-pol').innerHTML=pol;
+ const types=Array.from(new Set(zs.map(z=>z.t)));
+ $('mp-leg').innerHTML=(types.length?types.map(t=>'<span style="color:'+ZT[t][1]+'">●</span> '+T(ZT[t][0])).join(' &nbsp; ')+' &nbsp; ':'')+'<span style="color:#ffd34d">●</span> '+T('punctul subsolar')+' &nbsp; '+T('zona întunecată = noapte');
+ const c=COL[mapId];
+ let h='';
+ if(!zs.length)h='<div class="panel"><h3>'+nm(b)+'</h3><p>'+T('Nicio zonă recomandată: {0}',T(c.haz))+'</p></div>';
+ else h=zs.map((z,i)=>'<div class="mz"><h4><span class="nb" style="background:'+ZT[z.t][1]+'">'+(i+1)+'</span>'+T(z.n)+' <i class="tag">'+T(ZT[z.t][0])+'</i></h4><p>'+(z.band?T('Latitudine {0}° … {1}°, toate longitudinile',z.band[0],z.band[1]):f(Math.abs(z.lat),1)+'°'+(z.lat<0?U('S'):U('N'))+', '+f(Math.abs(mapLon(z.lon)),1)+'°'+(mapLon(z.lon)<0?U('W'):U('E')))+'</p><p>'+T(z.why)+'</p><div class="tl" id="mz-t'+i+'"></div><div class="nx" id="mz-n'+i+'"></div></div>').join('');
+ $('mp-z').innerHTML=h;
+ tickMap();
+}
+function tickMap(){
+ if(curView!=='map')return;
+ const b=byId[mapId],zs=ZONES[mapId]||[],ms=Date.now(),sg=sunGeom(b,ms);
+ if(!sg){$('mp-night').setAttribute('d','');return}
+ const dec=Math.abs(sg.dec)<0.05?0.05:sg.dec,tn=Math.tan(dec*D2R);
+ let pts=[];
+ for(let lo=-180;lo<=180;lo+=2){const phi=Math.atan(-Math.cos((lo-sg.ls)*D2R)/tn)/D2R;pts.push([mx(lo===180?179.999:lo),my(phi)])}
+ let d='M'+pts.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' L');
+ d+=dec>0?' L720,360 L0,360 Z':' L720,0 L0,0 Z';
+ $('mp-night').setAttribute('d',d);
+ const lsw=mapLon(sg.ls);
+ $('mp-sun').setAttribute('transform','translate('+mx(lsw)+','+my(sg.dec)+')');
+ const hb=refH(ms);
+ zs.forEach((z,i)=>{
+  const lon=z.band?0:z.lon,lat=z.band?(z.band[0]+z.band[1])/2:z.lat;
+  const r=localHour(b,ms,lon);if(!r){return}
+  const el=sunElev(lat,lon,sg),dh=mod(r.h-hb+12,24)-12;
+  const t=$('mz-t'+i),n=$('mz-n'+i);if(!t)return;
+  const sun=(el>0?'+':'')+f(el,0)+'°';
+  t.textContent=(z.band?T('La meridianul 0: {0}',hms(r.h)):T('Ora locală {0}',hms(r.h)))+' · '+refLabel()+' '+refHMS(ms)+' · '+T('decalaj {0}',fmtDH(dh))+' · '+(el>0?T('Soare {0} (zi)',sun):T('Soare {0} (noapte)',sun));
+  if(b.Psol){
+   const nx=(tg)=>{const rem=mod(tg-r.h,24)/24*b.Psol*DAYS;return T('{0} (peste {1})',refFmt(ms+rem*1000),fmtSec(rem))};
+   n.innerHTML=T('Următoarea amiază locală: <b>{0}</b>',nx(12))+'<br>'+T('Răsărit (06:00 local, convențional): {0}',nx(6))+'<br>'+T('Apus (18:00 local, convențional): {0}',nx(18))+(r.real?'':'<br><i>'+T('Origine convențională a ceasului: ancorează-l în fișa corpului.')+'</i>')+((sg.decReal)?'':'<br><i>'+T('Latitudinea subsolară e aproximată la 0°: zona de noapte e orientativă.')+'</i>');
+  }
+ });
+}
+
+// ----- limbă: aplicare pe pagina statică + reconstruire -----
+const STAT=[];
+function captureStatic(){
+ const sel='header p, .refbar label, nav button, main p, main h3, main h2, main li, main label, main button.btn, main .formula, main .note, footer';
+ const all=Array.from(document.querySelectorAll(sel));
+ all.forEach(el=>{
+  if(all.some(o=>o!==el&&o.contains(el)))return;
+  if(!/[A-Za-zĂÂÎȘȚăâîșțŞŢş]{3}/.test(el.textContent))return;
+  STAT.push([el,el.innerHTML]);
+ });
+}
+function applyStatic(){
+ STAT.forEach(p=>{p[0].innerHTML=T(p[1])});
+ document.title=T('ORARIUM — Timpul pe toate lumile');
+ document.documentElement.lang=LANG;
+ $('x').setAttribute('aria-label',T('Închide'));
+}
+function setLang(l){
+ if(!UNITS[l])return;
+ LANG=l;try{localStorage.setItem('orarium.lang',l)}catch(e){}
+ $('lang-z').value=l;
+ applyStatic();
+ const zc=$('cv-z').value,zr=$('ref-z').value;
+ $('cv-z').innerHTML=tzOptionsHtml();$('ref-z').innerHTML=tzOptionsHtml();
+ $('cv-z').value=zc;$('ref-z').value=zr;
+ fillBodySelects();
+ const pv=$('cv-p').value;fillPresets();$('cv-p').value=pv;if($('cv-p').value!==pv)$('cv-p').selectedIndex=0;
+ buildChips();buildBoard();tickBoard();buildMoon();convCalc();refTick();
+ if(curView==='scen')buildScen();
+ if(curView==='col')buildCol();
+ if(curView==='map'){buildMap()}
+ if(openId)openDetail(openId);
+}
+
+// ----- navigare și ceas -----
+function show(v){
+ curView=v;
+ document.querySelectorAll('.view').forEach(s=>s.classList.toggle('on',s.id==='v-'+v));
+ document.querySelectorAll('#tabs button').forEach(b=>b.classList.toggle('on',b.dataset.v===v));
+ if(v==='scen')buildScen();
+ if(v==='metoda')buildMoon();
+ if(v==='col')buildCol();
+ if(v==='map'){buildMapSel();buildMap()}
+ window.scrollTo(0,0);
+}
+document.querySelectorAll('#tabs button').forEach(b=>b.onclick=()=>show(b.dataset.v));
+captureStatic();
+$('lang-z').innerHTML=LANGS.map(l=>'<option value="'+l[0]+'">'+l[1]+'</option>').join('');
+$('lang-z').onchange=()=>setLang($('lang-z').value);
+buildChips();buildBoard();buildConv();buildMoon();tickBoard();
+refTick();
+{let want='ro';try{want=localStorage.getItem('orarium.lang')||''}catch(e){}
+ if(!want||!UNITS[want]){const nv=String((navigator.languages&&navigator.languages[0])||navigator.language||'ro').slice(0,2).toLowerCase();want=UNITS[nv]?nv:'ro'}
+ $('lang-z').value='ro';if(want!=='ro')setLang(want);else $('lang-z').value='ro'}
+setInterval(()=>{refTick();tickBoard();tickDetail();tickMap();if(curView==='scen'&&Date.now()%5000<1000)buildScen()},1000);
+</script>
+</body>
+</html>

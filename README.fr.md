@@ -1,0 +1,65 @@
+# ORARIUM
+
+[English](README.md) · [Română](README.ro.md) · **Français** · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
+
+**Le temps sur tous les mondes**
+
+ORARIUM est une application web autonome en un seul fichier, hors ligne (`index.html`, sans serveur, sans compte, sans pistage), qui propose une manière cohérente de mesurer le temps sur la Lune, sur Mars, sur toutes les planètes, planètes naines, astéroïdes, comètes et lunes du Système solaire. Elle s'inspire du débat sur l'heure lunaire (un décalage d'horloge d'environ 56 µs/jour, la résolution de la CGPM sur une échelle de temps de référence lunaire, et les questions ouvertes sur l'« altitude zéro » et les réseaux d'horloges).
+
+Langues de l'interface : **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**.
+
+## L'idée : quatre horloges, deux formules
+
+| Horloge | À quoi elle répond |
+|---|---|
+| **Horloge-Étalon** | À quelle vitesse une horloge atomique y marche-t-elle ? Seconde SI, temps propre sur la surface équipotentielle de référence du corps (« Temps Local de Surface », TLS), avec un taux ρ par rapport à la Terre. |
+| **Horloge-Rythme** | Le jour solaire local divisé en 24 heures locales de *P*<sub>sol</sub>/24 secondes SI, de sorte que midi est à 12:00 sur tous les mondes. |
+| **Horloge-Phase** | Quelle est l'heure locale réelle ? À partir de l'orientation IAU + une éphéméride képlérienne (planètes), l'élongation moyenne (Lune), MSD/MTC (Mars). Ailleurs, le rythme est exact et l'origine est fixée par convention. |
+| **Horloge-Pont** | Chaque message porte (TLS, UTC, ρ) ; le récepteur soustrait le temps-lumière et applique ρ. |
+
+```
+ρ = (Φ⊕ − Φ_b) / c²          Φ = 3·GM☉/2a☉ + 3·GM_p/2a_s + GM_b/R + ½ω²R²
+P_sol = 1 / | 1/P_sid ∓ 1/P_year |
+```
+
+## Contenu de l'application
+
+- **Maintenant** — l'heure locale en direct sur 45 corps (planètes, 22 lunes, planètes naines, astéroïdes, une comète, un aérostat vénusien), avec le taux d'horloge ρ, la durée du jour, la **distance à la Terre en direct** (km, mi, UA, secondes/minutes/heures/années-lumière, distances lunaires) et le **temps de communication aller-retour**.
+- **Fiches des corps** — grandeurs physiques en plusieurs unités, décomposition du taux d'horloge, exemples détaillés, calculateur d'altitude, ancrage de l'origine de l'horloge pour les corps qui n'en ont pas d'admise, et évaluation de colonisation.
+- **Méthode** — les quatre horloges, les formules, un recalcul en direct des +56 µs/jour de la Lune, les réponses aux questions ouvertes, les limites assumées.
+- **Convertisseur** — « quelle heure est-il là-bas quand il est … ici ? » pour n'importe quel corps et n'importe quelle longitude, avec n'importe quel fuseau horaire terrestre (sauts et chevauchements de l'heure d'été signalés).
+- **Colonies** — un classement indicatif, pondéré par l'utilisateur, des candidats à la colonisation (7 facteurs, filtre sur le facteur vital).
+- **Cartes** — cartes schématiques des zones de colonisation optimales pour chaque corps, avec terminateur jour/nuit, heure locale par rapport à l'horloge de référence terrestre, et prochain midi local.
+- **Scénarios** — exemples concrets (site d'Apollo 11, Jezero, Titan, Bennu, Vénus, Mercure, Pluton–Charon, tableau des aller-retour).
+- **Horloge de référence terrestre** — UTC ou n'importe quel fuseau horaire IANA (p. ex. Bucarest), utilisé partout.
+
+## Limites assumées
+
+Modèle de taux d'horloge au premier ordre (p. ex. ≈488 µs/jour pour Mars contre ≈477 µs/jour dans les modèles complets) ; les heures locales « réelles » utilisent les orientations IAU moyennes et des éphémérides képlériennes simplifiées (erreur de l'ordre de quelques minutes, vérifiée avec Mars24 pour Mars) ; temps-lumière ≈0,5 % ; les cartes sont schématiques ; l'indice de colonisation est indicatif, pas une évaluation scientifique. Pour une navigation réelle, utilisez des éphémérides numériques complètes.
+
+## Utilisation
+
+Ouvrez `index.html` dans n'importe quel navigateur moderne (fonctionne depuis `file://`), ou publiez-le avec GitHub Pages (un workflow est inclus : **Settings → Pages → Source: GitHub Actions**).
+
+## Développement
+
+`index.html` est généré à partir de `src/template.html` (moteur + interface, chaînes sources en roumain) et des dictionnaires de traduction dans `src/i18n/`.
+
+```bash
+python3 tools/validate.py     # translations: same keys, {n} placeholders and HTML tags as the source
+python3 tools/build.py        # regenerates index.html
+npm install && npm test       # jsdom walk-through of every screen/body (per language), reports missing keys/errors/NaN
+node tools/exercise.js index.html fr   # one language only
+```
+
+**Traductions.** Dans le code, chaque chaîne visible par l'utilisateur est `T('romanian source text', …args)` ; `src/i18n/keys.json` liste toutes les clés et `tr_<lang>.json` contient la traduction de chaque clé. Pour ajouter une langue : ajoutez son entrée à `LANGS` et `UNITS` dans `src/template.html`, créez `tr_<lang>.json` avec les mêmes clés, puis exécutez `validate.py` et `build.py`. Les corrections apportées aux traductions existantes sont les bienvenues. Ce README est également disponible dans chaque langue de l'interface (`README.<lang>.md`) ; `README.md` (anglais) est la version de référence.
+
+## Sources et crédits
+
+- Article à l'origine du projet : « [Quelle heure est-il sur la Lune…](https://www.stiripesurse.ro/cat-este-ceasul-pe-luna_3928805) » (en roumain; AFP/Agerpres, stiripesurse.ro, 18.10.2026).
+- Orientations des pôles et des méridiens origines : IAU WGCCRE 2009. Éléments képlériens moyens : JPL (Standish). Temps martien MSD/MTC : Allison & McEwen. Séries de la distance lunaire : J. Meeus, *Astronomical Algorithms*.
+- Les valeurs physiques sont les chiffres usuels de la littérature, arrondis. Les données de colonisation sont qualitatives et indicatives.
+
+## Licence
+
+[MIT](LICENSE) © 2026 Alexandru-Ionuț Chiuță (Alexio).
