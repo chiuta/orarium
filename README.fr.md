@@ -33,6 +33,7 @@ P_sol = 1 / | 1/P_sid ∓ 1/P_year |
 - **Colonies** — un classement indicatif, pondéré par l'utilisateur, des candidats à la colonisation (7 facteurs, filtre sur le facteur vital).
 - **Cartes** — cartes schématiques des zones de colonisation optimales pour chaque corps, avec terminateur jour/nuit, heure locale par rapport à l'horloge de référence terrestre, et prochain midi local.
 - **Liaisons** — quand il est minuit local sur chaque corps (dans votre heure de référence et en UTC) et la fenêtre de transmission Terre–corps (station terrestre choisie, point choisi sur le corps, temps-lumière inclus), ainsi que les périodes de conjonction solaire où la liaison est interrompue.
+- **Communication entre corps** — pour n'importe quelle paire de corps (pas seulement avec la Terre) : la fenêtre de communication où chacun voit l'autre au-dessus de l'horizon, le temps-lumière et les périodes de conjonction solaire ; de plus, chaque corps affiche désormais aussi son midi local (12:00).
 - **Scénarios** — exemples concrets (site d'Apollo 11, Jezero, Titan, Bennu, Vénus, Mercure, Pluton–Charon, tableau des aller-retour).
 - **Horloge de référence terrestre** — UTC ou n'importe quel fuseau horaire IANA (p. ex. Bucarest), utilisé partout.
 

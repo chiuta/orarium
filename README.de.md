@@ -33,6 +33,7 @@ P_sol = 1 / | 1/P_sid ∓ 1/P_year |
 - **Kolonien** — eine richtungsweisende, vom Nutzer gewichtete Rangliste von Besiedlungskandidaten (7 Faktoren, Vitalfaktor-Schwelle).
 - **Karten** — schematische Karten optimaler Besiedlungszonen für jeden Körper mit Tag-Nacht-Grenze, Ortszeit im Vergleich zur Referenz-Erdzeit und dem nächsten lokalen Mittag.
 - **Funk** — wann auf jedem Körper Ortsmitternacht ist (in Ihrer Referenzzeit und in UTC) und das Sendefenster Erde–Körper (gewählte Bodenstation, gewählter Punkt auf dem Körper, Lichtlaufzeit eingerechnet), dazu die Zeiten der Sonnenkonjunktion, in denen die Verbindung unterbrochen ist.
+- **Kommunikation zwischen Körpern** — für jedes beliebige Körperpaar (nicht nur mit der Erde): das Kommunikationsfenster, in dem jeder den anderen über dem Horizont sieht, die Lichtlaufzeit und die Zeiten der Sonnenkonjunktion; außerdem zeigt jeder Körper jetzt auch seinen Ortsmittag (12:00).
 - **Szenarien** — konkrete Beispiele (Apollo-11-Landeplatz, Jezero, Titan, Bennu, Venus, Merkur, Pluto–Charon, Tabelle der Hin-und-zurück-Zeiten).
 - **Referenz-Erdzeit** — UTC oder eine beliebige IANA-Zeitzone (z. B. Bukarest), durchgängig verwendet.
 

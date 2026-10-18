@@ -556,5 +556,22 @@
 "Canberra (Australia)": "Canberra (Australia)",
 "Malargüe (Argentina)": "Malargüe (Argentina)",
 "Miezul nopții și transmisii": "Medianoche y transmisiones",
-"Setările stației și ale punctului de pe corp se schimbă în fila Transmisii.": "Los ajustes de la estación y del punto del cuerpo se cambian en la pestaña «Enlaces»."
+"Setările stației și ale punctului de pe corp se schimbă în fila Transmisii.": "Los ajustes de la estación y del punto del cuerpo se cambian en la pestaña «Enlaces».",
+"Comunicare între două corpuri": "Comunicación entre dos cuerpos",
+"Alege două corpuri și punctele de pe ele. Fereastra de comunicare e intervalul în care fiecare îl vede pe celălalt peste orizont (0°; pentru Pământ se folosesc stația și elevația minimă de mai sus), cu timp-lumină inclus. Conjuncția solară: legătura e întreruptă când linia dintre ele trece prea aproape de Soare (pragul ales mai sus).": "Elige dos cuerpos y los puntos en ellos. La ventana de comunicación es el intervalo en el que cada uno ve al otro sobre el horizonte (0°; para la Tierra se usan la estación y la elevación mínima de arriba), con el tiempo luz incluido. Conjunción solar: el enlace se interrumpe cuando la línea entre ellos pasa demasiado cerca del Sol (el umbral elegido arriba).",
+"Primul corp": "Primer cuerpo",
+"Al doilea corp": "Segundo cuerpo",
+"Primul corp: latitudine (°)": "Primer cuerpo: latitud (°)",
+"Primul corp: longitudine est (°)": "Primer cuerpo: longitud este (°)",
+"Al doilea corp: latitudine (°)": "Segundo cuerpo: latitud (°)",
+"Al doilea corp: longitudine est (°)": "Segundo cuerpo: longitud este (°)",
+"Alege două corpuri diferite.": "Elige dos cuerpos distintos.",
+"Unul dintre corpuri nu are efemeridă în aplicație.": "Uno de los cuerpos no tiene efemérides en la aplicación.",
+"Cele două corpuri sunt în același sistem planetar: poziția lor relativă nu e modelată aici.": "Los dos cuerpos están en el mismo sistema planetario: aquí no se modela su posición relativa.",
+"Timp-lumină acum": "Tiempo luz ahora",
+"distanță {0} UA": "distancia {0} UA",
+"Nu există model de orientare pentru niciunul dintre capete: se arată doar timpul-lumină și conjuncția solară.": "No hay modelo de orientación para ninguno de los extremos: solo se muestran el tiempo luz y la conjunción solar.",
+"Fereastră de comunicare": "Ventana de comunicación",
+"Orientarea locală a unuia dintre capete nu e modelată: se ia în calcul doar celălalt.": "La orientación local de uno de los extremos no está modelada: solo se tiene en cuenta el otro.",
+"Amiaza locală (12:00, meridianul 0)": "Mediodía local (12:00, meridiano 0)"
 }

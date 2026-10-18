@@ -556,5 +556,22 @@
 "Canberra (Australia)": "",
 "Malargüe (Argentina)": "",
 "Miezul nopții și transmisii": "",
-"Setările stației și ale punctului de pe corp se schimbă în fila Transmisii.": ""
+"Setările stației și ale punctului de pe corp se schimbă în fila Transmisii.": "",
+"Comunicare între două corpuri": "",
+"Alege două corpuri și punctele de pe ele. Fereastra de comunicare e intervalul în care fiecare îl vede pe celălalt peste orizont (0°; pentru Pământ se folosesc stația și elevația minimă de mai sus), cu timp-lumină inclus. Conjuncția solară: legătura e întreruptă când linia dintre ele trece prea aproape de Soare (pragul ales mai sus).": "",
+"Primul corp": "",
+"Al doilea corp": "",
+"Primul corp: latitudine (°)": "",
+"Primul corp: longitudine est (°)": "",
+"Al doilea corp: latitudine (°)": "",
+"Al doilea corp: longitudine est (°)": "",
+"Alege două corpuri diferite.": "",
+"Unul dintre corpuri nu are efemeridă în aplicație.": "",
+"Cele două corpuri sunt în același sistem planetar: poziția lor relativă nu e modelată aici.": "",
+"Timp-lumină acum": "",
+"distanță {0} UA": "",
+"Nu există model de orientare pentru niciunul dintre capete: se arată doar timpul-lumină și conjuncția solară.": "",
+"Fereastră de comunicare": "",
+"Orientarea locală a unuia dintre capete nu e modelată: se ia în calcul doar celălalt.": "",
+"Amiaza locală (12:00, meridianul 0)": ""
 }

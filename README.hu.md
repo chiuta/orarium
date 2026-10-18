@@ -33,6 +33,7 @@ P_sol = 1 / | 1/P_sid ∓ 1/P_year |
 - **Kolóniák** — kolonizációs jelöltek tájékoztató jellegű, felhasználó által súlyozott rangsora (7 tényező, létfontosságú-tényező kapu).
 - **Térképek** — az optimális kolonizációs övezetek sematikus térképei minden égitestre, nappal/éjszaka határvonallal, a helyi idővel a földi referenciaórához képest, valamint a következő helyi déllel.
 - **Adás** — mikor van helyi éjfél az egyes égitesteken (a megadott referenciaidőben és UTC-ben), valamint a Föld–égitest adási ablak (választott földi állomás, választott pont az égitesten, a fényidővel együtt), továbbá a napkonjunkciók időszakai, amikor a kapcsolat megszakad.
+- **Kommunikáció égitestek között** — bármely égitestpárra (nemcsak a Földdel): a kommunikációs ablak, amikor mindkettő látja a másikat a horizont felett, a fényidő és a napkonjunkció időszakai; ezen kívül minden égitest mostantól a helyi délét (12:00) is mutatja.
 - **Forgatókönyvek** — konkrét példák (az Apollo–11 helyszíne, Jezero, Titán, Bennu, Vénusz, Merkúr, Plútó–Charon, oda-vissza táblázat).
 - **Referencia földi idő** — UTC vagy bármely IANA-időzóna (pl. Bukarest), mindenhol ezt használja.
 

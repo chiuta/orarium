@@ -556,5 +556,22 @@
  "Canberra (Australia)": "Canberra (Ausztrália)",
  "Malargüe (Argentina)": "Malargüe (Argentína)",
  "Miezul nopții și transmisii": "Éjfél és adás",
- "Setările stației și ale punctului de pe corp se schimbă în fila Transmisii.": "Az állomás és az égitestpont beállításai az „Adás” fülön módosíthatók."
+ "Setările stației și ale punctului de pe corp se schimbă în fila Transmisii.": "Az állomás és az égitestpont beállításai az „Adás” fülön módosíthatók.",
+ "Comunicare între două corpuri": "Kommunikáció két égitest között",
+ "Alege două corpuri și punctele de pe ele. Fereastra de comunicare e intervalul în care fiecare îl vede pe celălalt peste orizont (0°; pentru Pământ se folosesc stația și elevația minimă de mai sus), cu timp-lumină inclus. Conjuncția solară: legătura e întreruptă când linia dintre ele trece prea aproape de Soare (pragul ales mai sus).": "Válassz két égitestet és pontokat rajtuk. A kommunikációs ablak az az időszak, amikor mindkettő látja a másikat a horizont felett (0°; a Földnél a fenti állomást és minimális elevációt használjuk), a fényidővel együtt. Napkonjunkció: a kapcsolat megszakad, ha a köztük húzott vonal túl közel halad a Naphoz (a fent választott küszöb).",
+ "Primul corp": "Első égitest",
+ "Al doilea corp": "Második égitest",
+ "Primul corp: latitudine (°)": "Első égitest: szélesség (°)",
+ "Primul corp: longitudine est (°)": "Első égitest: keleti hosszúság (°)",
+ "Al doilea corp: latitudine (°)": "Második égitest: szélesség (°)",
+ "Al doilea corp: longitudine est (°)": "Második égitest: keleti hosszúság (°)",
+ "Alege două corpuri diferite.": "Válassz két különböző égitestet.",
+ "Unul dintre corpuri nu are efemeridă în aplicație.": "Az egyik égitesthez nincs efemerisz az alkalmazásban.",
+ "Cele două corpuri sunt în același sistem planetar: poziția lor relativă nu e modelată aici.": "A két égitest ugyanabban a bolygórendszerben van: relatív helyzetüket itt nem modellezzük.",
+ "Timp-lumină acum": "Fényidő most",
+ "distanță {0} UA": "távolság {0} CsE",
+ "Nu există model de orientare pentru niciunul dintre capete: se arată doar timpul-lumină și conjuncția solară.": "Egyik végponthoz sincs tájolási modell: csak a fényidőt és a napkonjunkciót mutatjuk.",
+ "Fereastră de comunicare": "Kommunikációs ablak",
+ "Orientarea locală a unuia dintre capete nu e modelată: se ia în calcul doar celălalt.": "Az egyik végpont helyi tájolása nincs modellezve: csak a másikat vesszük figyelembe.",
+ "Amiaza locală (12:00, meridianul 0)": "Helyi dél (12:00, 0. délkör)"
 }

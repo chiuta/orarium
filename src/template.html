@@ -211,6 +211,22 @@ Acces        1 − log₁₀(1 + timp-lumină minute)/log₁₀(301)</div>
 </div>
 <p class="mut" style="font-size:12.5px">Modelul folosește pozițiile kepleriene medii ale planetelor și orientarea IAU a corpurilor. Precizia ferestrelor e de ordinul câtorva minute. Pentru Lună, Pământul e considerat fix pe cer (fără librație). Pentru sateliții planetelor, asteroizi și planetele pitice, orientarea locală nu e modelată: se arată doar partea dinspre Pământ (corpul peste orizontul stației), iar pentru corpurile fără efemeridă incluse doar timpul-lumină. † = ritm cu origine convențională. Conjuncția solară: legătura e degradată sau întreruptă când Soarele e aproape de linia de vedere, în spatele lui.</p>
 </div>
+<div class="panel"><h3>Comunicare între două corpuri</h3>
+<p>Alege două corpuri și punctele de pe ele. Fereastra de comunicare e intervalul în care fiecare îl vede pe celălalt peste orizont (0°; pentru Pământ se folosesc stația și elevația minimă de mai sus), cu timp-lumină inclus. Conjuncția solară: legătura e întreruptă când linia dintre ele trece prea aproape de Soare (pragul ales mai sus).</p>
+<div class="row2">
+<div><label>Primul corp</label><select id="pk-a"></select></div>
+<div><label>Al doilea corp</label><select id="pk-b"></select></div>
+</div>
+<div class="row2">
+<div><label>Primul corp: latitudine (°)</label><input type="number" id="pk-ala" value="0" step="0.01" min="-90" max="90"></div>
+<div><label>Primul corp: longitudine est (°)</label><input type="number" id="pk-alo" value="0" step="0.01"></div>
+</div>
+<div class="row2">
+<div><label>Al doilea corp: latitudine (°)</label><input type="number" id="pk-bla" value="0" step="0.01" min="-90" max="90"></div>
+<div><label>Al doilea corp: longitudine est (°)</label><input type="number" id="pk-blo" value="0" step="0.01"></div>
+</div>
+</div>
+<div id="pk-out"></div>
 <div id="lk-out"></div>
 </section>
 
@@ -454,10 +470,9 @@ function linkState(b,t){
  }
  return {eS:eS,eB:eB,lt:g.lt,ok:eS>=LK.mask&&(eB===null||eB>=0)};
 }
-// ferestre de transmisie (momentul emisiei, ora Pământului); start=null: deschisă deja; end=null: nu se închide în orizont
-function linkWindows(b,ms,days,maxN){
+// scanare generică: okAt(t)->true/false/null; ferestre {start,end}; start=null: deschisă deja; end=null: nu se închide în orizont
+function winScan(okAt,ms,days,maxN){
  const step=days>20?600000:300000,n=Math.ceil(days*86400000/step),res=[];
- const okAt=t=>{const s=linkState(b,t);return s?s.ok:null};
  let t0=ms,v0=okAt(t0),open=null;
  if(v0===null)return null;
  if(v0)open={start:null};
@@ -473,16 +488,15 @@ function linkWindows(b,ms,days,maxN){
  if(open&&res.length<maxN)res.push({start:open.start,end:null});
  return res;
 }
+function linkWindows(b,ms,days,maxN){return winScan(t=>{const s=linkState(b,t);return s?s.ok:null},ms,days,maxN)}
 function sunAngle(b,t){
  const E=earthEcl(t),P=tgtEcl(b,t);if(!P)return null;
  const s=[-E[0],-E[1],-E[2]],v=[P[0]-E[0],P[1]-E[1],P[2]-E[2]],ds=nrm3(s),dv=nrm3(v);
  const a=Math.acos(clamp(dot3(s,v)/(ds*dv),-1,1))/D2R;
  return {ang:a,beyond:dv*Math.cos(a*D2R)>ds};
 }
-// următoarea (sau curenta) perioadă în care corpul e în spatele Soarelui, la mai puțin de LK.thr grade de el
-function blackoutNext(b,ms){
- if(b.id==='luna'||!sunAngle(b,ms))return null;
- const bad=t=>{const s=sunAngle(b,t);return s.beyond&&s.ang<LK.thr};
+// următoarea (sau curenta) perioadă în care bad(t) e adevărat
+function blackScan(bad,ms){
  const step=43200000,lo=ms-25*86400000;
  let t0=lo,v0=bad(t0),start=v0?lo:null;
  for(let t=lo+step;t<=ms+900*86400000;t+=step){
@@ -496,12 +510,56 @@ function blackoutNext(b,ms){
  }
  return {none:true};
 }
-// următorul miez de noapte local (ora locală 00:00) la longitudinea lon
-function nextMidnight(b,ms,lon){
+// corpul în spatele Soarelui, la mai puțin de LK.thr grade de el, văzut de pe Pământ
+function blackoutNext(b,ms){
+ if(b.id==='luna'||!sunAngle(b,ms))return null;
+ return blackScan(t=>{const s=sunAngle(b,t);return s.beyond&&s.ang<LK.thr},ms);
+}
+// următoarea trecere a orei locale hr (0 = miezul nopții, 12 = amiaza) la longitudinea lon
+function nextAt(b,ms,lon,hr){
  const r=localHour(b,ms,lon);if(!r||!b.hourS)return null;
- let t=ms+mod(24-r.h,24)*b.hourS*1000;
- for(let i=0;i<5;i++){const q=localHour(b,t,lon);t-=(mod(q.h+12,24)-12)*b.hourS*1000}
+ let t=ms+mod(hr-r.h,24)*b.hourS*1000;
+ for(let i=0;i<5;i++){const q=localHour(b,t,lon);t-=(mod(q.h-hr+12,24)-12)*b.hourS*1000}
  return t;
+}
+const nextMidnight=(b,ms,lon)=>nextAt(b,ms,lon,0);
+// ---------- legătura între două corpuri oarecare ----------
+const PK={ala:0,alo:0,bla:0,blo:0};
+function pairGeom(a,b,t){
+ let lt=0,v=null,A=null,B=null;
+ for(let i=0;i<3;i++){
+  A=tgtEcl(a,t);B=tgtEcl(b,t+lt*1000);if(!A||!B)return null;
+  v=[(B[0]-A[0])*AUKM,(B[1]-A[1])*AUKM,(B[2]-A[2])*AUKM];lt=nrm3(v)/299792.458;
+ }
+ return {v:eqVec(v),lt:lt,A:A,B:B};
+}
+function modelled(x){return x.id==='terra'||x.id==='luna'||!!IAU[x.id]}
+// elevația celuilalt capăt, văzută din punctul site de pe x la momentul tau; vec = km, de la x spre celălalt
+function endEl(x,vec,tau,site){
+ if(x.id==='terra')return stationEl(vec,tau);
+ const d=nrm3(vec),u=[vec[0]/d,vec[1]/d,vec[2]/d];let s;
+ if(x.id==='luna'){
+  const m=eqVec(moonGeo(tau)),z=eqVec([0,0,1]),md=nrm3(m);
+  let ex=[-m[0]/md,-m[1]/md,-m[2]/md];const k=dot3(ex,z);ex=[ex[0]-k*z[0],ex[1]-k*z[1],ex[2]-k*z[2]];const en=nrm3(ex);ex=[ex[0]/en,ex[1]/en,ex[2]/en];
+  const ey=[z[1]*ex[2]-z[2]*ex[1],z[2]*ex[0]-z[0]*ex[2],z[0]*ex[1]-z[1]*ex[0]];
+  s={lat:Math.asin(clamp(dot3(u,z),-1,1))/D2R,lon:Math.atan2(dot3(u,ey),dot3(u,ex))/D2R};
+ }else{s=earthSub(x,u,tau);if(!s)return null}
+ const la=site.lat*D2R,sl=s.lat*D2R;
+ return Math.asin(clamp(Math.sin(la)*Math.sin(sl)+Math.cos(la)*Math.cos(sl)*Math.cos((site.lon-s.lon)*D2R),-1,1))/D2R;
+}
+function pairOk(a,b,t){
+ const g=pairGeom(a,b,t);if(!g||nrm3(g.v)<1)return null;
+ const eA=endEl(a,g.v,t,{lat:PK.ala,lon:PK.alo}),eB=endEl(b,[-g.v[0],-g.v[1],-g.v[2]],t+g.lt*1000,{lat:PK.bla,lon:PK.blo});
+ return (eA===null||eA>=(a.id==='terra'?LK.mask:0))&&(eB===null||eB>=(b.id==='terra'?LK.mask:0));
+}
+// segmentul A–B trece la mai puțin de sin(LK.thr)·(distanța minimă la Soare a capetelor) de Soare
+function pairBlocked(a,b,t){
+ const g=pairGeom(a,b,t);if(!g)return null;
+ const A=g.A,B=g.B,d=[B[0]-A[0],B[1]-A[1],B[2]-A[2]],dd=dot3(d,d);if(dd<1e-18)return false;
+ const u=clamp(-dot3(A,d)/dd,0,1);
+ if(u<=0||u>=1)return false;
+ const q=[A[0]+u*d[0],A[1]+u*d[1],A[2]+u*d[2]];
+ return nrm3(q)<Math.sin(LK.thr*D2R)*Math.min(nrm3(A),nrm3(B));
 }
 function altRate(b,hMeters){return b.g*hMeters/(C*C)*DAYS*1e9} // ns/zi
 
@@ -1123,6 +1181,7 @@ function linkHtml(b,ms){
  else{
   const m2=nextMidnight(b,m1+b.Psol*DAYS*500,0);
   h+='<div class="ln"><b>'+T('Miezul nopții local (meridianul 0)')+'</b>'+(r&&!r.real?' †':'')+': '+whenStr(m1)+' — '+T('peste {0}',fmtSec((m1-ms)/1000))+(m2?'<br><span class="mut">'+T('următorul')+': '+whenStr(m2)+'</span>':'')+'</div>';
+  const n1=nextAt(b,ms,0,12);if(n1!==null){const n2=nextAt(b,n1+b.Psol*DAYS*500,0,12);h+='<div class="ln"><b>'+T('Amiaza locală (12:00, meridianul 0)')+'</b>'+(r&&!r.real?' †':'')+': '+whenStr(n1)+' — '+T('peste {0}',fmtSec((n1-ms)/1000))+(n2?'<br><span class="mut">'+T('următorul')+': '+whenStr(n2)+'</span>':'')+'</div>'}
  }
  if(b.id==='terra')return h;
  if(!tgtEcl(b,ms))return h+'<div class="ln mut">'+T('Fereastra de transmisie și conjuncția solară nu sunt calculate pentru acest corp (nu are efemeridă în aplicație; vezi timpul-lumină).')+'</div>';
@@ -1170,11 +1229,51 @@ function buildLink(){
  $('lk-out').innerHTML=h;
  $('lk-out').querySelectorAll('.lk').forEach(c=>c.onclick=()=>openDetail(c.dataset.id));
 }
-function lkSoon(){clearTimeout(lkTimer);lkTimer=setTimeout(()=>{if(curView==='link')buildLink()},250)}
+function lkSoon(){clearTimeout(lkTimer);lkTimer=setTimeout(()=>{if(curView==='link'){buildLink();buildPair()}},250)}
 $('lk-s').onchange=()=>{const i=$('lk-s').value;if(i!==''){$('lk-sla').value=LK_ST[i][1];$('lk-slo').value=LK_ST[i][2]}lkSoon()};
 ['lk-sla','lk-slo'].forEach(id=>$(id).addEventListener('input',()=>{$('lk-s').value='';lkSoon()}));
 ['lk-m','lk-t','lk-bla','lk-blo'].forEach(id=>$(id).addEventListener('input',lkSoon));
 
+
+function pairHtml(a,b,ms){
+ if(a.id===b.id)return '<div class="ln mut">'+T('Alege două corpuri diferite.')+'</div>';
+ const g=pairGeom(a,b,ms);
+ if(!g)return '<div class="ln mut">'+T('Unul dintre corpuri nu are efemeridă în aplicație.')+'</div>';
+ if(nrm3(g.v)<1)return '<div class="ln mut">'+T('Cele două corpuri sunt în același sistem planetar: poziția lor relativă nu e modelată aici.')+'</div>';
+ let h='<div class="ln"><b>'+T('Timp-lumină acum')+'</b>: '+fmtSec(g.lt)+' ('+T('distanță {0} UA',f(nrm3(g.v)/AUKM,nrm3(g.v)/AUKM<1?4:2))+')</div>';
+ const ma=modelled(a),mb=modelled(b);
+ if(!ma&&!mb)h+='<div class="ln mut">'+T('Nu există model de orientare pentru niciunul dintre capete: se arată doar timpul-lumină și conjuncția solară.')+'</div>';
+ else{
+  const days=Math.min(400,Math.max(3,Math.max(a.Psol||1,b.Psol||1)*1.1+2)),w=winScan(t=>pairOk(a,b,t),ms,days,2);
+  let s;
+  if(!w||!w.length)s=T('nicio fereastră în următoarele {0} de zile',nf(Math.round(days)));
+  else s=w.map((x,i)=>{
+   const dur=x.end===null?null:fmtSec((x.end-Math.max(ms,x.start===null?ms:x.start))/1000);
+   if(x.start===null)return '<b class="pos">'+T('deschisă acum')+'</b>'+(x.end===null?'':', '+T('până la {0}',whenStr(x.end))+' ('+T('încă {0}',dur)+')');
+   return (i?T('următoarea')+': ':'')+whenStr(x.start)+' → '+(x.end===null?'…':whenStr(x.end))+(dur?' ('+dur+')':'');
+  }).join('<br>');
+  h+='<div class="ln"><b>'+T('Fereastră de comunicare')+'</b>: '+s+((ma&&mb)?'':'<br><span class="mut">'+T('Orientarea locală a unuia dintre capete nu e modelată: se ia în calcul doar celălalt.')+'</span>')+'</div>';
+ }
+ const bo=blackScan(t=>pairBlocked(a,b,t),ms);
+ let c;
+ if(bo.none)c=T('nicio întrerupere în următorii 900 de zile');
+ else if(bo.start!==null&&bo.start<=ms)c='<b class="neg">'+T('legătură întreruptă')+'</b> (&lt; '+f(LK.thr,1)+'°), '+T('până la {0}',whenStr(bo.end));
+ else c=T('următoarea întrerupere (&lt; {0}°)',f(LK.thr,1))+': '+whenStr(bo.start)+' → '+whenStr(bo.end)+' ('+fmtSec((bo.end-bo.start)/1000)+')';
+ return h+'<div class="ln"><b>'+T('Conjuncție solară')+'</b>: '+c+'</div>';
+}
+function fillPair(){
+ const ca=$('pk-a').value,cb=$('pk-b').value,o=B.filter(b=>b.cat!=='ref').map(b=>'<option value="'+b.id+'">'+nm(b)+'</option>').join('');
+ $('pk-a').innerHTML=o;$('pk-b').innerHTML=o;$('pk-a').value=ca||'terra';$('pk-b').value=cb||'marte';
+}
+function buildPair(){
+ const g=(id,d,a,c)=>{const v=parseFloat($(id).value);return isFinite(v)?clamp(v,a,c):d};
+ PK.ala=g('pk-ala',0,-90,90);PK.alo=g('pk-alo',0,-360,360);PK.bla=g('pk-bla',0,-90,90);PK.blo=g('pk-blo',0,-360,360);
+ const a=byId[$('pk-a').value],b=byId[$('pk-b').value];
+ $('pk-out').innerHTML='<div class="panel"><div class="nm"><span>'+nm(a)+' ⇄ '+nm(b)+'</span></div>'+pairHtml(a,b,Date.now())+'</div>';
+}
+function pkSoon(){clearTimeout(lkTimer);lkTimer=setTimeout(()=>{if(curView==='link'){buildPair()}},250)}
+['pk-a','pk-b'].forEach(id=>$(id).onchange=pkSoon);
+['pk-ala','pk-alo','pk-bla','pk-blo'].forEach(id=>$(id).addEventListener('input',pkSoon));
 function captureStatic(){
  const sel='header p, .refbar label, nav button, main p, main h3, main h2, main li, main label, main button.btn, main .formula, main .note, footer';
  const all=Array.from(document.querySelectorAll(sel));
@@ -1198,13 +1297,13 @@ function setLang(l){
  const zc=$('cv-z').value,zr=$('ref-z').value;
  $('cv-z').innerHTML=tzOptionsHtml();$('ref-z').innerHTML=tzOptionsHtml();
  $('cv-z').value=zc;$('ref-z').value=zr;
- fillBodySelects();fillStations();
+ fillBodySelects();fillStations();fillPair();
  const pv=$('cv-p').value;fillPresets();$('cv-p').value=pv;if($('cv-p').value!==pv)$('cv-p').selectedIndex=0;
  buildChips();buildBoard();tickBoard();buildMoon();convCalc();refTick();
  if(curView==='scen')buildScen();
  if(curView==='col')buildCol();
  if(curView==='map'){buildMap()}
- if(curView==='link')buildLink();
+ if(curView==='link'){buildLink();fillPair();buildPair()}
  if(openId)openDetail(openId);
 }
 
@@ -1217,19 +1316,19 @@ function show(v){
  if(v==='metoda')buildMoon();
  if(v==='col')buildCol();
  if(v==='map'){buildMapSel();buildMap()}
- if(v==='link')buildLink();
+ if(v==='link'){buildLink();fillPair();buildPair()}
  window.scrollTo(0,0);
 }
 document.querySelectorAll('#tabs button').forEach(b=>b.onclick=()=>show(b.dataset.v));
 captureStatic();
 $('lang-z').innerHTML=LANGS.map(l=>'<option value="'+l[0]+'">'+l[1]+'</option>').join('');
 $('lang-z').onchange=()=>setLang($('lang-z').value);
-buildChips();buildBoard();buildConv();buildMoon();fillStations();tickBoard();
+buildChips();buildBoard();buildConv();buildMoon();fillStations();fillPair();tickBoard();
 refTick();
 {let want='ro';try{want=localStorage.getItem('orarium.lang')||''}catch(e){}
  if(!want||!UNITS[want]){const nv=String((navigator.languages&&navigator.languages[0])||navigator.language||'ro').slice(0,2).toLowerCase();want=UNITS[nv]?nv:'ro'}
  $('lang-z').value='ro';if(want!=='ro')setLang(want);else $('lang-z').value='ro'}
-setInterval(()=>{refTick();tickBoard();tickDetail();tickMap();if(curView==='scen'&&Date.now()%5000<1000)buildScen();if(curView==='link'&&Date.now()%30000<1000)buildLink()},1000);
+setInterval(()=>{refTick();tickBoard();tickDetail();tickMap();if(curView==='scen'&&Date.now()%5000<1000)buildScen();if(curView==='link'&&Date.now()%30000<1000){buildLink();buildPair()}},1000);
 </script>
 <div id="tf-donate" role="complementary" aria-label="Buy Me a Coffee"><style>
 #tf-donate{box-sizing:border-box;display:flex;justify-content:center;width:100%;padding:18px 12px calc(18px + env(safe-area-inset-bottom,0px));margin:0;position:relative;z-index:2147483000;background:none;color:inherit;font:600 13px/1 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;clear:both;flex:0 0 auto}

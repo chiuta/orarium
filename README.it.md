@@ -33,6 +33,7 @@ P_sol = 1 / | 1/P_sid ∓ 1/P_year |
 - **Colonie** — una classifica indicativa, con pesi scelti dall'utente, dei candidati alla colonizzazione (7 fattori, soglia del fattore vitale).
 - **Mappe** — mappe schematiche delle zone ottimali di colonizzazione per ciascun corpo, con terminatore giorno/notte, ora locale rispetto all'orologio di riferimento terrestre e prossimo mezzogiorno locale.
 - **Collegamenti** — quando è mezzanotte locale su ciascun corpo (nella tua ora di riferimento e in UTC) e la finestra di trasmissione Terra–corpo (stazione terrestre scelta, punto scelto sul corpo, tempo-luce incluso), più i periodi di congiunzione solare in cui il collegamento è interrotto.
+- **Comunicazione tra corpi** — per qualsiasi coppia di corpi (non solo con la Terra): la finestra di comunicazione in cui ciascuno vede l'altro sopra l'orizzonte, il tempo-luce e i periodi di congiunzione solare; inoltre ogni corpo mostra ora anche il suo mezzogiorno locale (12:00).
 - **Scenari** — esempi concreti (sito dell'Apollo 11, Jezero, Titano, Bennu, Venere, Mercurio, Plutone–Caronte, tabella dell'andata e ritorno).
 - **Orologio di riferimento terrestre** — UTC o qualsiasi fuso orario IANA (ad es. Bucarest), usato ovunque.
 

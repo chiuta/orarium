@@ -556,5 +556,22 @@
  "Canberra (Australia)": "Canberra (Australia)",
  "Malargüe (Argentina)": "Malargüe (Argentina)",
  "Miezul nopții și transmisii": "Midnight and transmissions",
- "Setările stației și ale punctului de pe corp se schimbă în fila Transmisii.": "Station and body-point settings are changed in the Comms tab."
+ "Setările stației și ale punctului de pe corp se schimbă în fila Transmisii.": "Station and body-point settings are changed in the Comms tab.",
+ "Comunicare între două corpuri": "Communication between two bodies",
+ "Alege două corpuri și punctele de pe ele. Fereastra de comunicare e intervalul în care fiecare îl vede pe celălalt peste orizont (0°; pentru Pământ se folosesc stația și elevația minimă de mai sus), cu timp-lumină inclus. Conjuncția solară: legătura e întreruptă când linia dintre ele trece prea aproape de Soare (pragul ales mai sus).": "Choose two bodies and the points on them. The communication window is the interval in which each sees the other above the horizon (0°; for Earth the station and the minimum elevation above are used), light time included. Solar conjunction: the link is interrupted when the line between them passes too close to the Sun (the threshold chosen above).",
+ "Primul corp": "First body",
+ "Al doilea corp": "Second body",
+ "Primul corp: latitudine (°)": "First body: latitude (°)",
+ "Primul corp: longitudine est (°)": "First body: east longitude (°)",
+ "Al doilea corp: latitudine (°)": "Second body: latitude (°)",
+ "Al doilea corp: longitudine est (°)": "Second body: east longitude (°)",
+ "Alege două corpuri diferite.": "Choose two different bodies.",
+ "Unul dintre corpuri nu are efemeridă în aplicație.": "One of the bodies has no ephemeris in the app.",
+ "Cele două corpuri sunt în același sistem planetar: poziția lor relativă nu e modelată aici.": "The two bodies are in the same planetary system: their relative position is not modelled here.",
+ "Timp-lumină acum": "Light time now",
+ "distanță {0} UA": "distance {0} AU",
+ "Nu există model de orientare pentru niciunul dintre capete: se arată doar timpul-lumină și conjuncția solară.": "There is no orientation model for either end: only the light time and the solar conjunction are shown.",
+ "Fereastră de comunicare": "Communication window",
+ "Orientarea locală a unuia dintre capete nu e modelată: se ia în calcul doar celălalt.": "The local orientation of one end is not modelled: only the other end is taken into account.",
+ "Amiaza locală (12:00, meridianul 0)": "Local noon (12:00, meridian 0)"
 }

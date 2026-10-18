@@ -35,6 +35,7 @@ setTimeout(()=>{
  // transmisii: stație personalizată
  D.querySelector('#tabs button[data-v=link]').click();
  for(const sid of ['1','2','3','4','','0']){$('lk-s').value=sid;fire($('lk-s'),'change');ev('buildLink()');snap('link:'+sid)}
+ for(const [pa,pb] of [['terra','marte'],['marte','jupiter'],['terra','luna'],['phobos','marte'],['titan','europa'],['terra','ceres'],['marte','marte']]){$('pk-a').value=pa;$('pk-b').value=pb;fire($('pk-b'),'change');ev('buildPair()');snap('pair:'+pa+pb)}
  // DST gap / ambiguity
  $('cv-z').value='Europe/Bucharest';
  for(const t of ['2026-03-29T03:30','2026-10-25T03:30']){$('cv-t').value=t;fire($('cv-t'),'input');snap('conv-dst')}
