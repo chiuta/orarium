@@ -32,6 +32,7 @@ P_sol = 1 / | 1/P_sid ∓ 1/P_year |
 - **Convertor** — „ce oră e acolo când aici e…?” pentru orice corp și orice longitudine, cu orice fus orar de pe Pământ (cu avertizare pentru orele inexistente sau duble de la schimbarea orei).
 - **Colonii** — un clasament orientativ al candidaților la colonizare, cu ponderi alese de utilizator (7 factori, filtru pentru factorii vitali).
 - **Hărți** — hărți schematice ale zonelor optime de colonizare pentru fiecare corp, cu terminatorul zi/noapte, ora locală față de ceasul Pământului de referință și următoarea amiază locală.
+- **Transmisii** — când e miezul nopții locale pe fiecare corp (în ora ta de referință și în UTC) și fereastra de transmisie Pământ–corp (stație terestră aleasă, punct ales pe corp, timp-lumină inclus), plus perioadele de conjuncție solară în care legătura e întreruptă.
 - **Scenarii** — exemple concrete (locul Apollo 11, Jezero, Titan, Bennu, Venus, Mercur, Pluto–Charon, tabel dus-întors).
 - **Ceasul Pământului de referință** — UTC sau orice fus IANA (de exemplu București), folosit peste tot.
 

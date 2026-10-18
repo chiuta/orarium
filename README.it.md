@@ -32,6 +32,7 @@ P_sol = 1 / | 1/P_sid ∓ 1/P_year |
 - **Convertitore** — «che ora è lì quando qui sono le …?» per qualsiasi corpo e longitudine, con qualsiasi fuso orario terrestre (salti e sovrapposizioni dell'ora legale segnalati).
 - **Colonie** — una classifica indicativa, con pesi scelti dall'utente, dei candidati alla colonizzazione (7 fattori, soglia del fattore vitale).
 - **Mappe** — mappe schematiche delle zone ottimali di colonizzazione per ciascun corpo, con terminatore giorno/notte, ora locale rispetto all'orologio di riferimento terrestre e prossimo mezzogiorno locale.
+- **Collegamenti** — quando è mezzanotte locale su ciascun corpo (nella tua ora di riferimento e in UTC) e la finestra di trasmissione Terra–corpo (stazione terrestre scelta, punto scelto sul corpo, tempo-luce incluso), più i periodi di congiunzione solare in cui il collegamento è interrotto.
 - **Scenari** — esempi concreti (sito dell'Apollo 11, Jezero, Titano, Bennu, Venere, Mercurio, Plutone–Caronte, tabella dell'andata e ritorno).
 - **Orologio di riferimento terrestre** — UTC o qualsiasi fuso orario IANA (ad es. Bucarest), usato ovunque.
 

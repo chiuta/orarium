@@ -32,6 +32,7 @@ P_sol = 1 / | 1/P_sid ∓ 1/P_year |
 - **Konverter** — „Wie spät ist es dort, wenn es hier … ist?“ für jeden Körper und jede Länge, mit beliebiger Erdzeitzone (Lücken/Überlappungen durch die Sommerzeit werden markiert).
 - **Kolonien** — eine richtungsweisende, vom Nutzer gewichtete Rangliste von Besiedlungskandidaten (7 Faktoren, Vitalfaktor-Schwelle).
 - **Karten** — schematische Karten optimaler Besiedlungszonen für jeden Körper mit Tag-Nacht-Grenze, Ortszeit im Vergleich zur Referenz-Erdzeit und dem nächsten lokalen Mittag.
+- **Funk** — wann auf jedem Körper Ortsmitternacht ist (in Ihrer Referenzzeit und in UTC) und das Sendefenster Erde–Körper (gewählte Bodenstation, gewählter Punkt auf dem Körper, Lichtlaufzeit eingerechnet), dazu die Zeiten der Sonnenkonjunktion, in denen die Verbindung unterbrochen ist.
 - **Szenarien** — konkrete Beispiele (Apollo-11-Landeplatz, Jezero, Titan, Bennu, Venus, Merkur, Pluto–Charon, Tabelle der Hin-und-zurück-Zeiten).
 - **Referenz-Erdzeit** — UTC oder eine beliebige IANA-Zeitzone (z. B. Bukarest), durchgängig verwendet.
 

@@ -32,6 +32,7 @@ P_sol = 1 / | 1/P_sid ∓ 1/P_year |
 - **Conversor** — «¿qué hora es allí cuando es … aquí?» para cualquier cuerpo y longitud, con cualquier huso horario de la Tierra (se señalan los saltos y solapamientos del horario de verano).
 - **Colonias** — una clasificación orientativa, ponderada por el usuario, de candidatos a la colonización (7 factores, filtro de factores vitales).
 - **Mapas** — mapas esquemáticos de las zonas óptimas de colonización de cada cuerpo, con el terminador día/noche, la hora local frente al reloj de referencia terrestre y el próximo mediodía local.
+- **Enlaces** — cuándo es medianoche local en cada cuerpo (en tu hora de referencia y en UTC) y la ventana de transmisión Tierra–cuerpo (estación terrestre elegida, punto elegido del cuerpo, con el tiempo luz incluido), además de los periodos de conjunción solar en los que el enlace se interrumpe.
 - **Escenarios** — ejemplos concretos (emplazamiento del Apolo 11, Jezero, Titán, Bennu, Venus, Mercurio, Plutón–Caronte, tabla de ida y vuelta).
 - **Reloj de referencia terrestre** — UTC o cualquier huso horario IANA (p. ej., Bucarest), usado en toda la aplicación.
 

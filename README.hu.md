@@ -32,6 +32,7 @@ P_sol = 1 / | 1/P_sid ∓ 1/P_year |
 - **Átváltó** — „hány óra van ott, amikor itt … van?” bármely égitestre és hosszúsági fokra, tetszőleges földi időzónával (a nyári időszámítás kihagyásai/átfedései jelezve).
 - **Kolóniák** — kolonizációs jelöltek tájékoztató jellegű, felhasználó által súlyozott rangsora (7 tényező, létfontosságú-tényező kapu).
 - **Térképek** — az optimális kolonizációs övezetek sematikus térképei minden égitestre, nappal/éjszaka határvonallal, a helyi idővel a földi referenciaórához képest, valamint a következő helyi déllel.
+- **Adás** — mikor van helyi éjfél az egyes égitesteken (a megadott referenciaidőben és UTC-ben), valamint a Föld–égitest adási ablak (választott földi állomás, választott pont az égitesten, a fényidővel együtt), továbbá a napkonjunkciók időszakai, amikor a kapcsolat megszakad.
 - **Forgatókönyvek** — konkrét példák (az Apollo–11 helyszíne, Jezero, Titán, Bennu, Vénusz, Merkúr, Plútó–Charon, oda-vissza táblázat).
 - **Referencia földi idő** — UTC vagy bármely IANA-időzóna (pl. Bukarest), mindenhol ezt használja.
 

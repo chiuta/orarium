@@ -12,7 +12,7 @@ function snap(tag){const c=D.body.cloneNode(true);c.querySelectorAll('script').f
 setTimeout(()=>{
  $('lang-z').value=lang;fire($('lang-z'),'change');ev('MISS.clear()');
  const ids=ev('B.map(b=>b.id)');
- for(const v of ['acum','metoda','conv','col','map','scen']){D.querySelector('#tabs button[data-v='+v+']').click();snap('tab:'+v)}
+ for(const v of ['acum','metoda','conv','col','map','link','scen']){D.querySelector('#tabs button[data-v='+v+']').click();snap('tab:'+v)}
  // chips
  D.querySelector('#tabs button[data-v=acum]').click();
  D.querySelectorAll('#chips button').forEach(b=>{b.click()});
@@ -32,6 +32,9 @@ setTimeout(()=>{
  // conv
  D.querySelector('#tabs button[data-v=conv]').click();
  for(const id of ids){$('cv-b').value=id;fire($('cv-b'),'change');if($('cv-p').options.length>1){$('cv-p').selectedIndex=1;fire($('cv-p'),'change')};snap('conv:'+id)}
+ // transmisii: stație personalizată
+ D.querySelector('#tabs button[data-v=link]').click();
+ for(const sid of ['1','2','3','4','','0']){$('lk-s').value=sid;fire($('lk-s'),'change');ev('buildLink()');snap('link:'+sid)}
  // DST gap / ambiguity
  $('cv-z').value='Europe/Bucharest';
  for(const t of ['2026-03-29T03:30','2026-10-25T03:30']){$('cv-t').value=t;fire($('cv-t'),'input');snap('conv-dst')}
