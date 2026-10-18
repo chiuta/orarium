@@ -34,6 +34,7 @@ P_sol = 1 / | 1/P_sid ∓ 1/P_year |
 - **Maps** — schematic maps of optimal colonization zones for each body with day/night terminator, local time versus the Earth reference clock, and next local noon.
 - **Comms** — when it is local midnight on each body (in your reference time and in UTC) and the Earth–body transmission window (chosen ground station, chosen point on the body, light time included), plus the solar-conjunction periods when the link is interrupted.
 - **Communication between bodies** — for any pair of bodies (not only with Earth): the communication window in which each sees the other above the horizon, the light time and the solar-conjunction periods; in addition, every body now also shows its local noon (12:00).
+- **TerRa link** — "↗ TerRa" buttons on every computed midnight / noon and in the body sheet: they open [TerRa](https://chiuta.github.io/TerRa/) at that moment, with the 3D globe for Earth or the sky seen from the chosen body (unique link).
 - **Scenarios** — concrete examples (Apollo 11 site, Jezero, Titan, Bennu, Venus, Mercury, Pluto–Charon, round-trip table).
 - **Earth reference clock** — UTC or any IANA time zone (e.g. Bucharest), used throughout.
 

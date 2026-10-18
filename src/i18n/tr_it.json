@@ -573,5 +573,9 @@
  "Nu există model de orientare pentru niciunul dintre capete: se arată doar timpul-lumină și conjuncția solară.": "Non c'è un modello di orientamento per nessuna delle due estremità: si mostrano solo il tempo-luce e la congiunzione solare.",
  "Fereastră de comunicare": "Finestra di comunicazione",
  "Orientarea locală a unuia dintre capete nu e modelată: se ia în calcul doar celălalt.": "L'orientamento locale di una delle estremità non è modellato: si considera solo l'altra.",
- "Amiaza locală (12:00, meridianul 0)": "Mezzogiorno locale (12:00, meridiano 0)"
+ "Amiaza locală (12:00, meridianul 0)": "Mezzogiorno locale (12:00, meridiano 0)",
+ "Vezi în TerRa: globul 3D la acel moment": "Vedi in TerRa: il globo 3D in quel momento",
+ "Vezi în TerRa: cerul, observator {0}, la acel moment": "Vedi in TerRa: il cielo, osservatore {0}, in quel momento",
+ "Vezi în TerRa: globul 3D, acum": "Vedi in TerRa: il globo 3D, ora",
+ "Vezi în TerRa: cerul, observator {0}, acum": "Vedi in TerRa: il cielo, osservatore {0}, ora"
 }

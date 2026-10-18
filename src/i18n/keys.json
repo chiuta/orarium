@@ -573,5 +573,9 @@
 "Nu există model de orientare pentru niciunul dintre capete: se arată doar timpul-lumină și conjuncția solară.": "",
 "Fereastră de comunicare": "",
 "Orientarea locală a unuia dintre capete nu e modelată: se ia în calcul doar celălalt.": "",
-"Amiaza locală (12:00, meridianul 0)": ""
+"Amiaza locală (12:00, meridianul 0)": "",
+"Vezi în TerRa: globul 3D la acel moment": "",
+"Vezi în TerRa: cerul, observator {0}, la acel moment": "",
+"Vezi în TerRa: globul 3D, acum": "",
+"Vezi în TerRa: cerul, observator {0}, acum": ""
 }

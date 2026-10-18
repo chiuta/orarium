@@ -573,5 +573,9 @@
  "Nu există model de orientare pentru niciunul dintre capete: se arată doar timpul-lumină și conjuncția solară.": "Egyik végponthoz sincs tájolási modell: csak a fényidőt és a napkonjunkciót mutatjuk.",
  "Fereastră de comunicare": "Kommunikációs ablak",
  "Orientarea locală a unuia dintre capete nu e modelată: se ia în calcul doar celălalt.": "Az egyik végpont helyi tájolása nincs modellezve: csak a másikat vesszük figyelembe.",
- "Amiaza locală (12:00, meridianul 0)": "Helyi dél (12:00, 0. délkör)"
+ "Amiaza locală (12:00, meridianul 0)": "Helyi dél (12:00, 0. délkör)",
+ "Vezi în TerRa: globul 3D la acel moment": "Megnézem a TerRában: a 3D-s földgömb abban a pillanatban",
+ "Vezi în TerRa: cerul, observator {0}, la acel moment": "Megnézem a TerRában: az égbolt, megfigyelő: {0}, abban a pillanatban",
+ "Vezi în TerRa: globul 3D, acum": "Megnézem a TerRában: a 3D-s földgömb, most",
+ "Vezi în TerRa: cerul, observator {0}, acum": "Megnézem a TerRában: az égbolt, megfigyelő: {0}, most"
 }

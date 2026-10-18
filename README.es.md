@@ -34,6 +34,7 @@ P_sol = 1 / | 1/P_sid ∓ 1/P_year |
 - **Mapas** — mapas esquemáticos de las zonas óptimas de colonización de cada cuerpo, con el terminador día/noche, la hora local frente al reloj de referencia terrestre y el próximo mediodía local.
 - **Enlaces** — cuándo es medianoche local en cada cuerpo (en tu hora de referencia y en UTC) y la ventana de transmisión Tierra–cuerpo (estación terrestre elegida, punto elegido del cuerpo, con el tiempo luz incluido), además de los periodos de conjunción solar en los que el enlace se interrumpe.
 - **Comunicación entre cuerpos** — para cualquier par de cuerpos (no solo con la Tierra): la ventana de comunicación en la que cada uno ve al otro sobre el horizonte, el tiempo luz y los periodos de conjunción solar; además, cada cuerpo muestra ahora también su mediodía local (12:00).
+- **Enlace con TerRa** — botones «↗ TerRa» en cada medianoche / mediodía calculado y en la ficha del cuerpo: abren [TerRa](https://chiuta.github.io/TerRa/) en ese momento, con el globo 3D para la Tierra o el cielo visto desde el cuerpo elegido (enlace único).
 - **Escenarios** — ejemplos concretos (emplazamiento del Apolo 11, Jezero, Titán, Bennu, Venus, Mercurio, Plutón–Caronte, tabla de ida y vuelta).
 - **Reloj de referencia terrestre** — UTC o cualquier huso horario IANA (p. ej., Bucarest), usado en toda la aplicación.
 
