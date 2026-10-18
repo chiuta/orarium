@@ -2,6 +2,8 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · **Español** · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
+**Aplicación en línea:** [https://chiuta.github.io/orarium/](https://chiuta.github.io/orarium/)
+
 **El tiempo en todos los mundos**
 
 ORARIUM es una aplicación web de un solo archivo y sin conexión (`index.html`, sin servidor, sin cuenta, sin seguimiento) que propone una manera coherente de medir el tiempo en la Luna, Marte, todos los planetas, planetas enanos, asteroides, cometas y lunas del Sistema Solar. Nació a raíz del debate sobre la hora lunar (un desfase de reloj de ≈56 µs/día, la resolución de la CGPM sobre una escala de tiempo de referencia lunar y las cuestiones abiertas sobre la «altitud cero» y las redes de relojes).

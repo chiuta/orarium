@@ -2,6 +2,8 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · **Magyar**
 
+**Online alkalmazás:** [https://chiuta.github.io/orarium/](https://chiuta.github.io/orarium/)
+
 **Idő minden világon**
 
 Az ORARIUM egyetlen fájlból álló, offline webalkalmazás (`index.html`, szerver, fiók és követés nélkül), amely egységes módot javasol az idő megadására a Holdon, a Marson, valamennyi bolygón, törpebolygón, aszteroidán, üstökösön és a Naprendszer holdjain. A holdidőről folyó vita ihlette (≈56 µs/nap óraeltérés, a CGPM határozata a holdi referencia-időskáláról, valamint a „nulla magasságról” és az órahálózatokról szóló nyitott kérdések).

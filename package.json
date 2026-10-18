@@ -12,5 +12,10 @@
   },
   "devDependencies": {
     "jsdom": "^24.0.0"
+  },
+  "homepage": "https://chiuta.github.io/orarium/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chiuta/orarium.git"
   }
 }

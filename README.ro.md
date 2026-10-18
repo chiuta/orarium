@@ -2,6 +2,8 @@
 
 [English](README.md) · **Română** · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
+**Aplicația online:** [https://chiuta.github.io/orarium/](https://chiuta.github.io/orarium/)
+
 **Timpul pe toate lumile**
 
 ORARIUM este o aplicație web dintr-un singur fișier, offline (`index.html`, fără server, fără cont, fără urmărire), care propune o metodă unitară de a măsura timpul pe Lună, pe Marte, pe toate planetele, pe planetele pitice, pe asteroizi, pe comete și pe sateliții Sistemului Solar. A pornit de la dezbaterea despre timpul lunar (un decalaj de ceas de ≈56 µs/zi, rezoluția CGPM privind o scară de timp lunară de referință și întrebările deschise despre „altitudinea zero” și rețelele de ceasuri).
