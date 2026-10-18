@@ -1173,7 +1173,7 @@ const STAT=[];
 // ----- miezul nopții și transmisii: afișare -----
 // ----- legătură cu TerRa (https://chiuta.github.io/TerRa/): vedere 3D / cer, cu link unic -----
 const TERRA_URL='https://chiuta.github.io/TerRa/';
-const TERRA_OBS={soare:'sun',mercur:'mercury',venus:'venus',luna:'luna',marte:'mars',jupiter:'jupiter',saturn:'saturn',uranus:'uranus',neptun:'neptune',pluto:'pluto',io:'io',europa:'europa',ganimede:'ganymede',callisto:'callisto',mimas:'mimas',enceladus:'enceladus',tethys:'tethys',dione:'dione',rhea:'rhea',titan:'titan',iapetus:'iapetus',miranda:'miranda',ariel:'ariel',umbriel:'umbriel',titania:'titania',oberon:'oberon',triton:'triton'};
+const TERRA_OBS={soare:'sun',mercur:'mercury',venus:'venus',luna:'luna',marte:'mars',jupiter:'jupiter',saturn:'saturn',uranus:'uranus',neptun:'neptune',pluto:'pluto',io:'io',europa:'europa',ganimede:'ganymede',callisto:'callisto',mimas:'mimas',enceladus:'enceladus',tethys:'tethys',dione:'dione',rhea:'rhea',titan:'titan',iapetus:'iapetus',miranda:'miranda',ariel:'ariel',umbriel:'umbriel',titania:'titania',oberon:'oberon',triton:'triton',phobos:'phobos',deimos:'deimos',hyperion:'hyperion',charon:'charon',ceres:'ceres',vesta:'vesta',pallas:'pallas',haumea:'haumea',makemake:'makemake',eris:'eris',bennu:'bennu',ryugu:'ryugu',eros:'eros',hygiea:'hygiea',psyche:'psyche','67p':'cg67p',venus50:'venus'};
 function terraUrl(b,ms){
  if(b.id!=='terra'&&!TERRA_OBS[b.id])return null;
  const t='&t='+new Date(ms).toISOString().slice(0,19)+'Z';
@@ -1276,7 +1276,7 @@ function pairHtml(a,b,ms){
  if(bo.none)c=T('nicio întrerupere în următorii 900 de zile');
  else if(bo.start!==null&&bo.start<=ms)c='<b class="neg">'+T('legătură întreruptă')+'</b> (&lt; '+f(LK.thr,1)+'°), '+T('până la {0}',whenStr(bo.end));
  else c=T('următoarea întrerupere (&lt; {0}°)',f(LK.thr,1))+': '+whenStr(bo.start)+' → '+whenStr(bo.end)+' ('+fmtSec((bo.end-bo.start)/1000)+')';
- return h+'<div class="ln"><b>'+T('Conjuncție solară')+'</b>: '+c+'</div>';
+ return h+'<div class="ln"><b>'+T('Conjuncție solară')+'</b>: '+c+'</div>'+((terraUrl(a,ms)||terraUrl(b,ms))?'<div class="ln">'+nm(a)+terraLink(a,ms)+' · '+nm(b)+terraLink(b,ms)+'</div>':'');
 }
 function fillPair(){
  const ca=$('pk-a').value,cb=$('pk-b').value,o=B.filter(b=>b.cat!=='ref').map(b=>'<option value="'+b.id+'">'+nm(b)+'</option>').join('');
