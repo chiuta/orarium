@@ -2229,10 +2229,21 @@ const STAT=[];
 // ----- legătură cu TerRa (https://chiuta.github.io/TerRa/): vedere 3D / cer, cu link unic -----
 const TERRA_URL='https://chiuta.github.io/TerRa/';
 const TERRA_OBS={soare:'sun',mercur:'mercury',venus:'venus',luna:'luna',marte:'mars',jupiter:'jupiter',saturn:'saturn',uranus:'uranus',neptun:'neptune',pluto:'pluto',io:'io',europa:'europa',ganimede:'ganymede',callisto:'callisto',mimas:'mimas',enceladus:'enceladus',tethys:'tethys',dione:'dione',rhea:'rhea',titan:'titan',iapetus:'iapetus',miranda:'miranda',ariel:'ariel',umbriel:'umbriel',titania:'titania',oberon:'oberon',triton:'triton',phobos:'phobos',deimos:'deimos',hyperion:'hyperion',charon:'charon',ceres:'ceres',vesta:'vesta',pallas:'pallas',haumea:'haumea',makemake:'makemake',eris:'eris',bennu:'bennu',ryugu:'ryugu',eros:'eros',hygiea:'hygiea',psyche:'psyche','67p':'cg67p',venus50:'venus'};
+/* Reciprocitate (from=): buton „← înapoi” către aplicația-sursă, doar pentru surse cunoscute; ignorat altfel */
+function fromBack(f,self){
+  const SRC={terra:['TerRa','https://chiuta.github.io/TerRa/'],orarium:['ORARIUM','https://chiuta.github.io/orarium/'],'nota-zero':['Nota Zero','https://chiuta.github.io/Nota-Zero/'],bolta:['Bolta','https://chiuta.github.io/apps/Bolta/']};
+  if(!f||f===self||!Object.prototype.hasOwnProperty.call(SRC,f)||document.getElementById('fff-back')) return;
+  const W={ro:'← înapoi la',en:'← back to',fr:'← retour à',de:'← zurück zu',es:'← volver a',it:'← torna a',pt:'← voltar a',hu:'← vissza:'};
+  const l=(document.documentElement.lang||'ro').slice(0,2), a=document.createElement('a');
+  a.id='fff-back'; a.href=SRC[f][1]; a.textContent=(W[l]||W.ro)+' '+SRC[f][0]; a.rel='noopener';
+  a.style.cssText='position:fixed;left:10px;bottom:10px;z-index:50;padding:6px 12px;border-radius:999px;background:rgba(20,22,30,.88);color:#fff;font:600 12px/1.3 system-ui,sans-serif;text-decoration:none;box-shadow:0 2px 8px rgba(0,0,0,.35)';
+  document.body.appendChild(a);
+}
 function terraUrl(b,ms){
  if(b.id!=='terra'&&!TERRA_OBS[b.id])return null;
  const t='&t='+new Date(ms).toISOString().slice(0,19)+'Z';
- return b.id==='terra'?TERRA_URL+'#v=3d'+t+'&ll='+LK.lat.toFixed(4)+','+LK.lon.toFixed(4):TERRA_URL+'#v=sky&o='+TERRA_OBS[b.id]+t;
+ const fr='&from=orarium';
+ return b.id==='terra'?TERRA_URL+'#v=3d'+t+'&ll='+LK.lat.toFixed(4)+','+LK.lon.toFixed(4)+fr:TERRA_URL+'#v=sky&o='+TERRA_OBS[b.id]+t+fr;
 }
 function terraLink(b,ms){
  const u=terraUrl(b,ms);if(!u)return '';
@@ -2379,6 +2390,7 @@ function lnkApply(){
  if(q.b&&byId[q.b]&&q.b!=='soare')$('pk-b').value=q.b;
  if(v)show(v);
  if(q.body&&byId[q.body])openDetail(q.body);
+ fromBack(q.from,'orarium');
  tfixBanner();tickBoard();
 }
 $('lnk-copy').onclick=async()=>{
