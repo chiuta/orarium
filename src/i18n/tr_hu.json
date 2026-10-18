@@ -577,5 +577,10 @@
  "Vezi în TerRa: globul 3D la acel moment": "Megnézem a TerRában: a 3D-s földgömb abban a pillanatban",
  "Vezi în TerRa: cerul, observator {0}, la acel moment": "Megnézem a TerRában: az égbolt, megfigyelő: {0}, abban a pillanatban",
  "Vezi în TerRa: globul 3D, acum": "Megnézem a TerRában: a 3D-s földgömb, most",
- "Vezi în TerRa: cerul, observator {0}, acum": "Megnézem a TerRában: az égbolt, megfigyelő: {0}, most"
+ "Vezi în TerRa: cerul, observator {0}, acum": "Megnézem a TerRában: az égbolt, megfigyelő: {0}, most",
+ "🔗 Link unic": "🔗 Egyedi link",
+ "Link copiat": "Link másolva",
+ "Copiere indisponibilă — linkul e în bara de adrese": "A másolás nem érhető el — a link a címsorban van",
+ "Moment fixat din link: {0}": "A linkből rögzített pillanat: {0}",
+ "Revino la acum": "Vissza a mostra"
 }

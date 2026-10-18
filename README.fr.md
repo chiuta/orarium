@@ -35,6 +35,7 @@ P_sol = 1 / | 1/P_sid ∓ 1/P_year |
 - **Liaisons** — quand il est minuit local sur chaque corps (dans votre heure de référence et en UTC) et la fenêtre de transmission Terre–corps (station terrestre choisie, point choisi sur le corps, temps-lumière inclus), ainsi que les périodes de conjonction solaire où la liaison est interrompue.
 - **Communication entre corps** — pour n'importe quelle paire de corps (pas seulement avec la Terre) : la fenêtre de communication où chacun voit l'autre au-dessus de l'horizon, le temps-lumière et les périodes de conjonction solaire ; de plus, chaque corps affiche désormais aussi son midi local (12:00).
 - **Lien avec TerRa** — boutons « ↗ TerRa » à chaque minuit / midi calculé et dans la fiche du corps : ils ouvrent [TerRa](https://chiuta.github.io/TerRa/) à ce moment, avec le globe 3D pour la Terre ou le ciel vu depuis le corps choisi (lien unique).
+- **Lien unique et liaison dans les deux sens avec TerRa** — le bouton « 🔗 Lien unique » copie la vue actuelle (onglet, corps, moment fixé, station, paire de corps, seuil solaire) ; [TerRa](https://chiuta.github.io/TerRa/) ouvre ici le corps, l'heure et la fenêtre de transmission depuis votre position.
 - **Scénarios** — exemples concrets (site d'Apollo 11, Jezero, Titan, Bennu, Vénus, Mercure, Pluton–Charon, tableau des aller-retour).
 - **Horloge de référence terrestre** — UTC ou n'importe quel fuseau horaire IANA (p. ex. Bucarest), utilisé partout.
 

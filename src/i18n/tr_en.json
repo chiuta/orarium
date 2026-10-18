@@ -577,5 +577,10 @@
  "Vezi în TerRa: globul 3D la acel moment": "See in TerRa: the 3D globe at that moment",
  "Vezi în TerRa: cerul, observator {0}, la acel moment": "See in TerRa: the sky, observer {0}, at that moment",
  "Vezi în TerRa: globul 3D, acum": "See in TerRa: the 3D globe, now",
- "Vezi în TerRa: cerul, observator {0}, acum": "See in TerRa: the sky, observer {0}, now"
+ "Vezi în TerRa: cerul, observator {0}, acum": "See in TerRa: the sky, observer {0}, now",
+ "🔗 Link unic": "🔗 Unique link",
+ "Link copiat": "Link copied",
+ "Copiere indisponibilă — linkul e în bara de adrese": "Copy unavailable — the link is in the address bar",
+ "Moment fixat din link: {0}": "Moment fixed from the link: {0}",
+ "Revino la acum": "Back to now"
 }

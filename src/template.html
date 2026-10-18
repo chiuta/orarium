@@ -87,7 +87,8 @@ input[type=range]{padding:0;accent-color:var(--acc2)}
 <header>
 <h1>ORARIUM</h1>
 <p>Timpul pe toate lumile — un etalon, două formule, patru ceasuri. Fișier unic, offline, fără urmărire.</p>
-<div class="refbar"><label for="lang-z">Limba</label><select id="lang-z"></select></div>
+<div class="refbar"><label for="lang-z">Limba</label><select id="lang-z"></select><button class="btn" id="lnk-copy" type="button" style="margin:0">🔗 Link unic</button></div>
+<div id="tfix" class="note" hidden style="margin-top:8px"></div>
 <div class="refbar"><label for="ref-z">Ora Pământului de referință</label><select id="ref-z"></select><span id="ref-now" class="mut"></span></div>
 </header>
 <nav><div class="in" id="tabs">
@@ -311,6 +312,7 @@ const B=[
 ];
 const byId={};B.forEach(b=>byId[b.id]=b);
 const anchor={};
+let TFIX=null;const NOW=()=>TFIX===null?Date.now():TFIX; // TFIX: moment fixat din link (ms UTC)
 function mod(x,m){return ((x%m)+m)%m}
 function frac(x){return x-Math.floor(x)}
 function jdTT(ms){return ms/86400000+2440587.5+69.184/86400}
@@ -801,7 +803,7 @@ function buildBoard(){
  $('board').querySelectorAll('.card').forEach(c=>c.onclick=()=>openDetail(c.dataset.id));
 }
 function tickBoard(){
- const ms=Date.now();
+ const ms=NOW();
  B.forEach(b=>{
   const el=document.querySelector('[data-clk="'+b.id+'"]');
   if(!el)return;
@@ -818,7 +820,7 @@ function tickBoard(){
 // ----- fișa corpului -----
 function openDetail(id){
  const b=byId[id];openId=id;
- const ms=Date.now(),lr=lightRange(b);
+ const ms=NOW(),lr=lightRange(b);
  const mm=id==='marte'?mars(ms):null;
  let h='<h3>'+nm(b)+'</h3><div class="mut">'+(b.P?T('satelit al corpului: {0}',nm(b.P)):b.cat==='planeta'?T('planetă'):b.cat==='mic'?T('pitică / corp mic'):b.cat==='hab'?T('habitat în atmosferă'):T('referință'))+'</div>';
  h+='<div class="clk" style="font-size:38px;margin:10px 0 0" id="d-clk">--:--:--</div><div class="mut" id="d-sub"></div>';
@@ -867,7 +869,7 @@ function openDetail(id){
    const v=$('d-an').value;if(!v)return;
    const p=v.split(':').map(Number),want=p[0]+(p[1]||0)/60+(p[2]||0)/3600;
    delete anchor[id];
-   const cur=localHour(b,Date.now(),0).h;
+   const cur=localHour(b,NOW(),0).h;
    anchor[id]=mod(want-cur,24);saveAnchor();tickDetail();tickBoard();
   };
   $('d-anr').onclick=()=>{delete anchor[id];saveAnchor();tickDetail();tickBoard()};
@@ -876,7 +878,7 @@ function openDetail(id){
 }
 function tickDetail(){
  if(!openId)return;
- const b=byId[openId],ms=Date.now(),r=localHour(b,ms,0);
+ const b=byId[openId],ms=NOW(),r=localHour(b,ms,0);
  if(!$('d-clk'))return;
  $('d-clk').textContent=r?hms(r.h):'—';
  $('d-sub').textContent=b.id==='terra'?T('UTC (meridianul 0)')+(REF!=='UTC'?' · '+refLabel()+' ('+refOff(ms)+'): '+refHMS(ms):''):r?(r.real?T('ora locală la meridianul 0 · fază reală'):T('ora locală la meridianul 0 · ritm cu origine convențională'))+' · '+T('{0} zile locale de la J2000.0',f((jdTT(ms)-J2000)/(b.Psol||1),1)):T('rotație haotică: nu există zi locală stabilă');
@@ -1012,7 +1014,7 @@ function convCalc(){
 
 // ----- Scenarii -----
 function buildScen(){
- const ms=Date.now(),L=byId.luna,M=byId.marte,Ti=byId.titan,Bn=byId.bennu,V=byId.venus,Me=byId.mercur,Pl=byId.pluto,S=byId.soare;
+ const ms=NOW(),L=byId.luna,M=byId.marte,Ti=byId.titan,Bn=byId.bennu,V=byId.venus,Me=byId.mercur,Pl=byId.pluto,S=byId.soare;
  const refNoon=wallToUTC(zoneNowStr(REF,ms,'12:00'),REF),RL=refLabel();
  const ap=localHour(L,refNoon,23.47).h;
  const jz=localHour(M,ms,77.45).h;
@@ -1141,7 +1143,7 @@ function buildMap(){
 }
 function tickMap(){
  if(curView!=='map')return;
- const b=byId[mapId],zs=ZONES[mapId]||[],ms=Date.now(),sg=sunGeom(b,ms);
+ const b=byId[mapId],zs=ZONES[mapId]||[],ms=NOW(),sg=sunGeom(b,ms);
  if(!sg){$('mp-night').setAttribute('d','');return}
  const dec=Math.abs(sg.dec)<0.05?0.05:sg.dec,tn=Math.tan(dec*D2R);
  let pts=[];
@@ -1232,7 +1234,7 @@ function readLK(){
 }
 function buildLink(){
  readLK();
- const ms=Date.now();let h='';
+ const ms=NOW();let h='';
  ['planeta','sat','mic','hab'].forEach(c=>{
   const list=B.filter(b=>b.cat===c);if(!list.length)return;
   h+='<h2>'+T(catName[c])+'</h2>'+list.map(b=>{
@@ -1284,11 +1286,53 @@ function buildPair(){
  const g=(id,d,a,c)=>{const v=parseFloat($(id).value);return isFinite(v)?clamp(v,a,c):d};
  PK.ala=g('pk-ala',0,-90,90);PK.alo=g('pk-alo',0,-360,360);PK.bla=g('pk-bla',0,-90,90);PK.blo=g('pk-blo',0,-360,360);
  const a=byId[$('pk-a').value],b=byId[$('pk-b').value];
- $('pk-out').innerHTML='<div class="panel"><div class="nm"><span>'+nm(a)+' ⇄ '+nm(b)+'</span></div>'+pairHtml(a,b,Date.now())+'</div>';
+ $('pk-out').innerHTML='<div class="panel"><div class="nm"><span>'+nm(a)+' ⇄ '+nm(b)+'</span></div>'+pairHtml(a,b,NOW())+'</div>';
 }
 function pkSoon(){clearTimeout(lkTimer);lkTimer=setTimeout(()=>{if(curView==='link'){buildPair()}},250)}
 ['pk-a','pk-b'].forEach(id=>$(id).onchange=pkSoon);
 ['pk-ala','pk-alo','pk-bla','pk-blo'].forEach(id=>$(id).addEventListener('input',pkSoon));
+
+// ----- link unic (fragment URL): #view=&body=&t=&station=&site=&thr=&a=&b= -----
+function tfixBanner(){
+ const el=$('tfix');if(!el)return;
+ if(TFIX===null){el.hidden=true;return}
+ el.hidden=false;
+ el.innerHTML=T('Moment fixat din link: {0}',whenStr(TFIX))+' <button class="btn" id="tfix-x" type="button" style="margin:0 0 0 8px">'+T('Revino la acum')+'</button>';
+ $('tfix-x').onclick=()=>{TFIX=null;tfixBanner();tickBoard();tickDetail();if(curView==='link'){buildLink();buildPair()}if(curView==='scen')buildScen();if(openId)openDetail(openId)};
+}
+function lnkBuild(){
+ const p=['view='+curView];
+ if(openId)p.push('body='+openId);
+ if(TFIX!==null)p.push('t='+new Date(TFIX).toISOString().slice(0,19)+'Z');
+ if(curView==='link'||openId){readLK();p.push('station='+LK.lat.toFixed(4)+','+LK.lon.toFixed(4)+','+LK.mask);p.push('thr='+LK.thr);p.push('site='+LK.blat+','+LK.blon)}
+ if(curView==='link'&&$('pk-a').value){p.push('a='+$('pk-a').value);p.push('b='+$('pk-b').value)}
+ return location.href.split('#')[0]+'#'+p.join('&');
+}
+function lnkApply(){
+ const hs=location.hash.replace(/^#/,'');if(!hs)return;
+ const q={};hs.split('&').forEach(x=>{const i=x.indexOf('=');if(i>0){try{q[x.slice(0,i)]=decodeURIComponent(x.slice(i+1))}catch(e){}}});
+ if(q.t&&/^\d{4}-\d\d-\d\dT\d\d:\d\d(:\d\d)?Z?$/.test(q.t)){const d=new Date(/Z$/.test(q.t)?q.t:q.t+'Z');if(!isNaN(d))TFIX=d.getTime()}
+ const st=/^(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?)(?:,(\d+(?:\.\d+)?))?$/.exec(q.station||'');
+ if(st&&Math.abs(+st[1])<=90&&Math.abs(+st[2])<=180){$('lk-sla').value=+st[1];$('lk-slo').value=+st[2];$('lk-s').value='';if(st[3])$('lk-m').value=clamp(+st[3],0,60)}
+ if(q.thr&&isFinite(+q.thr))$('lk-t').value=clamp(+q.thr,0.5,20);
+ const si=/^(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?)$/.exec(q.site||'');
+ if(si&&Math.abs(+si[1])<=90){$('lk-bla').value=+si[1];$('lk-blo').value=+si[2]}
+ let v=['acum','metoda','conv','col','map','link','scen'].includes(q.view)?q.view:null;
+ if(!v&&(q.a||q.b||q.station))v='link';
+ fillPair();
+ if(q.a&&byId[q.a]&&q.a!=='soare')$('pk-a').value=q.a;
+ if(q.b&&byId[q.b]&&q.b!=='soare')$('pk-b').value=q.b;
+ if(v)show(v);
+ if(q.body&&byId[q.body])openDetail(q.body);
+ tfixBanner();tickBoard();
+}
+$('lnk-copy').onclick=async()=>{
+ const u=lnkBuild(),b=$('lnk-copy'),o=b.textContent;
+ try{history.replaceState(null,'',u.slice(u.indexOf('#')))}catch(e){}
+ let ok=false;try{await navigator.clipboard.writeText(u);ok=true}catch(e){}
+ b.textContent=ok?'✓ '+T('Link copiat'):T('Copiere indisponibilă — linkul e în bara de adrese');setTimeout(()=>{b.textContent=T('🔗 Link unic')},2200);
+};
+window.addEventListener('hashchange',()=>{try{lnkApply()}catch(e){}});
 function captureStatic(){
  const sel='header p, .refbar label, nav button, main p, main h3, main h2, main li, main label, main button.btn, main .formula, main .note, footer';
  const all=Array.from(document.querySelectorAll(sel));
@@ -1303,6 +1347,7 @@ function applyStatic(){
  document.title=T('ORARIUM — Timpul pe toate lumile');
  document.documentElement.lang=LANG;
  $('x').setAttribute('aria-label',T('Închide'));
+ $('lnk-copy').textContent=T('🔗 Link unic');tfixBanner();
 }
 function setLang(l){
  if(!UNITS[l])return;
@@ -1343,6 +1388,7 @@ refTick();
 {let want='ro';try{want=localStorage.getItem('orarium.lang')||''}catch(e){}
  if(!want||!UNITS[want]){const nv=String((navigator.languages&&navigator.languages[0])||navigator.language||'ro').slice(0,2).toLowerCase();want=UNITS[nv]?nv:'ro'}
  $('lang-z').value='ro';if(want!=='ro')setLang(want);else $('lang-z').value='ro'}
+try{lnkApply()}catch(e){console.error(e)}
 setInterval(()=>{refTick();tickBoard();tickDetail();tickMap();if(curView==='scen'&&Date.now()%5000<1000)buildScen();if(curView==='link'&&Date.now()%30000<1000){buildLink();buildPair()}},1000);
 </script>
 <div id="tf-donate" role="complementary" aria-label="Buy Me a Coffee"><style>

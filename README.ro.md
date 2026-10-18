@@ -35,6 +35,7 @@ P_sol = 1 / | 1/P_sid ∓ 1/P_year |
 - **Transmisii** — când e miezul nopții locale pe fiecare corp (în ora ta de referință și în UTC) și fereastra de transmisie Pământ–corp (stație terestră aleasă, punct ales pe corp, timp-lumină inclus), plus perioadele de conjuncție solară în care legătura e întreruptă.
 - **Comunicare între corpuri** — pentru orice pereche de corpuri (nu doar cu Pământul): fereastra de comunicare în care fiecare îl vede pe celălalt peste orizont, timpul-lumină și perioadele de conjuncție solară; în plus, fiecare corp are acum și amiaza locală (12:00).
 - **Legătură cu TerRa** — butoane „↗ TerRa” la fiecare miez de noapte / amiază calculat și în fișa corpului: deschid [TerRa](https://chiuta.github.io/TerRa/) la momentul respectiv, cu globul 3D pentru Pământ sau cerul văzut de pe corpul ales (link unic).
+- **Link unic și legătura cu TerRa din ambele părți** — butonul „🔗 Link unic” copiază vederea curentă (filă, corp, moment fixat, stație, pereche de corpuri, prag solar); [TerRa](https://chiuta.github.io/TerRa/) deschide aici corpul, ora și fereastra de transmisie din locația ta.
 - **Scenarii** — exemple concrete (locul Apollo 11, Jezero, Titan, Bennu, Venus, Mercur, Pluto–Charon, tabel dus-întors).
 - **Ceasul Pământului de referință** — UTC sau orice fus IANA (de exemplu București), folosit peste tot.
 
