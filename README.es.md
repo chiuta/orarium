@@ -53,7 +53,8 @@ Abre `index.html` en cualquier navegador moderno (funciona desde `file://`) o pu
 
 ```bash
 python3 tools/validate.py     # translations: same keys, {n} placeholders and HTML tags as the source
-python3 tools/build.py        # regenerates index.html
+python3 tools/build.py        # regenerates index.html (step 1 of 2; on its own it drops the fff-info block)
+node ../chiuta.github.io/fff-kit/build.mjs info . --slug orarium   # step 2: rewrites fff-info / data-fff-hash in index.html and app.json (sha256, size); needs the fff-kit from chiuta.github.io
 npm install && npm test       # jsdom walk-through of every screen/body (per language), reports missing keys/errors/NaN
 node tools/exercise.js index.html fr   # one language only
 ```

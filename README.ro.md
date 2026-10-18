@@ -53,7 +53,8 @@ Deschide `index.html` în orice browser modern (funcționează și din `file://`
 
 ```bash
 python3 tools/validate.py     # traduceri: aceleași chei, aceleași variabile {n} și aceleași etichete HTML ca sursa
-python3 tools/build.py        # regenerează index.html
+python3 tools/build.py        # regenerează index.html (pasul 1 din 2; singur, șterge blocul fff-info)
+node ../chiuta.github.io/fff-kit/build.mjs info . --slug orarium   # pasul 2: rescrie fff-info/data-fff-hash în index.html și app.json (sha256, mărime)
 npm install && npm test       # parcurge cu jsdom fiecare ecran/corp (pe limbă), raportează chei lipsă/erori/NaN
 node tools/exercise.js index.html fr   # doar o limbă
 ```

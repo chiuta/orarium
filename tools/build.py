@@ -13,7 +13,7 @@ out = t.replace('/*__DICT__*/{}', js)
 # CSP: hash-uri sha256 pentru toate scripturile inline (calculate DUPĂ asamblare)
 import re, hashlib, base64
 def _h(x): return "'sha256-" + base64.b64encode(hashlib.sha256(x.encode('utf8')).digest()).decode() + "'"
-_sc = re.findall(r'<script[^>]*>(.*?)</script>', out, flags=re.S)
+_sc = [b for a, b in re.findall(r'<script(?![^>]*\bsrc=)([^>]*)>(.*?)</script>', out, flags=re.S) if 'json' not in a]
 _csp = "default-src 'none'; script-src " + ' '.join(_h(x) for x in _sc) + "; style-src 'unsafe-inline'; img-src data: blob:; worker-src blob:; connect-src 'none'; base-uri 'none'; form-action 'none'"
 assert out.count('<!--CSP-->') == 1
 out = out.replace('<!--CSP-->', '<meta http-equiv="Content-Security-Policy" content="' + _csp + '">')

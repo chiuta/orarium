@@ -3,7 +3,7 @@
 <html lang="ro">
 <head>
 <!--CSP-->
-<meta name="application-version" content="1.1.0">
+<meta name="application-version" content="1.1.1">
 <meta name="last-updated" content="2026-10-18">
 <meta name="description" content="Timpul pe Lună, Marte și toate corpurile Sistemului Solar: un etalon, două formule, patru ceasuri. Fișier unic, offline.">
 <meta charset="utf-8">
@@ -1289,7 +1289,7 @@ Acces        1 − log₁₀(1 + timp-lumină minute)/log₁₀(301)</div>
 
 <section id="v-scen" class="view"><div id="scen"></div></section>
 </main>
-<footer><span id="app-version" style="display:block;font-size:11px;opacity:.7">v 1.1.0 · 2026-10-18</span>Surse și metodă: articolul <a href="https://www.stiripesurse.ro/cat-este-ceasul-pe-luna_3928805" target="_blank" rel="noopener">„Cât este ceasul pe Lună…”</a> (AFP/Agerpres, 18.10.2026); orientări IAU WGCCRE 2009; elemente orbitale kepleriene medii (JPL, Standish); MTC/MSD marțian (Allison & McEwen). Valorile fizice ale corpurilor sunt cele uzuale din literatura de specialitate, rotunjite. Aplicația este trade-free: fără rețea, fără cont, fără urmărire.</footer>
+<footer><span id="app-version" style="display:block;font-size:11px;opacity:.7">v 1.1.1 · 2026-10-18</span>Surse și metodă: articolul <a href="https://www.stiripesurse.ro/cat-este-ceasul-pe-luna_3928805" target="_blank" rel="noopener">„Cât este ceasul pe Lună…”</a> (AFP/Agerpres, 18.10.2026); orientări IAU WGCCRE 2009; elemente orbitale kepleriene medii (JPL, Standish); MTC/MSD marțian (Allison & McEwen). Valorile fizice ale corpurilor sunt cele uzuale din literatura de specialitate, rotunjite. Aplicația este trade-free: fără rețea, fără cont, fără urmărire.</footer>
 
 <div id="ov"><div class="sheet"><button id="x" aria-label="Închide">×</button><div id="det"></div></div></div>
 
@@ -1365,7 +1365,7 @@ const B=[
 {id:'eros',n:'Eros',cat:'mic',GM:4.463e-4,R:8.42,Prot:0.2196,a:1.4583,e:0.2229,note:'Asteroid apropiat de Pământ, alungit (≈34 km). Zi de 5,27 ore. NEAR Shoemaker a aterizat pe el în 2001.'},
 {id:'venus50',n:'Venus — aerostat 50 km',cat:'hab',GM:324858.59,R:6101.8,Prot:6,retro:1,a:0.72333566,e:0.0068,Pyr:224.701,unc:1,note:'Un habitat plutitor în atmosfera Venusului, unde aerul are ≈1 bar și ≈75 °C și gravitația e ≈0,9 g. „Ziua” urmează vânturile (super-rotație de ≈6 zile Pământ, valoare orientativă) și are ≈5,8 zile. Ceasul nu mai are „suprafață”: metoda se aplică la altitudine, cu R = 6 101,8 km.'}
 ];
-const byId={};B.forEach(b=>byId[b.id]=b);
+const byId=Object.create(null);B.forEach(b=>byId[b.id]=b);
 const anchor={};
 let TFIX=null;const NOW=()=>TFIX===null?Date.now():TFIX; // TFIX: moment fixat din link (ms UTC)
 function mod(x,m){return ((x%m)+m)%m}
@@ -2231,13 +2231,23 @@ const TERRA_URL='https://chiuta.github.io/TerRa/';
 const TERRA_OBS={soare:'sun',mercur:'mercury',venus:'venus',luna:'luna',marte:'mars',jupiter:'jupiter',saturn:'saturn',uranus:'uranus',neptun:'neptune',pluto:'pluto',io:'io',europa:'europa',ganimede:'ganymede',callisto:'callisto',mimas:'mimas',enceladus:'enceladus',tethys:'tethys',dione:'dione',rhea:'rhea',titan:'titan',iapetus:'iapetus',miranda:'miranda',ariel:'ariel',umbriel:'umbriel',titania:'titania',oberon:'oberon',triton:'triton',phobos:'phobos',deimos:'deimos',hyperion:'hyperion',charon:'charon',ceres:'ceres',vesta:'vesta',pallas:'pallas',haumea:'haumea',makemake:'makemake',eris:'eris',bennu:'bennu',ryugu:'ryugu',eros:'eros',hygiea:'hygiea',psyche:'psyche','67p':'cg67p',venus50:'venus'};
 /* Reciprocitate (from=): buton „← înapoi” către aplicația-sursă, doar pentru surse cunoscute; ignorat altfel */
 function fromBack(f,self){
-  const SRC={terra:['TerRa','https://chiuta.github.io/TerRa/'],orarium:['ORARIUM','https://chiuta.github.io/orarium/'],'nota-zero':['Nota Zero','https://chiuta.github.io/Nota-Zero/'],bolta:['Bolta','https://chiuta.github.io/apps/Bolta/']};
+  const SRC={terra:['TerRa','https://chiuta.github.io/TerRa/'],orarium:['ORARIUM','https://chiuta.github.io/orarium/'],'nota-zero':['Nota Zero','https://chiuta.github.io/Nota-Zero/']};
   if(!f||f===self||!Object.prototype.hasOwnProperty.call(SRC,f)||document.getElementById('fff-back')) return;
   const W={ro:'← înapoi la',en:'← back to',fr:'← retour à',de:'← zurück zu',es:'← volver a',it:'← torna a',pt:'← voltar a',hu:'← vissza:'};
-  const l=(document.documentElement.lang||'ro').slice(0,2), a=document.createElement('a');
-  a.id='fff-back'; a.href=SRC[f][1]; a.textContent=(W[l]||W.ro)+' '+SRC[f][0]; a.rel='noopener';
-  a.style.cssText='position:fixed;left:10px;bottom:10px;z-index:50;padding:6px 12px;border-radius:999px;background:rgba(20,22,30,.88);color:#fff;font:600 12px/1.3 system-ui,sans-serif;text-decoration:none;box-shadow:0 2px 8px rgba(0,0,0,.35)';
-  document.body.appendChild(a);
+  const lg=()=>(document.documentElement.lang||'ro').slice(0,2).toLowerCase();
+  const box=document.createElement('div'), a=document.createElement('a'), x=document.createElement('button');
+  const fx=document.getElementById('tf-donate'), lift=fx&&/\btf-fx\b/.test(fx.className)?58:10;
+  box.id='fff-back-box';
+  box.style.cssText='position:fixed;left:10px;bottom:calc('+lift+'px + env(safe-area-inset-bottom,0px));z-index:50;display:flex;align-items:stretch;border-radius:999px;background:rgba(20,22,30,.88);box-shadow:0 2px 8px rgba(0,0,0,.35);font:600 13px/1.3 system-ui,sans-serif;overflow:hidden';
+  a.id='fff-back'; a.href=SRC[f][1]; a.rel='noopener';
+  a.style.cssText='display:inline-flex;align-items:center;min-height:44px;padding:0 8px 0 14px;color:#fff;text-decoration:none';
+  const lab=()=>{a.textContent=(W[lg()]||W.ro)+' '+SRC[f][0]};lab();
+  x.type='button'; x.textContent='×'; x.setAttribute('aria-label','×');
+  x.style.cssText='min-width:44px;min-height:44px;border:0;background:none;color:#fff;font:600 18px/1 system-ui,sans-serif;cursor:pointer';
+  x.onclick=()=>box.remove();
+  box.appendChild(a); box.appendChild(x); document.body.appendChild(box);
+  if(window.FFF&&FFF.onLang)FFF.onLang(lab);
+  else new MutationObserver(lab).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
 }
 function terraUrl(b,ms){
  if(b.id!=='terra'&&!TERRA_OBS[b.id])return null;
@@ -2386,11 +2396,12 @@ function lnkApply(){
  let v=['acum','metoda','conv','col','map','link','scen'].includes(q.view)?q.view:null;
  if(!v&&(q.a||q.b||q.station))v='link';
  fillPair();
- if(q.a&&byId[q.a]&&q.a!=='soare')$('pk-a').value=q.a;
- if(q.b&&byId[q.b]&&q.b!=='soare')$('pk-b').value=q.b;
- if(v)show(v);
- if(q.body&&byId[q.body])openDetail(q.body);
  fromBack(q.from,'orarium');
+ const has=k=>typeof k==='string'&&Object.prototype.hasOwnProperty.call(byId,k);
+ if(has(q.a)&&q.a!=='soare')$('pk-a').value=q.a;
+ if(has(q.b)&&q.b!=='soare')$('pk-b').value=q.b;
+ if(v)show(v);
+ if(has(q.body))openDetail(q.body);
  tfixBanner();tickBoard();
 }
 $('lnk-copy').onclick=async()=>{
