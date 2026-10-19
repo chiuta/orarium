@@ -4,6 +4,8 @@
 
 **Verzió:** 1.2.0 · **Utolsó frissítés:** 2026-10-18
 
+A felület nyelvei: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
+
 **Online alkalmazás:** [https://chiuta.github.io/orarium/](https://chiuta.github.io/orarium/)
 
 **Idő minden világon**
