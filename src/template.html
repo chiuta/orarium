@@ -3,7 +3,7 @@
 <html lang="ro">
 <head>
 <!--CSP-->
-<meta name="application-version" content="1.1.1">
+<meta name="application-version" content="1.2.0">
 <meta name="last-updated" content="2026-10-18">
 <meta name="description" content="Timpul pe Lună, Marte și toate corpurile Sistemului Solar: un etalon, două formule, patru ceasuri. Fișier unic, offline.">
 <meta charset="utf-8">
@@ -1289,7 +1289,7 @@ Acces        1 − log₁₀(1 + timp-lumină minute)/log₁₀(301)</div>
 
 <section id="v-scen" class="view"><div id="scen"></div></section>
 </main>
-<footer><span id="app-version" style="display:block;font-size:11px;opacity:.7">v 1.1.1 · 2026-10-18</span>Surse și metodă: articolul <a href="https://www.stiripesurse.ro/cat-este-ceasul-pe-luna_3928805" target="_blank" rel="noopener">„Cât este ceasul pe Lună…”</a> (AFP/Agerpres, 18.10.2026); orientări IAU WGCCRE 2009; elemente orbitale kepleriene medii (JPL, Standish); MTC/MSD marțian (Allison & McEwen). Valorile fizice ale corpurilor sunt cele uzuale din literatura de specialitate, rotunjite. Aplicația este trade-free: fără rețea, fără cont, fără urmărire.</footer>
+<footer><span id="app-version" style="display:block;font-size:11px;opacity:.7">v 1.2.0 · 2026-10-19</span>Surse și metodă: articolul <a href="https://www.stiripesurse.ro/cat-este-ceasul-pe-luna_3928805" target="_blank" rel="noopener">„Cât este ceasul pe Lună…”</a> (AFP/Agerpres, 18.10.2026); orientări IAU WGCCRE 2009; elemente orbitale kepleriene medii (JPL, Standish); MTC/MSD marțian (Allison & McEwen). Valorile fizice ale corpurilor sunt cele uzuale din literatura de specialitate, rotunjite. Aplicația este trade-free: fără rețea, fără cont, fără urmărire.</footer>
 
 <div id="ov"><div class="sheet"><button id="x" aria-label="Închide">×</button><div id="det"></div></div></div>
 
@@ -1879,7 +1879,7 @@ function openDetail(id){
  const mm=id==='marte'?mars(ms):null;
  let h='<h3>'+nm(b)+'</h3><div class="mut">'+(b.P?T('satelit al corpului: {0}',nm(b.P)):b.cat==='planeta'?T('planetă'):b.cat==='mic'?T('pitică / corp mic'):b.cat==='hab'?T('habitat în atmosferă'):T('referință'))+'</div>';
  h+='<div class="clk" style="font-size:38px;margin:10px 0 0" id="d-clk">--:--:--</div><div class="mut" id="d-sub"></div>';
- {const u=terraUrl(b,ms);if(u)h+='<p style="margin:6px 0"><a class="tl big" href="'+u+'" target="_blank" rel="noopener">↗ '+(b.id==='terra'?T('Vezi în TerRa: globul 3D, acum'):T('Vezi în TerRa: cerul, observator {0}, acum',nm(b)))+'</a></p>'}
+ {const u=terraUrl(b,TFIX===null?null:ms);if(u)h+='<p style="margin:6px 0"><a class="tl big" href="'+u+'" target="_blank" rel="noopener">↗ '+(b.id==='terra'?T('Vezi în TerRa: globul 3D, acum'):T('Vezi în TerRa: cerul, observator {0}, acum',nm(b)))+'</a>'+(b.id==='terra'?boltaLink(true):'')+'</p>'}
  h+='<div class="note">'+T(b.note)+'</div>';
  h+='<table>';
  h+='<tr><th>'+T('Rază / gravitație')+'</th><td class="r">'+f(b.R,b.R<10?2:1)+' km · '+f(b.g,b.g<0.01?5:3)+' m/s²</td></tr>';
@@ -2249,9 +2249,9 @@ function fromBack(f,self){
   if(window.FFF&&FFF.onLang)FFF.onLang(lab);
   else new MutationObserver(lab).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
 }
-function terraUrl(b,ms){
+function terraUrl(b,ms){   // ms===null: „acum” (fără t=, TerRa rămâne live)
  if(b.id!=='terra'&&!TERRA_OBS[b.id])return null;
- const t='&t='+new Date(ms).toISOString().slice(0,19)+'Z';
+ const t=ms===null?'':'&t='+new Date(ms).toISOString().slice(0,19)+'Z';
  const fr='&from=orarium';
  return b.id==='terra'?TERRA_URL+'#v=3d'+t+'&ll='+LK.lat.toFixed(4)+','+LK.lon.toFixed(4)+fr:TERRA_URL+'#v=sky&o='+TERRA_OBS[b.id]+t+fr;
 }
@@ -2259,6 +2259,18 @@ function terraLink(b,ms){
  const u=terraUrl(b,ms);if(!u)return '';
  return ' <a class="tl" href="'+u+'" target="_blank" rel="noopener" title="'+(b.id==='terra'?T('Vezi în TerRa: globul 3D la acel moment'):T('Vezi în TerRa: cerul, observator {0}, la acel moment',nm(b)))+'">↗ TerRa</a>';
 }
+// ----- legătură cu Bolta (https://chiuta.github.io/apps/Bolta/): cerul din stația LK, la momentul fixat (TFIX) sau live; Bolta acceptă 1900–2100 și afișează ora în UTC -----
+const BOLTA_URL='https://chiuta.github.io/apps/Bolta/';
+function boltaUrl(){
+ readLK();
+ const ms=NOW();if(!(ms>=Date.UTC(1900,0,1)&&ms<=Date.UTC(2100,11,31,23,59,59)))return null;
+ return BOLTA_URL+'#sky'+(TFIX===null?'':'&t='+new Date(TFIX).toISOString().slice(0,19)+'Z')+'&ll='+LK.lat.toFixed(2)+','+LK.lon.toFixed(2)+'&from=orarium';
+}
+function boltaLink(big){
+ const u=boltaUrl();if(!u)return '';
+ return ' <a class="tl'+(big?' big':'')+'" data-bolta="1" href="'+u+'" target="_blank" rel="noopener" title="'+T('Deschide planetariul Bolta pentru stația aleasă, la momentul fixat din link sau live (ora în UTC). Coordonatele, rotunjite la ~1 km, apar în adresa filei noi și în istoricul browserului; nu se trimit nicăieri.')+'">↗ '+T('Bolta: cerul din stația aleasă')+'</a>';
+}
+['pointerdown','click','keydown','focusin'].forEach(ev=>document.addEventListener(ev,e=>{const a=e.target.closest&&e.target.closest('a[data-bolta]');if(a){const u=boltaUrl();if(u)a.href=u}},true));  // href proaspăt la click (stația/ora s-au putut schimba)
 function whenStr(ms){
  const o={day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit',hourCycle:'h23'};
  const iso=new Date(ms).toISOString();
@@ -2275,7 +2287,7 @@ function linkHtml(b,ms){
   h+='<div class="ln"><b>'+T('Miezul nopții local (meridianul 0)')+'</b>'+(r&&!r.real?' †':'')+': '+whenStr(m1)+' — '+T('peste {0}',fmtSec((m1-ms)/1000))+terraLink(b,m1)+(m2?'<br><span class="mut">'+T('următorul')+': '+whenStr(m2)+'</span>':'')+'</div>';
   const n1=nextAt(b,ms,0,12);if(n1!==null){const n2=nextAt(b,n1+b.Psol*DAYS*500,0,12);h+='<div class="ln"><b>'+T('Amiaza locală (12:00, meridianul 0)')+'</b>'+(r&&!r.real?' †':'')+': '+whenStr(n1)+' — '+T('peste {0}',fmtSec((n1-ms)/1000))+terraLink(b,n1)+(n2?'<br><span class="mut">'+T('următorul')+': '+whenStr(n2)+'</span>':'')+'</div>'}
  }
- if(b.id==='terra')return h;
+ if(b.id==='terra')return h+(boltaUrl()?'<div class="ln">'+boltaLink()+'</div>':'');
  if(!tgtEcl(b,ms))return h+'<div class="ln mut">'+T('Fereastra de transmisie și conjuncția solară nu sunt calculate pentru acest corp (nu are efemeridă în aplicație; vezi timpul-lumină).')+'</div>';
  const full=b.id==='luna'||!!IAU[b.id];
  const days=Math.min(400,Math.max(3,(b.Psol||1)*1.1+2)),w=linkWindows(b,ms,days,2);
@@ -2352,7 +2364,7 @@ function pairHtml(a,b,ms){
  if(bo.none)c=T('nicio întrerupere în următorii 900 de zile');
  else if(bo.start!==null&&bo.start<=ms)c='<b class="neg">'+T('legătură întreruptă')+'</b> (&lt; '+f(LK.thr,1)+'°), '+T('până la {0}',whenStr(bo.end));
  else c=T('următoarea întrerupere (&lt; {0}°)',f(LK.thr,1))+': '+whenStr(bo.start)+' → '+whenStr(bo.end)+' ('+fmtSec((bo.end-bo.start)/1000)+')';
- return h+'<div class="ln"><b>'+T('Conjuncție solară')+'</b>: '+c+'</div>'+((terraUrl(a,ms)||terraUrl(b,ms))?'<div class="ln">'+nm(a)+terraLink(a,ms)+' · '+nm(b)+terraLink(b,ms)+'</div>':'');
+ return h+'<div class="ln"><b>'+T('Conjuncție solară')+'</b>: '+c+'</div>'+((terraUrl(a,ms)||terraUrl(b,ms))?'<div class="ln">'+nm(a)+terraLink(a,TFIX===null?null:ms)+' · '+nm(b)+terraLink(b,TFIX===null?null:ms)+'</div>':'');
 }
 function fillPair(){
  const ca=$('pk-a').value,cb=$('pk-b').value,o=B.filter(b=>b.cat!=='ref').map(b=>'<option value="'+b.id+'">'+nm(b)+'</option>').join('');
@@ -2362,7 +2374,44 @@ function buildPair(){
  const g=(id,d,a,c)=>{const v=parseFloat($(id).value);return isFinite(v)?clamp(v,a,c):d};
  PK.ala=g('pk-ala',0,-90,90);PK.alo=g('pk-alo',0,-360,360);PK.bla=g('pk-bla',0,-90,90);PK.blo=g('pk-blo',0,-360,360);
  const a=byId[$('pk-a').value],b=byId[$('pk-b').value];
- $('pk-out').innerHTML='<div class="panel"><div class="nm"><span>'+nm(a)+' ⇄ '+nm(b)+'</span></div>'+pairHtml(a,b,NOW())+'</div>';
+ const gg=a.id!==b.id?pairGeom(a,b,NOW()):null,canIcs=!!gg&&nrm3(gg.v)>=1;
+ $('pk-out').innerHTML='<div class="panel"><div class="nm"><span>'+nm(a)+' ⇄ '+nm(b)+'</span></div>'+pairHtml(a,b,NOW())+(canIcs?'<div class="ln"><button class="btn" id="pk-ics" type="button" style="margin-top:2px">'+T('📅 Exportă ferestrele în .ics')+'</button><span id="pk-ics-msg" class="mut" role="status" style="margin-left:8px"></span><div class="mut" style="font-size:12.5px;margin-top:4px">'+T('Fișier .ics cu următoarele ferestre de comunicare și cu întreruperea prin conjuncție solară pentru perechea aleasă. Orele sunt în UTC; se importă în Orar sau în orice calendar.')+'</div></div>':'')+'</div>';
+ if(canIcs)$('pk-ics').onclick=exportPairIcs;
+}
+// ----- export .ics: ferestre de comunicare (maximum 20) + întreruperea prin conjuncție solară; toate orele în UTC (fără fus orar/DST de tratat) -----
+const icsEsc=s=>String(s).replace(/\\/g,'\\\\').replace(/;/g,'\\;').replace(/,/g,'\\,').replace(/\r?\n/g,'\\n');
+const icsT=ms=>new Date(ms).toISOString().replace(/[-:]/g,'').slice(0,15)+'Z';
+function icsFold(l){   // RFC 5545: linii de cel mult 75 de octeți UTF-8; continuarea începe cu un spațiu
+ const enc=new TextEncoder();if(enc.encode(l).length<=75)return l;
+ const parts=[];let cur='',n=0,lim=75;
+ for(const ch of l){const k=enc.encode(ch).length;if(n+k>lim){parts.push(cur);cur='';n=0;lim=74}cur+=ch;n+=k}
+ parts.push(cur);return parts.join('\r\n ');
+}
+function pairIcs(a,b,ms){
+ const g=a.id===b.id?null:pairGeom(a,b,ms);if(!g||nrm3(g.v)<1)return null;
+ const days=Math.min(400,Math.max(30,Math.max(a.Psol||1,b.Psol||1)*3+2)),ev=[];
+ if(modelled(a)||modelled(b))(winScan(t=>pairOk(a,b,t),ms,days,20)||[]).forEach(x=>{if(x.end!==null)ev.push({k:'w',s:x.start===null?ms:x.start,e:x.end})});
+ const bo=blackScan(t=>pairBlocked(a,b,t),ms);
+ if(!bo.none&&bo.end>ms)ev.push({k:'b',s:Math.max(bo.start===null?ms:bo.start,ms),e:bo.end});
+ ev.sort((x,y)=>x.s-y.s);
+ const stamp=icsT(Date.now()),L=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//fara frontiere//ORARIUM 1.2.0//RO','CALSCALE:GREGORIAN','X-WR-CALNAME:'+icsEsc('ORARIUM '+nm(a)+' ⇄ '+nm(b))];
+ ev.forEach(x=>{
+  const lt=pairGeom(a,b,x.s).lt;
+  L.push('BEGIN:VEVENT','UID:orarium-'+a.id+'-'+b.id+'-'+x.k+'-'+icsT(x.s)+'@chiuta.github.io','DTSTAMP:'+stamp,'DTSTART:'+icsT(x.s),'DTEND:'+icsT(x.e),
+   'SUMMARY:'+icsEsc(T(x.k==='w'?'Fereastră de comunicare: {0} ⇄ {1}':'Conjuncție solară, legătură întreruptă: {0} ⇄ {1}',nm(a),nm(b))),
+   'DESCRIPTION:'+icsEsc(T('Timp-lumină la început: {0}. Calcul orientativ din elemente kepleriene medii (precizie de ordinul minutelor); nu pentru operațiuni reale.',fmtSec(lt))),
+   'CATEGORIES:ORARIUM','TRANSP:TRANSPARENT','END:VEVENT');
+ });
+ L.push('END:VCALENDAR');
+ return {ev:ev,days:days,text:L.map(icsFold).join('\r\n')+'\r\n',name:'orarium-'+a.id+'-'+b.id+'-'+new Date().toISOString().slice(0,10).replace(/-/g,'')+'.ics'};
+}
+function exportPairIcs(){
+ readLK();
+ const a=byId[$('pk-a').value],b=byId[$('pk-b').value],r=pairIcs(a,b,NOW()),m=$('pk-ics-msg');
+ if(!r||!r.ev.length){if(m)m.textContent=T('Nicio fereastră de exportat în următoarele {0} de zile.',nf(Math.round(r?r.days:30)));return}
+ if(m)m.textContent='';
+ if(window.FFF&&FFF.download)FFF.download(r.name,r.text,'text/calendar;charset=utf-8');
+ else{const u=URL.createObjectURL(new Blob([r.text],{type:'text/calendar;charset=utf-8'})),x=document.createElement('a');x.href=u;x.download=r.name;document.body.appendChild(x);x.click();x.remove();setTimeout(()=>URL.revokeObjectURL(u),4000)}
 }
 function pkSoon(){clearTimeout(lkTimer);lkTimer=setTimeout(()=>{if(curView==='link'){buildPair()}},250)}
 ['pk-a','pk-b'].forEach(id=>$(id).onchange=pkSoon);

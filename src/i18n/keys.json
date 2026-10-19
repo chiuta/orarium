@@ -582,5 +582,13 @@
 "Link copiat": "",
 "Copiere indisponibilă — linkul e în bara de adrese": "",
 "Moment fixat din link: {0}": "",
-"Revino la acum": ""
+"Revino la acum": "",
+"Bolta: cerul din stația aleasă": "",
+"Deschide planetariul Bolta pentru stația aleasă, la momentul fixat din link sau live (ora în UTC). Coordonatele, rotunjite la ~1 km, apar în adresa filei noi și în istoricul browserului; nu se trimit nicăieri.": "",
+"📅 Exportă ferestrele în .ics": "",
+"Fișier .ics cu următoarele ferestre de comunicare și cu întreruperea prin conjuncție solară pentru perechea aleasă. Orele sunt în UTC; se importă în Orar sau în orice calendar.": "",
+"Fereastră de comunicare: {0} ⇄ {1}": "",
+"Conjuncție solară, legătură întreruptă: {0} ⇄ {1}": "",
+"Timp-lumină la început: {0}. Calcul orientativ din elemente kepleriene medii (precizie de ordinul minutelor); nu pentru operațiuni reale.": "",
+"Nicio fereastră de exportat în următoarele {0} de zile.": ""
 }

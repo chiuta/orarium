@@ -582,5 +582,13 @@
  "Link copiat": "Link másolva",
  "Copiere indisponibilă — linkul e în bara de adrese": "A másolás nem érhető el — a link a címsorban van",
  "Moment fixat din link: {0}": "A linkből rögzített pillanat: {0}",
- "Revino la acum": "Vissza a mostra"
+ "Revino la acum": "Vissza a mostra",
+"Bolta: cerul din stația aleasă": "Bolta: az ég a kiválasztott állomásról",
+"Deschide planetariul Bolta pentru stația aleasă, la momentul fixat din link sau live (ora în UTC). Coordonatele, rotunjite la ~1 km, apar în adresa filei noi și în istoricul browserului; nu se trimit nicăieri.": "Megnyitja a Bolta planetáriumot a kiválasztott állomásra, a hivatkozásból rögzített időpontban vagy élőben (idő UTC-ben). A ~1 km-re kerekített koordináták megjelennek az új lap címében és a böngészőelőzményekben; sehová sem kerülnek elküldésre.",
+"📅 Exportă ferestrele în .ics": "📅 Ablakok exportálása .ics-be",
+"Fișier .ics cu următoarele ferestre de comunicare și cu întreruperea prin conjuncție solară pentru perechea aleasă. Orele sunt în UTC; se importă în Orar sau în orice calendar.": "A kiválasztott párra vonatkozó következő kommunikációs ablakokat és a napkonjunkció okozta megszakítást tartalmazó .ics fájl. Az idők UTC-ben vannak; importálható az Orarba vagy bármely naptárba.",
+"Fereastră de comunicare: {0} ⇄ {1}": "Kommunikációs ablak: {0} ⇄ {1}",
+"Conjuncție solară, legătură întreruptă: {0} ⇄ {1}": "Napkonjunkció, megszakadt kapcsolat: {0} ⇄ {1}",
+"Timp-lumină la început: {0}. Calcul orientativ din elemente kepleriene medii (precizie de ordinul minutelor); nu pentru operațiuni reale.": "Fényidő a kezdetkor: {0}. Tájékoztató számítás átlagos Kepler-elemekből (percnyi pontosság); valódi műveletekhez nem alkalmas.",
+"Nicio fereastră de exportat în următoarele {0} de zile.": "A következő {0} napban nincs exportálandó ablak."
 }

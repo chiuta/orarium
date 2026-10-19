@@ -1,6 +1,6 @@
 {
   "name": "orarium",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "ORARIUM — a single-file, offline app that defines time on the Moon, Mars and every body of the Solar System.",
   "license": "MIT",
   "author": "Alexandru-Ionuț Chiuță (Alexio)",
@@ -9,6 +9,7 @@
     "build": "python3 tools/build.py && node ../chiuta.github.io/fff-kit/build.mjs info . --slug orarium",
     "validate": "python3 tools/validate.py",
     "test:browser": "node tests/from.test.mjs",
+    "test:bridge": "node tools/bridge.test.mjs",
     "test": "node tools/exercise.js index.html ro && node tools/exercise.js index.html en"
   },
   "devDependencies": {

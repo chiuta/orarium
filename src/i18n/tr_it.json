@@ -582,5 +582,13 @@
  "Link copiat": "Link copiato",
  "Copiere indisponibilă — linkul e în bara de adrese": "Copia non disponibile — il link è nella barra degli indirizzi",
  "Moment fixat din link: {0}": "Momento fissato dal link: {0}",
- "Revino la acum": "Torna ad ora"
+ "Revino la acum": "Torna ad ora",
+"Bolta: cerul din stația aleasă": "Bolta: il cielo dalla stazione scelta",
+"Deschide planetariul Bolta pentru stația aleasă, la momentul fixat din link sau live (ora în UTC). Coordonatele, rotunjite la ~1 km, apar în adresa filei noi și în istoricul browserului; nu se trimit nicăieri.": "Apre il planetario Bolta per la stazione scelta, nell'istante fissato dal link o in tempo reale (ora in UTC). Le coordinate, arrotondate a ~1 km, compaiono nell'indirizzo della nuova scheda e nella cronologia del browser; non vengono inviate da nessuna parte.",
+"📅 Exportă ferestrele în .ics": "📅 Esporta le finestre in .ics",
+"Fișier .ics cu următoarele ferestre de comunicare și cu întreruperea prin conjuncție solară pentru perechea aleasă. Orele sunt în UTC; se importă în Orar sau în orice calendar.": "File .ics con le prossime finestre di comunicazione e l'interruzione per congiunzione solare per la coppia scelta. Gli orari sono in UTC; si importa in Orar o in qualsiasi calendario.",
+"Fereastră de comunicare: {0} ⇄ {1}": "Finestra di comunicazione: {0} ⇄ {1}",
+"Conjuncție solară, legătură întreruptă: {0} ⇄ {1}": "Congiunzione solare, collegamento interrotto: {0} ⇄ {1}",
+"Timp-lumină la început: {0}. Calcul orientativ din elemente kepleriene medii (precizie de ordinul minutelor); nu pentru operațiuni reale.": "Tempo-luce all'inizio: {0}. Calcolo indicativo da elementi kepleriani medi (precisione dell'ordine dei minuti); non per operazioni reali.",
+"Nicio fereastră de exportat în următoarele {0} de zile.": "Nessuna finestra da esportare nei prossimi {0} giorni."
 }
