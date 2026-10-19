@@ -2,6 +2,8 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · **Italiano** · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
+**Versione:** 1.2.0 · **Ultimo aggiornamento:** 2026-10-18
+
 **App online:** [https://chiuta.github.io/orarium/](https://chiuta.github.io/orarium/)
 
 **Il tempo su tutti i mondi**
