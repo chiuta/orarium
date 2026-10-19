@@ -68,12 +68,12 @@
 .fff-chip:focus-visible{outline:2px solid currentColor;outline-offset:2px}
 @media (prefers-reduced-motion:no-preference){.fff-dlg[open]{animation:fff-in .12s ease-out}@keyframes fff-in{from{transform:translateY(6px)}to{transform:none}}}
 @media (prefers-reduced-motion:reduce){.fff-dlg,.fff-dlg *{animation:none!important;transition:none!important}}</style>
-<script id="fff-kit">/* fff-kit 1.0.0 */
+<script id="fff-kit">/* fff-kit 1.1.1 */
 /* ---- fff-kit/core ---- */
-/* fff-kit · core · v1.0.0 — fără rețea, fără dependențe. Definește window.FFF. */
+/* fff-kit · core · v1.1.1 — fără rețea, fără dependențe. Definește window.FFF. */
 (function () {
   'use strict';
-  var KIT_VERSION = '1.0.0';
+  var KIT_VERSION = '1.1.1';
   var F = (window.FFF = window.FFF || {});
   if (F.core && F.core.version) return; // idempotent la dublă încărcare
   var SUP = ['ro', 'en', 'fr', 'it', 'es', 'pt', 'hu', 'de'];
@@ -892,12 +892,15 @@
   }
 
   /* ---------- construire ---------- */
-  function plain() {
+  var redactors = [];
+  function plain(redact) {
     var keys = F.store.indexKeys(), data = {};
     keys.forEach(function (k) {
       if (k === F.store.indexKey) return;
       var v = F.store.raw.get(k);
-      if (typeof v === 'string') data[k] = v;
+      if (typeof v !== 'string') return;
+      if (redact) redactors.forEach(function (f) { try { var r = f(k, v); if (typeof r === 'string') v = r; else v = ''; } catch (e) { /* un redactor defect nu oprește exportul, dar nici nu lasă valoarea originală: */ v = ''; } });
+      data[k] = v;
     });
     var a = F.app;
     return {format: 'fff-bundle', schema: SCHEMA, app: a.slug, version: a.version || '', updated: a.updated || '', exported: new Date().toISOString(), data: data};
@@ -961,14 +964,16 @@
   var bundle = F.bundle = {
     schema: SCHEMA,
     iterations: ITER,
-    build: plain,
+    build: function () { return plain(false); },
+    /** Înregistrează fn(cheie, valoare) -> valoare curățată (șir); se aplică doar exportului necriptat. */
+    redact: function (fn) { if (typeof fn === 'function') redactors.push(fn); },
     confirm: confirmDlg,
 
     /** Descarcă un .fff.json. Cu {encrypt:true, password} produce varianta criptată. */
     export: function (opt) {
       opt = opt || {};
       return Promise.resolve().then(function () {
-        var obj = plain();
+        var obj = plain(!opt.encrypt && !opt.secrets);   // exportul necriptat trece prin redactori (secrete scoase); cel criptat sau {secrets:true} e complet
         var n = Object.keys(obj.data).length;
         if (opt.encrypt) {
           if (typeof opt.password !== 'string' || opt.password.length < 8) throw BErr('pw_short');

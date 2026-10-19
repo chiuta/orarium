@@ -15,8 +15,8 @@
     "orarium.lang",
     "orarium.ref"
   ],
-  "sizeBytes": 708274,
-  "sha256": "7785597c51a7f969828f9a2ed5393642c1b2da2098f476de39d6f133c658527c",
+  "sizeBytes": 708910,
+  "sha256": "4841a1065abab669d31b0b0aa705bac242e2d41f3262c78c7758e2825f9c0b8b",
   "csp": {
     "present": true,
     "directives": {
@@ -56,7 +56,7 @@
     ]
   },
   "kit": {
-    "version": "1.1.0",
+    "version": "1.1.1",
     "modules": [
       "core",
       "label",
