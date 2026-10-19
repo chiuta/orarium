@@ -18,11 +18,10 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
-      - name: Validate translations and rebuild index.html
+      - name: Validate translations and check index.html is up to date
         run: |
           python3 tools/validate.py
-          python3 tools/build.py
-          git diff --exit-code index.html || (echo "index.html is out of date: run 'python3 tools/build.py' and commit" && exit 1)
+          python3 tools/check_fresh.py
       - name: Prepare site
         run: mkdir _site && cp index.html LICENSE _site/
       - uses: actions/configure-pages@v5
