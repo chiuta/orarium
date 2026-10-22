@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · **Français** · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Version :** 1.2.2 · **Dernière mise à jour :** 2026-10-22
+**Version :** 1.2.3 · **Dernière mise à jour :** 2026-10-22
 
 **Application en ligne :** [https://chiuta.github.io/orarium/](https://chiuta.github.io/orarium/)
 
@@ -70,6 +70,11 @@ node tools/exercise.js index.html fr   # one language only
 - Les valeurs physiques sont les chiffres usuels de la littérature, arrondis. Les données de colonisation sont qualitatives et indicatives.
 
 ## Historique
+
+### 1.2.3 — 2026-10-22
+- Hors ligne pour de bon : un service worker (cache d'abord, cache par version), un manifeste web et des icônes ont été ajoutés ; l'application s'ouvre donc sans réseau après la première visite et peut être installée (la promesse « hors ligne » du catalogue est désormais vraie). La chaîne de build (`npm run build`) applique les fichiers PWA et actualise l'étiquette de transparence.
+- Accessibilité : les 19 champs du convertisseur, de la liaison de communication et de la fenêtre par paires ont désormais des étiquettes associées par programmation à leurs champs.
+- Mobile : correction du débordement horizontal de 10 px sur les cartes « Maintenant » (l'étiquette du nom du corps ne dépasse plus de la carte) ; le petit texte (étiquettes, notes) fait au moins 12 px.
 
 ### 1.2.2 — 2026-10-22
 - L'étiquette d'accessibilité de la carte schématique est traduite dès le départ (elle restait en roumain avant l'ouverture de l'onglet carte), et le titre de l'article cité en pied de page est rendu en français, allemand et hongrois comme dans les autres langues.

@@ -2,12 +2,13 @@
   "schema": 1,
   "slug": "orarium",
   "name": "ORARIUM — Timpul pe toate lumile",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "updated": "2026-10-22",
   "description": "Timpul pe Lună, Marte și toate corpurile Sistemului Solar: un etalon, două formule, patru ceasuri. Fișier unic, offline.",
   "egress": [],
   "permissions": [
     "clipboard",
+    "serviceWorker",
     "localStorage"
   ],
   "storageKeys": [
@@ -15,19 +16,20 @@
     "orarium.lang",
     "orarium.ref"
   ],
-  "sizeBytes": 711430,
-  "sha256": "032b21c805bfbd92831d95c4c00e99e1e90d82a88183332af365becd135f53f3",
+  "sizeBytes": 713203,
+  "sha256": "b1d5dd2ac3031974acbbd55744aeda22b47427eee2a2c7c8bf55ed443a529107",
   "csp": {
     "present": true,
     "directives": {
       "default-src": "'none'",
-      "script-src": "sha256×2",
+      "script-src": "sha256×3",
       "style-src": "'unsafe-inline'",
-      "img-src": "data: blob:",
-      "worker-src": "blob:",
+      "img-src": "'self' data: blob:",
+      "worker-src": "'self' blob:",
       "connect-src": "'none'",
       "base-uri": "'none'",
-      "form-action": "'none'"
+      "form-action": "'none'",
+      "manifest-src": "'self'"
     },
     "scriptInline": "hash",
     "connect": "'none'"
@@ -46,8 +48,8 @@
       "de"
     ],
     "pwa": {
-      "manifest": false,
-      "serviceWorker": false
+      "manifest": true,
+      "serviceWorker": true
     },
     "modules": [
       "core",

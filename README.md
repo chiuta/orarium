@@ -2,7 +2,7 @@
 
 **English** · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Version:** 1.2.2 · **Last updated:** 2026-10-22
+**Version:** 1.2.3 · **Last updated:** 2026-10-22
 
 **Live app:** [https://chiuta.github.io/orarium/](https://chiuta.github.io/orarium/)
 
@@ -71,6 +71,11 @@ node tools/exercise.js index.html fr   # one language only
 - Physical values are the usual literature figures, rounded. Colonization data are qualitative and indicative.
 
 ## Changelog
+
+### 1.2.3 — 2026-10-22
+- Offline for real: a service worker (cache-first, per-version cache), a web manifest and icons were added, so the app opens without network after the first visit and can be installed (the catalogue promise “offline” is now true). The build chain (`npm run build`) applies the PWA files and refreshes the transparency label.
+- Accessibility: the 19 converter, communication-link and pair-window fields now have labels programmatically associated with their inputs.
+- Mobile: fixed the 10 px horizontal overflow on the “Now” cards (body-name tag no longer sticks out of the card); small text (tags, notes) is at least 12 px.
 
 ### 1.2.2 — 2026-10-22
 - The accessibility label of the schematic map is now translated from the start (it was Romanian until the map tab was opened), and the cited article title in the sources footer is rendered in French, German and Hungarian like in the other languages.

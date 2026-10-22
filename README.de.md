@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · **Deutsch** · [Magyar](README.hu.md)
 
-**Version:** 1.2.2 · **Zuletzt aktualisiert:** 2026-10-22
+**Version:** 1.2.3 · **Zuletzt aktualisiert:** 2026-10-22
 
 **Online-App:** [https://chiuta.github.io/orarium/](https://chiuta.github.io/orarium/)
 
@@ -70,6 +70,11 @@ node tools/exercise.js index.html fr   # one language only
 - Die physikalischen Werte sind die üblichen, gerundeten Literaturangaben. Die Besiedlungsdaten sind qualitativ und richtungsweisend.
 
 ## Verlauf
+
+### 1.2.3 — 2026-10-22
+- Wirklich offline: Ein Service Worker (Cache zuerst, Cache pro Version), ein Web-Manifest und Symbole wurden hinzugefügt; die App öffnet sich nach dem ersten Besuch ohne Netz und kann installiert werden (das Katalogversprechen „offline“ stimmt nun). Die Build-Kette (`npm run build`) wendet die PWA-Dateien an und aktualisiert das Transparenzetikett.
+- Barrierefreiheit: Die 19 Felder des Umrechners, der Kommunikationsverbindung und des Paarfensters haben jetzt programmatisch zugeordnete Beschriftungen.
+- Mobil: Der horizontale Überlauf von 10 px bei den „Jetzt“-Karten wurde behoben (das Namensetikett des Himmelskörpers ragt nicht mehr aus der Karte); kleiner Text (Etiketten, Notizen) ist mindestens 12 px groß.
 
 ### 1.2.2 — 2026-10-22
 - Das Barrierefreiheits-Label der schematischen Karte wird von Anfang an übersetzt (es blieb rumänisch, bis der Karten-Tab geöffnet wurde), und der Titel des zitierten Artikels in der Fußzeile erscheint auch auf Französisch, Deutsch und Ungarisch übersetzt.

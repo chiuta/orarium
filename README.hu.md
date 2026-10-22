@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · **Magyar**
 
-**Verzió:** 1.2.2 · **Utolsó frissítés:** 2026-10-22
+**Verzió:** 1.2.3 · **Utolsó frissítés:** 2026-10-22
 
 A felület nyelvei: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -72,6 +72,11 @@ node tools/exercise.js index.html fr   # one language only
 - A fizikai értékek a szokásos, kerekített szakirodalmi adatok. A kolonizációs adatok kvalitatívak és tájékoztató jellegűek.
 
 ## Előzmények
+
+### 1.2.3 — 2026-10-22
+- Valóban offline: service worker (előbb gyorsítótár, verziónkénti gyorsítótár), webes manifest és ikonok kerültek az alkalmazásba, így az első látogatás után hálózat nélkül is megnyílik, és telepíthető (a katalógus „offline” ígérete mostantól igaz). A build-lánc (`npm run build`) alkalmazza a PWA-fájlokat és frissíti az átláthatósági címkét.
+- Akadálymentesség: az átváltó, a kommunikációs kapcsolat és a párablak 19 mezőjéhez most programozottan hozzárendelt címkék tartoznak.
+- Mobil: javítva a „Most” kártyák 10 px-es vízszintes túlcsordulása (a égitest nevét jelölő címke már nem lóg ki a kártyából); a kis szöveg (címkék, jegyzetek) legalább 12 px.
 
 ### 1.2.2 — 2026-10-22
 - A sematikus térkép hozzáférhetőségi címkéje az elejétől fogva le van fordítva (korábban a térkép fül megnyitásáig román maradt), a láblécben idézett cikk címe pedig franciául, németül és magyarul is fordítva jelenik meg.

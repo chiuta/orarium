@@ -2,7 +2,7 @@
 
 [English](README.md) · **Română** · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versiune:** 1.2.2 · **Ultima actualizare:** 2026-10-22
+**Versiune:** 1.2.3 · **Ultima actualizare:** 2026-10-22
 
 **Aplicația online:** [https://chiuta.github.io/orarium/](https://chiuta.github.io/orarium/)
 
@@ -71,6 +71,11 @@ node tools/exercise.js index.html fr   # doar o limbă
 - Valorile fizice sunt cele uzuale din literatura de specialitate, rotunjite. Datele despre colonizare sunt calitative și orientative.
 
 ## Istoric
+
+### 1.2.3 — 2026-10-22
+- Offline pe bune: au fost adăugate un service worker (cache-first, cache pe versiune), un manifest web și pictograme, astfel încât aplicația se deschide fără rețea după prima vizită și poate fi instalată (promisiunea „offline” din catalog e acum adevărată). Lanțul de build (`npm run build`) aplică fișierele PWA și reîmprospătează eticheta de transparență.
+- Accesibilitate: cele 19 câmpuri din convertor, legătura de comunicație și fereastra pe perechi au acum etichete asociate programatic cu câmpurile.
+- Mobil: corectat depășirea orizontală de 10 px la cardurile „Acum” (eticheta cu numele corpului nu mai iese din card); textul mic (etichete, note) are cel puțin 12 px.
 
 ### 1.2.2 — 2026-10-22
 - Eticheta de accesibilitate a hărții schematice este tradusă încă de la început (rămânea în română până la deschiderea filei Hartă), iar titlul articolului citat din subsol este redat și în franceză, germană și maghiară.

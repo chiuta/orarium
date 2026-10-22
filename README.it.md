@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · **Italiano** · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versione:** 1.2.2 · **Ultimo aggiornamento:** 2026-10-22
+**Versione:** 1.2.3 · **Ultimo aggiornamento:** 2026-10-22
 
 **App online:** [https://chiuta.github.io/orarium/](https://chiuta.github.io/orarium/)
 
@@ -70,6 +70,11 @@ node tools/exercise.js index.html fr   # one language only
 - I valori fisici sono le consuete cifre di letteratura, arrotondate. I dati sulla colonizzazione sono qualitativi e indicativi.
 
 ## Cronologia
+
+### 1.2.3 — 2026-10-22
+- Offline davvero: sono stati aggiunti un service worker (cache first, cache per versione), un manifest web e le icone, quindi l'app si apre senza rete dopo la prima visita e può essere installata (la promessa «offline» del catalogo ora è vera). La catena di build (`npm run build`) applica i file PWA e aggiorna l'etichetta di trasparenza.
+- Accessibilità: i 19 campi del convertitore, del collegamento di comunicazione e della finestra per coppie hanno ora etichette associate programmaticamente ai campi.
+- Mobile: corretto lo sforamento orizzontale di 10 px nelle schede «Adesso» (l'etichetta con il nome del corpo non sporge più dalla scheda); il testo piccolo (etichette, note) è di almeno 12 px.
 
 ### 1.2.2 — 2026-10-22
 - L'etichetta di accessibilità della mappa schematica è tradotta fin dall'inizio (restava in rumeno finché non si apriva la scheda mappa) e il titolo dell'articolo citato nel piè di pagina è reso anche in francese, tedesco e ungherese.

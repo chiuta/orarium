@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · **Português** · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versão:** 1.2.2 · **Última atualização:** 2026-10-22
+**Versão:** 1.2.3 · **Última atualização:** 2026-10-22
 
 **Aplicação online:** [https://chiuta.github.io/orarium/](https://chiuta.github.io/orarium/)
 
@@ -70,6 +70,11 @@ node tools/exercise.js index.html fr   # one language only
 - Os valores físicos são os números habituais da literatura, arredondados. Os dados de colonização são qualitativos e indicativos.
 
 ## Histórico
+
+### 1.2.3 — 2026-10-22
+- Offline a sério: foram adicionados um service worker (cache primeiro, cache por versão), um manifesto web e ícones, pelo que a aplicação abre sem rede após a primeira visita e pode ser instalada (a promessa «offline» do catálogo é agora verdadeira). A cadeia de compilação (`npm run build`) aplica os ficheiros PWA e atualiza a etiqueta de transparência.
+- Acessibilidade: os 19 campos do conversor, da ligação de comunicação e da janela por pares têm agora etiquetas associadas programaticamente aos campos.
+- Móvel: corrigido o excesso horizontal de 10 px nos cartões «Agora» (a etiqueta com o nome do corpo já não sai do cartão); o texto pequeno (etiquetas, notas) tem pelo menos 12 px.
 
 ### 1.2.2 — 2026-10-22
 - A etiqueta de acessibilidade do mapa esquemático é traduzida desde o início (ficava em romeno até abrir o separador do mapa) e o título do artigo citado no rodapé é apresentado também em francês, alemão e húngaro.
