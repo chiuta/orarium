@@ -2,7 +2,7 @@
 
 [English](README.md) · **Română** · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versiune:** 1.2.0 · **Ultima actualizare:** 2026-10-18
+**Versiune:** 1.2.1 · **Ultima actualizare:** 2026-10-22
 
 **Aplicația online:** [https://chiuta.github.io/orarium/](https://chiuta.github.io/orarium/)
 
@@ -69,6 +69,11 @@ node tools/exercise.js index.html fr   # doar o limbă
 - Articolul care a declanșat proiectul: „Cât este ceasul pe Lună…” (AFP/Agerpres, stiripesurse.ro, 18.10.2026).
 - Orientările polilor și meridianelor de origine: IAU WGCCRE 2009. Elemente kepleriene medii: JPL (Standish). Timpul marțian MSD/MTC: Allison și McEwen. Seria pentru distanța Pământ–Lună: J. Meeus, *Astronomical Algorithms*.
 - Valorile fizice sunt cele uzuale din literatura de specialitate, rotunjite. Datele despre colonizare sunt calitative și orientative.
+
+## Istoric
+
+### 1.2.1 — 2026-10-22
+- Subsolul „Surse și metodă”, meta descrierea și panoul de transparență fff-kit (nume și descriere) urmează acum limba interfeței.
 
 ## Licență
 

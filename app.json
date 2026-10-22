@@ -2,8 +2,8 @@
   "schema": 1,
   "slug": "orarium",
   "name": "ORARIUM — Timpul pe toate lumile",
-  "version": "1.2.0",
-  "updated": "2026-10-18",
+  "version": "1.2.1",
+  "updated": "2026-10-22",
   "description": "Timpul pe Lună, Marte și toate corpurile Sistemului Solar: un etalon, două formule, patru ceasuri. Fișier unic, offline.",
   "egress": [],
   "permissions": [
@@ -15,8 +15,8 @@
     "orarium.lang",
     "orarium.ref"
   ],
-  "sizeBytes": 708910,
-  "sha256": "4841a1065abab669d31b0b0aa705bac242e2d41f3262c78c7758e2825f9c0b8b",
+  "sizeBytes": 711357,
+  "sha256": "fa42e9ef75a676f7698a51d5976919b8b2391280830aed476c88e7ca9344f75c",
   "csp": {
     "present": true,
     "directives": {

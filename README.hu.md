@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · **Magyar**
 
-**Verzió:** 1.2.0 · **Utolsó frissítés:** 2026-10-18
+**Verzió:** 1.2.1 · **Utolsó frissítés:** 2026-10-22
 
 A felület nyelvei: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -70,6 +70,11 @@ node tools/exercise.js index.html fr   # one language only
 - A projektet elindító cikk: „[Hány óra van a Holdon…](https://www.stiripesurse.ro/cat-este-ceasul-pe-luna_3928805)” (románul; AFP/Agerpres, stiripesurse.ro, 2026.10.18.).
 - A pólusok és a kezdőmeridiánok tájolása: IAU WGCCRE 2009. Átlagos Kepler-féle pályaelemek: JPL (Standish). Marsi idő MSD/MTC: Allison & McEwen. Holdtávolság-sorozat: J. Meeus, *Astronomical Algorithms*.
 - A fizikai értékek a szokásos, kerekített szakirodalmi adatok. A kolonizációs adatok kvalitatívak és tájékoztató jellegűek.
+
+## Előzmények
+
+### 1.2.1 — 2026-10-22
+- A „Források és módszer” lábléc, a meta leírás és az fff-kit átláthatósági panel (név és leírás) mostantól a felület nyelvét követi.
 
 ## Licenc
 

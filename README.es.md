@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · **Español** · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versión:** 1.2.0 · **Última actualización:** 2026-10-18
+**Versión:** 1.2.1 · **Última actualización:** 2026-10-22
 
 **Aplicación en línea:** [https://chiuta.github.io/orarium/](https://chiuta.github.io/orarium/)
 
@@ -68,6 +68,11 @@ node tools/exercise.js index.html fr   # one language only
 - Artículo que motivó el proyecto: "[Qué hora es en la Luna…](https://www.stiripesurse.ro/cat-este-ceasul-pe-luna_3928805)" (en rumano; AFP/Agerpres, stiripesurse.ro, 18.10.2026).
 - Orientaciones del polo y del meridiano origen: IAU WGCCRE 2009. Elementos keplerianos medios: JPL (Standish). Tiempo marciano MSD/MTC: Allison y McEwen. Serie de distancias lunares: J. Meeus, *Astronomical Algorithms*.
 - Los valores físicos son las cifras habituales de la literatura, redondeadas. Los datos de colonización son cualitativos y orientativos.
+
+## Historial
+
+### 1.2.1 — 2026-10-22
+- El pie de página «Fuentes y método», la meta descripción y el panel de transparencia fff-kit (nombre y descripción) siguen ahora el idioma de la interfaz.
 
 ## Licencia
 

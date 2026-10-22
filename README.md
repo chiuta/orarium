@@ -2,7 +2,7 @@
 
 **English** · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Version:** 1.2.0 · **Last updated:** 2026-10-18
+**Version:** 1.2.1 · **Last updated:** 2026-10-22
 
 **Live app:** [https://chiuta.github.io/orarium/](https://chiuta.github.io/orarium/)
 
@@ -69,6 +69,11 @@ node tools/exercise.js index.html fr   # one language only
 - Article that prompted the project: "[What time is it on the Moon…](https://www.stiripesurse.ro/cat-este-ceasul-pe-luna_3928805)" (in Romanian; AFP/Agerpres, stiripesurse.ro, 18.10.2026).
 - Pole and prime-meridian orientations: IAU WGCCRE 2009. Mean Keplerian elements: JPL (Standish). Martian time MSD/MTC: Allison & McEwen. Lunar distance series: J. Meeus, *Astronomical Algorithms*.
 - Physical values are the usual literature figures, rounded. Colonization data are qualitative and indicative.
+
+## Changelog
+
+### 1.2.1 — 2026-10-22
+- The sources-and-method footer, the meta description and the fff-kit transparency panel (name and description) now follow the interface language.
 
 ## License
 

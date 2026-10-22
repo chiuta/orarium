@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · **Deutsch** · [Magyar](README.hu.md)
 
-**Version:** 1.2.0 · **Zuletzt aktualisiert:** 2026-10-18
+**Version:** 1.2.1 · **Zuletzt aktualisiert:** 2026-10-22
 
 **Online-App:** [https://chiuta.github.io/orarium/](https://chiuta.github.io/orarium/)
 
@@ -68,6 +68,11 @@ node tools/exercise.js index.html fr   # one language only
 - Artikel, der das Projekt angeregt hat: "[Wie spät ist es auf dem Mond…](https://www.stiripesurse.ro/cat-este-ceasul-pe-luna_3928805)" (auf Rumänisch; AFP/Agerpres, stiripesurse.ro, 18.10.2026).
 - Pol- und Nullmeridian-Orientierungen: IAU WGCCRE 2009. Mittlere keplersche Elemente: JPL (Standish). Marszeit MSD/MTC: Allison & McEwen. Reihe der Mondentfernung: J. Meeus, *Astronomical Algorithms*.
 - Die physikalischen Werte sind die üblichen, gerundeten Literaturangaben. Die Besiedlungsdaten sind qualitativ und richtungsweisend.
+
+## Verlauf
+
+### 1.2.1 — 2026-10-22
+- Die Fußzeile „Quellen und Methode“, die Meta-Beschreibung und das fff-kit-Transparenzpanel (Name und Beschreibung) folgen jetzt der Oberflächensprache.
 
 ## Lizenz
 

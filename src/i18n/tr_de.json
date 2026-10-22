@@ -590,5 +590,6 @@
 "Fereastră de comunicare: {0} ⇄ {1}": "Kommunikationsfenster: {0} ⇄ {1}",
 "Conjuncție solară, legătură întreruptă: {0} ⇄ {1}": "Sonnenkonjunktion, Verbindung unterbrochen: {0} ⇄ {1}",
 "Timp-lumină la început: {0}. Calcul orientativ din elemente kepleriene medii (precizie de ordinul minutelor); nu pentru operațiuni reale.": "Lichtlaufzeit zu Beginn: {0}. Orientierende Berechnung aus mittleren Kepler-Elementen (Genauigkeit im Minutenbereich); nicht für reale Operationen.",
-"Nicio fereastră de exportat în următoarele {0} de zile.": "Kein Fenster zum Exportieren in den nächsten {0} Tagen."
+"Nicio fereastră de exportat în următoarele {0} de zile.": "Kein Fenster zum Exportieren in den nächsten {0} Tagen.",
+"Timpul pe Lună, Marte și toate corpurile Sistemului Solar: un etalon, două formule, patru ceasuri. Fișier unic, offline.": "Die Zeit auf dem Mond, dem Mars und allen Körpern des Sonnensystems: ein Standard, zwei Formeln, vier Uhren. Einzelne Datei, offline."
 }
