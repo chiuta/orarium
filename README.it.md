@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · **Italiano** · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versione:** 1.2.3 · **Ultimo aggiornamento:** 2026-10-22
+**Versione:** 1.2.4 · **Ultimo aggiornamento:** 2026-10-22
 
 **App online:** [https://chiuta.github.io/orarium/](https://chiuta.github.io/orarium/)
 
@@ -70,6 +70,9 @@ node tools/exercise.js index.html fr   # one language only
 - I valori fisici sono le consuete cifre di letteratura, arrotondate. I dati sulla colonizzazione sono qualitativi e indicativi.
 
 ## Cronologia
+
+### 1.2.4 — 2026-10-22
+- fff-kit 1.1.2: PBKDF2 a 600.000 iterazioni, protezione anti-clickjacking.
 
 ### 1.2.3 — 2026-10-22
 - Offline davvero: sono stati aggiunti un service worker (cache first, cache per versione), un manifest web e le icone, quindi l'app si apre senza rete dopo la prima visita e può essere installata (la promessa «offline» del catalogo ora è vera). La catena di build (`npm run build`) applica i file PWA e aggiorna l'etichetta di trasparenza.

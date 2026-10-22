@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · **Magyar**
 
-**Verzió:** 1.2.3 · **Utolsó frissítés:** 2026-10-22
+**Verzió:** 1.2.4 · **Utolsó frissítés:** 2026-10-22
 
 A felület nyelvei: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -72,6 +72,9 @@ node tools/exercise.js index.html fr   # one language only
 - A fizikai értékek a szokásos, kerekített szakirodalmi adatok. A kolonizációs adatok kvalitatívak és tájékoztató jellegűek.
 
 ## Előzmények
+
+### 1.2.4 — 2026-10-22
+- fff-kit 1.1.2: PBKDF2 600 000 iterációval, clickjacking elleni védelem.
 
 ### 1.2.3 — 2026-10-22
 - Valóban offline: service worker (előbb gyorsítótár, verziónkénti gyorsítótár), webes manifest és ikonok kerültek az alkalmazásba, így az első látogatás után hálózat nélkül is megnyílik, és telepíthető (a katalógus „offline” ígérete mostantól igaz). A build-lánc (`npm run build`) alkalmazza a PWA-fájlokat és frissíti az átláthatósági címkét.

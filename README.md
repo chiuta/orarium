@@ -2,7 +2,7 @@
 
 **English** · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Version:** 1.2.3 · **Last updated:** 2026-10-22
+**Version:** 1.2.4 · **Last updated:** 2026-10-22
 
 **Live app:** [https://chiuta.github.io/orarium/](https://chiuta.github.io/orarium/)
 
@@ -71,6 +71,9 @@ node tools/exercise.js index.html fr   # one language only
 - Physical values are the usual literature figures, rounded. Colonization data are qualitative and indicative.
 
 ## Changelog
+
+### 1.2.4 — 2026-10-22
+- fff-kit 1.1.2: PBKDF2 600,000 iterations, anti-clickjacking protection.
 
 ### 1.2.3 — 2026-10-22
 - Offline for real: a service worker (cache-first, per-version cache), a web manifest and icons were added, so the app opens without network after the first visit and can be installed (the catalogue promise “offline” is now true). The build chain (`npm run build`) applies the PWA files and refreshes the transparency label.

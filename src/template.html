@@ -3,7 +3,7 @@
 <html lang="ro">
 <head>
 <!--CSP-->
-<meta name="application-version" content="1.2.3">
+<meta name="application-version" content="1.2.4">
 <meta name="last-updated" content="2026-10-22">
 <meta name="description" content="Timpul pe Lună, Marte și toate corpurile Sistemului Solar: un etalon, două formule, patru ceasuri. Fișier unic, offline.">
 <meta charset="utf-8">
@@ -68,12 +68,23 @@
 .fff-chip:focus-visible{outline:2px solid currentColor;outline-offset:2px}
 @media (prefers-reduced-motion:no-preference){.fff-dlg[open]{animation:fff-in .12s ease-out}@keyframes fff-in{from{transform:translateY(6px)}to{transform:none}}}
 @media (prefers-reduced-motion:reduce){.fff-dlg,.fff-dlg *{animation:none!important;transition:none!important}}</style>
-<script id="fff-kit">/* fff-kit 1.1.1 */
+<script id="fff-kit">/* fff-kit 1.1.2 */
 /* ---- fff-kit/core ---- */
-/* fff-kit · core · v1.1.1 — fără rețea, fără dependențe. Definește window.FFF. */
+/* fff-kit · core · v1.1.2 — fără rețea, fără dependențe. Definește window.FFF. */
 (function () {
   'use strict';
-  var KIT_VERSION = '1.1.1';
+  /* anti-clickjacking: GitHub Pages nu trimite X-Frame-Options; dacă pagina e încadrată de o origine străină, o ascundem. */
+  try {
+    if (window.top !== window.self) {
+      var __cross = false;
+      try { void window.top.location.href; } catch (e) { __cross = true; }
+      if (__cross) {
+        document.documentElement.style.display = 'none';
+        try { window.top.location = window.self.location.href; } catch (e2) {}
+      }
+    }
+  } catch (e3) {}
+  var KIT_VERSION = '1.1.2';
   var F = (window.FFF = window.FFF || {});
   if (F.core && F.core.version) return; // idempotent la dublă încărcare
   var SUP = ['ro', 'en', 'fr', 'it', 'es', 'pt', 'hu', 'de'];
@@ -825,7 +836,7 @@
   var F = window.FFF;
   if (!F || F.bundle) return;
   var doc = document;
-  var SCHEMA = 1, ITER = 310000, MAX_BYTES = 64 * 1048576, MAX_KEYS = 20000;
+  var SCHEMA = 1, ITER = 600000, MAX_BYTES = 64 * 1048576, MAX_KEYS = 20000;
   function T(k, v) { return F.t('bundle', k, v); }
 
   function BErr(code, vars) {
@@ -1300,7 +1311,7 @@ Acces        1 − log₁₀(1 + timp-lumină minute)/log₁₀(301)</div>
 
 <section id="v-scen" class="view"><div id="scen"></div></section>
 </main>
-<footer><span id="app-version" style="display:block;font-size:12px;opacity:.7;min-height:24px;line-height:24px">v 1.2.3 · 2026-10-22</span><span id="foot-src">Surse și metodă: articolul <a href="https://www.stiripesurse.ro/cat-este-ceasul-pe-luna_3928805" target="_blank" rel="noopener">„Cât este ceasul pe Lună…”</a> (AFP/Agerpres, 18.10.2026); orientări IAU WGCCRE 2009; elemente orbitale kepleriene medii (JPL, Standish); MTC/MSD marțian (Allison & McEwen). Valorile fizice ale corpurilor sunt cele uzuale din literatura de specialitate, rotunjite. Aplicația este trade-free: fără rețea, fără cont, fără urmărire.</span></footer>
+<footer><span id="app-version" style="display:block;font-size:12px;opacity:.7;min-height:24px;line-height:24px">v 1.2.4 · 2026-10-22</span><span id="foot-src">Surse și metodă: articolul <a href="https://www.stiripesurse.ro/cat-este-ceasul-pe-luna_3928805" target="_blank" rel="noopener">„Cât este ceasul pe Lună…”</a> (AFP/Agerpres, 18.10.2026); orientări IAU WGCCRE 2009; elemente orbitale kepleriene medii (JPL, Standish); MTC/MSD marțian (Allison & McEwen). Valorile fizice ale corpurilor sunt cele uzuale din literatura de specialitate, rotunjite. Aplicația este trade-free: fără rețea, fără cont, fără urmărire.</span></footer>
 
 <div id="ov"><div class="sheet"><button id="x" aria-label="Închide">×</button><div id="det"></div></div></div>
 
@@ -2405,7 +2416,7 @@ function pairIcs(a,b,ms){
  const bo=blackScan(t=>pairBlocked(a,b,t),ms);
  if(!bo.none&&bo.end>ms)ev.push({k:'b',s:Math.max(bo.start===null?ms:bo.start,ms),e:bo.end});
  ev.sort((x,y)=>x.s-y.s);
- const stamp=icsT(Date.now()),L=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//fara frontiere//ORARIUM 1.2.3//RO','CALSCALE:GREGORIAN','X-WR-CALNAME:'+icsEsc('ORARIUM '+nm(a)+' ⇄ '+nm(b))];
+ const stamp=icsT(Date.now()),L=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//fara frontiere//ORARIUM 1.2.4//RO','CALSCALE:GREGORIAN','X-WR-CALNAME:'+icsEsc('ORARIUM '+nm(a)+' ⇄ '+nm(b))];
  ev.forEach(x=>{
   const lt=pairGeom(a,b,x.s).lt;
   L.push('BEGIN:VEVENT','UID:orarium-'+a.id+'-'+b.id+'-'+x.k+'-'+icsT(x.s)+'@chiuta.github.io','DTSTAMP:'+stamp,'DTSTART:'+icsT(x.s),'DTEND:'+icsT(x.e),

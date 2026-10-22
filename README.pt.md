@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · **Português** · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versão:** 1.2.3 · **Última atualização:** 2026-10-22
+**Versão:** 1.2.4 · **Última atualização:** 2026-10-22
 
 **Aplicação online:** [https://chiuta.github.io/orarium/](https://chiuta.github.io/orarium/)
 
@@ -70,6 +70,9 @@ node tools/exercise.js index.html fr   # one language only
 - Os valores físicos são os números habituais da literatura, arredondados. Os dados de colonização são qualitativos e indicativos.
 
 ## Histórico
+
+### 1.2.4 — 2026-10-22
+- fff-kit 1.1.2: PBKDF2 com 600.000 iterações, proteção anti-clickjacking.
 
 ### 1.2.3 — 2026-10-22
 - Offline a sério: foram adicionados um service worker (cache primeiro, cache por versão), um manifesto web e ícones, pelo que a aplicação abre sem rede após a primeira visita e pode ser instalada (a promessa «offline» do catálogo é agora verdadeira). A cadeia de compilação (`npm run build`) aplica os ficheiros PWA e atualiza a etiqueta de transparência.
