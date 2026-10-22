@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · **Português** · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versão:** 1.2.1 · **Última atualização:** 2026-10-22
+**Versão:** 1.2.2 · **Última atualização:** 2026-10-22
 
 **Aplicação online:** [https://chiuta.github.io/orarium/](https://chiuta.github.io/orarium/)
 
@@ -70,6 +70,9 @@ node tools/exercise.js index.html fr   # one language only
 - Os valores físicos são os números habituais da literatura, arredondados. Os dados de colonização são qualitativos e indicativos.
 
 ## Histórico
+
+### 1.2.2 — 2026-10-22
+- A etiqueta de acessibilidade do mapa esquemático é traduzida desde o início (ficava em romeno até abrir o separador do mapa) e o título do artigo citado no rodapé é apresentado também em francês, alemão e húngaro.
 
 ### 1.2.1 — 2026-10-22
 - O rodapé «Fontes e método», a meta descrição e o painel de transparência fff-kit (nome e descrição) seguem agora o idioma da interface.

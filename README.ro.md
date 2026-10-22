@@ -2,7 +2,7 @@
 
 [English](README.md) · **Română** · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versiune:** 1.2.1 · **Ultima actualizare:** 2026-10-22
+**Versiune:** 1.2.2 · **Ultima actualizare:** 2026-10-22
 
 **Aplicația online:** [https://chiuta.github.io/orarium/](https://chiuta.github.io/orarium/)
 
@@ -71,6 +71,9 @@ node tools/exercise.js index.html fr   # doar o limbă
 - Valorile fizice sunt cele uzuale din literatura de specialitate, rotunjite. Datele despre colonizare sunt calitative și orientative.
 
 ## Istoric
+
+### 1.2.2 — 2026-10-22
+- Eticheta de accesibilitate a hărții schematice este tradusă încă de la început (rămânea în română până la deschiderea filei Hartă), iar titlul articolului citat din subsol este redat și în franceză, germană și maghiară.
 
 ### 1.2.1 — 2026-10-22
 - Subsolul „Surse și metodă”, meta descrierea și panoul de transparență fff-kit (nume și descriere) urmează acum limba interfeței.

@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · **Italiano** · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versione:** 1.2.1 · **Ultimo aggiornamento:** 2026-10-22
+**Versione:** 1.2.2 · **Ultimo aggiornamento:** 2026-10-22
 
 **App online:** [https://chiuta.github.io/orarium/](https://chiuta.github.io/orarium/)
 
@@ -70,6 +70,9 @@ node tools/exercise.js index.html fr   # one language only
 - I valori fisici sono le consuete cifre di letteratura, arrotondate. I dati sulla colonizzazione sono qualitativi e indicativi.
 
 ## Cronologia
+
+### 1.2.2 — 2026-10-22
+- L'etichetta di accessibilità della mappa schematica è tradotta fin dall'inizio (restava in rumeno finché non si apriva la scheda mappa) e il titolo dell'articolo citato nel piè di pagina è reso anche in francese, tedesco e ungherese.
 
 ### 1.2.1 — 2026-10-22
 - Il piè di pagina « Fonti e metodo », la meta descrizione e il pannello di trasparenza fff-kit (nome e descrizione) seguono ora la lingua dell'interfaccia.

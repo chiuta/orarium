@@ -2,7 +2,7 @@
 
 **English** · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Version:** 1.2.1 · **Last updated:** 2026-10-22
+**Version:** 1.2.2 · **Last updated:** 2026-10-22
 
 **Live app:** [https://chiuta.github.io/orarium/](https://chiuta.github.io/orarium/)
 
@@ -71,6 +71,9 @@ node tools/exercise.js index.html fr   # one language only
 - Physical values are the usual literature figures, rounded. Colonization data are qualitative and indicative.
 
 ## Changelog
+
+### 1.2.2 — 2026-10-22
+- The accessibility label of the schematic map is now translated from the start (it was Romanian until the map tab was opened), and the cited article title in the sources footer is rendered in French, German and Hungarian like in the other languages.
 
 ### 1.2.1 — 2026-10-22
 - The sources-and-method footer, the meta description and the fff-kit transparency panel (name and description) now follow the interface language.
