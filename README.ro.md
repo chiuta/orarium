@@ -2,7 +2,7 @@
 
 [English](README.md) · **Română** · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versiune:** 1.2.4 · **Ultima actualizare:** 2026-10-22
+**Versiune:** 1.2.5 · **Ultima actualizare:** 2026-10-22
 
 **Aplicația online:** [https://chiuta.github.io/orarium/](https://chiuta.github.io/orarium/)
 
@@ -71,6 +71,9 @@ node tools/exercise.js index.html fr   # doar o limbă
 - Valorile fizice sunt cele uzuale din literatura de specialitate, rotunjite. Datele despre colonizare sunt calitative și orientative.
 
 ## Istoric
+
+### 1.2.5 — 2026-10-22
+- fff-kit 1.1.4: ținte tactile și text minim; ținte tactile/text corectate
 
 ### 1.2.4 — 2026-10-22
 - fff-kit 1.1.2: PBKDF2 600 000 de iterații, protecție anti-clickjacking.

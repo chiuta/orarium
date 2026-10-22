@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · **Español** · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versión:** 1.2.4 · **Última actualización:** 2026-10-22
+**Versión:** 1.2.5 · **Última actualización:** 2026-10-22
 
 **Aplicación en línea:** [https://chiuta.github.io/orarium/](https://chiuta.github.io/orarium/)
 
@@ -70,6 +70,9 @@ node tools/exercise.js index.html fr   # one language only
 - Los valores físicos son las cifras habituales de la literatura, redondeadas. Los datos de colonización son cualitativos y orientativos.
 
 ## Historial
+
+### 1.2.5 — 2026-10-22
+- fff-kit 1.1.4: objetivos táctiles y texto mínimo; objetivos táctiles/texto corregidos
 
 ### 1.2.4 — 2026-10-22
 - fff-kit 1.1.2: PBKDF2 con 600.000 iteraciones, protección anti-clickjacking.
