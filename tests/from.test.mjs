@@ -57,6 +57,24 @@ for (const f of ['bolta', '__proto__', 'constructor', 'javascript:alert(1)', 'or
   ok(hrefs.length === 0 || hrefs.every(h => h.includes('&from=orarium')), 'linkurile spre TerRa poartă from=orarium', hrefs.slice(0, 2));
   await ctx.close();
 }
+console.log('ancora orei locale coruptă + durata solului marțian');
+for (const v of ['{"ceres":"zz","vesta":{"a":1},"__proto__":{"x":1}}', '[1,2]', '"str"', '{"ceres":1e308}']) {
+  const ctx = await browser.newContext({viewport: {width: 1280, height: 800}, locale: 'ro-RO'});
+  await ctx.route(/^https?:/, r => r.abort());
+  const page = await ctx.newPage(), errs = [];
+  page.on('pageerror', e => errs.push(e.message));
+  await page.addInitScript(x => localStorage.setItem('orarium-anchor', x), v);
+  await page.goto(APP + '#body=ceres'); await page.waitForTimeout(700);
+  const r = await page.evaluate(() => ({nan: (document.body.innerText.match(/NaN/g) || []).length, proto: Object.getPrototypeOf(anchor) === Object.prototype, h: (localHour(byId.ceres, Date.now(), 0) || {}).h}));
+  ok(r.nan === 0 && r.proto && Number.isFinite(r.h) && !errs.length, 'ancora coruptă ' + v.slice(0, 30) + ': fără NaN, fără prototip schimbat', [r, errs]);
+  await ctx.close();
+}
+{
+  const {ctx, page} = await open('#body=marte');
+  const sol = await page.evaluate(() => byId.marte.Psol * 86400);
+  ok(Math.abs(sol - 88775.244) < 0.005, 'sol marțian = 88775.244 s (Mars24)', sol);
+  await ctx.close();
+}
 await browser.close();
 console.log(`\n${pass} reușite, ${fail} eșuate`);
 process.exit(fail ? 1 : 0);

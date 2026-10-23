@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · **Português** · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versão:** 1.2.6 · **Última atualização:** 2026-10-23
+**Versão:** 1.2.7 · **Última atualização:** 2026-10-23
 
 **Aplicação online:** [https://chiuta.github.io/orarium/](https://chiuta.github.io/orarium/)
 
