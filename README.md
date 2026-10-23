@@ -2,7 +2,7 @@
 
 **English** · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Version:** 1.2.6 · **Last updated:** 2026-10-23
+**Version:** 1.2.7 · **Last updated:** 2026-10-23
 
 **Live app:** [https://chiuta.github.io/orarium/](https://chiuta.github.io/orarium/)
 
@@ -71,6 +71,10 @@ node tools/exercise.js index.html fr   # one language only
 - Physical values are the usual literature figures, rounded. Colonization data are qualitative and indicative.
 
 ## Changelog
+
+### 1.2.7 — 2026-10-23
+
+Audit: a corrupted `orarium-anchor` value in local storage no longer produces `NaN` hours or replaces the anchor object's prototype (only finite numbers are accepted); Mars sidereal rotation is now 1.02595675 d, so the mean sol is 88 775.243 s (Mars24: 88 775.244 s; it was 88 775.265 s).
 
 ### 1.2.5 — 2026-10-22
 - fff-kit 1.1.4: touch targets and minimum text size; touch targets/text fixed

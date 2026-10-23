@@ -1589,7 +1589,7 @@ const B=[
 {id:'mercur',n:'Mercur',cat:'planeta',GM:22031.78,R:2439.7,Prot:58.6462,a:0.38709927,e:0.2056,Pyr:87.9691,el:1,note:'Rezonanță 3:2: o zi siderală = 2/3 din an, iar ziua solară (≈176 zile) durează exact doi ani mercurieni. Soarele face „bucle” pe cer în jurul periheliului.'},
 {id:'venus',n:'Venus',cat:'planeta',GM:324858.59,R:6051.8,Prot:243.0185,retro:1,a:0.72333566,e:0.0068,Pyr:224.701,el:1,note:'Rotația siderală (243 d) e mai lungă decât anul (224,7 d), dar ziua solară are doar ≈117 zile, pentru că rotația e retrogradă: Soarele răsare la vest.'},
 {id:'terra',n:'Pământ',cat:'planeta',GM:398600.4418,R:6378.137,Prot:0.99726968,a:1.00000261,e:0.0167,Pyr:365.25636,el:1,note:'Etalonul: UTC pe geoid (W₀ = 62 636 856 m²/s²). Ora afișată este UTC, adică ora medie solară la Greenwich.'},
-{id:'marte',n:'Marte',cat:'planeta',GM:42828.375,R:3396.19,Prot:1.025957,a:1.52371034,e:0.0934,Pyr:686.98,el:1,note:'Ziua marțiană („sol”) are 24 h 39 min 35 s. Ora afișată este ora solară adevărată la meridianul 0 (include ecuația timpului, ±51 min); MTC și numărul solului MSD sunt în exemplele de mai jos.'},
+{id:'marte',n:'Marte',cat:'planeta',GM:42828.375,R:3396.19,Prot:1.02595675,a:1.52371034,e:0.0934,Pyr:686.98,el:1,note:'Ziua marțiană („sol”) are 24 h 39 min 35 s. Ora afișată este ora solară adevărată la meridianul 0 (include ecuația timpului, ±51 min); MTC și numărul solului MSD sunt în exemplele de mai jos.'},
 {id:'jupiter',n:'Jupiter',cat:'planeta',GM:126686534,R:71492,Prot:0.413538,a:5.202887,e:0.0484,Pyr:4332.589,el:1,note:'Fără suprafață solidă: „altitudine zero” este nivelul de 1 bar, iar longitudinea e Sistemul III (radio). Cel mai adânc potențial dintre planete, deci ceasul merge mai încet.'},
 {id:'saturn',n:'Saturn',cat:'planeta',GM:37931187,R:60268,Prot:0.44401,a:9.53667594,e:0.0539,Pyr:10759.22,el:1,note:'Referință la nivelul de 1 bar; rotația interioară e dată de convenția IAU (Sistemul III).'},
 {id:'uranus',n:'Uranus',cat:'planeta',GM:5793939,R:25559,Prot:0.71834,retro:1,a:19.18916464,e:0.0473,Pyr:30688.5,el:1,note:'Înclinare axială de ≈98°: aproape întregul glob are zile polare de zeci de ani. Ora locală medie are sens clar doar lângă ecuator.'},
@@ -2103,7 +2103,7 @@ const catName={planeta:'Planete',sat:'Sateliți',mic:'Pitice și corpuri mici',h
 // ---------- UI ----------
 const $=id=>document.getElementById(id);
 let filter='toate',curView='acum',openId=null;
-try{const s=JSON.parse(localStorage.getItem('orarium-anchor')||'{}');Object.assign(anchor,s)}catch(e){}
+try{const s=JSON.parse(localStorage.getItem('orarium-anchor')||'{}');if(s&&typeof s==='object'&&!Array.isArray(s))Object.keys(s).forEach(k=>{if(k!=='__proto__'&&typeof s[k]==='number'&&isFinite(s[k]))anchor[k]=mod(s[k],24)})}catch(e){}
 function saveAnchor(){try{localStorage.setItem('orarium-anchor',JSON.stringify(anchor))}catch(e){}}
 
 function buildChips(){

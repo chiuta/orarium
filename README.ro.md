@@ -2,7 +2,7 @@
 
 [English](README.md) · **Română** · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versiune:** 1.2.6 · **Ultima actualizare:** 2026-10-23
+**Versiune:** 1.2.7 · **Ultima actualizare:** 2026-10-23
 
 **Aplicația online:** [https://chiuta.github.io/orarium/](https://chiuta.github.io/orarium/)
 
@@ -71,6 +71,10 @@ node tools/exercise.js index.html fr   # doar o limbă
 - Valorile fizice sunt cele uzuale din literatura de specialitate, rotunjite. Datele despre colonizare sunt calitative și orientative.
 
 ## Istoric
+
+### 1.2.7 — 2026-10-23
+
+Audit: o valoare `orarium-anchor` coruptă din stocarea locală nu mai produce ore `NaN` și nu mai înlocuiește prototipul obiectului-ancoră (se acceptă doar numere finite); rotația siderală a lui Marte este 1,02595675 zile, deci solul mediu este 88 775,243 s (Mars24: 88 775,244 s; era 88 775,265 s).
 
 ### 1.2.5 — 2026-10-22
 - fff-kit 1.1.4: ținte tactile și text minim; ținte tactile/text corectate
