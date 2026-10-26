@@ -3,13 +3,13 @@
 import {createRequire} from 'module';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
-const require = createRequire(process.env.PW_ROOT || '/home/claude/pw/package.json');
+const require = createRequire(process.env.PW_ROOT || import.meta.url);
 const {chromium} = require('playwright');
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const APP = 'file://' + path.join(HERE, '..', 'index.html');
 let pass = 0, fail = 0;
 const ok = (c, n, i) => { if (c) { pass++; console.log('  ok   ' + n); } else { fail++; console.log('  FAIL ' + n + (i === undefined ? '' : ' ' + JSON.stringify(i).slice(0, 300))); } };
-const browser = await chromium.launch({executablePath: process.env.CHROME || '/opt/pw-browsers/chromium-1194/chrome-linux/chrome', args: ['--no-sandbox']});
+const browser = await chromium.launch({executablePath: process.env.CHROMIUM_PATH || process.env.CHROME || undefined, args: ['--no-sandbox']});
 async function open(hash, w = 1280, h = 800) {
   const ctx = await browser.newContext({viewport: {width: w, height: h}, locale: 'ro-RO'});
   await ctx.route(/^https?:/, r => r.abort());
