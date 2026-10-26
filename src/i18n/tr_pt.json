@@ -591,5 +591,19 @@
 "Conjuncție solară, legătură întreruptă: {0} ⇄ {1}": "Conjunção solar, ligação interrompida: {0} ⇄ {1}",
 "Timp-lumină la început: {0}. Calcul orientativ din elemente kepleriene medii (precizie de ordinul minutelor); nu pentru operațiuni reale.": "Tempo-luz no início: {0}. Cálculo indicativo a partir de elementos keplerianos médios (precisão da ordem dos minutos); não para operações reais.",
 "Nicio fereastră de exportat în următoarele {0} de zile.": "Nenhuma janela para exportar nos próximos {0} dias.",
-"Timpul pe Lună, Marte și toate corpurile Sistemului Solar: un etalon, două formule, patru ceasuri. Fișier unic, offline.": "O tempo na Lua, em Marte e em todos os corpos do Sistema Solar: um padrão, duas fórmulas, quatro relógios. Ficheiro único, offline."
+"Timpul pe Lună, Marte și toate corpurile Sistemului Solar: un etalon, două formule, patru ceasuri. Fișier unic, offline.": "O tempo na Lua, em Marte e em todos os corpos do Sistema Solar: um padrão, duas fórmulas, quatro relógios. Ficheiro único, offline.",
+"Planificator de întâlniri": "Planeador de reuniões",
+"Pentru o întâlnire între două lumi (de exemplu Pământ–Marte): găsește momentele în care ambele capete sunt în programul de lucru al orei locale, iar legătura este deschisă (fără conjuncție solară), cu întârzierea semnalului inclusă. Folosește cele două corpuri și punctele alese mai sus.": "Para uma reunião entre dois mundos (por exemplo Terra–Marte): encontra os momentos em que ambas as extremidades estão no horário de trabalho local e a ligação está aberta (sem conjunção solar), com o atraso do sinal incluído. Usa os dois corpos e os pontos escolhidos acima.",
+"Începutul programului de lucru (ora locală, 0–24)": "Início do horário de trabalho (hora local, 0–24)",
+"Sfârșitul programului de lucru (ora locală, 0–24)": "Fim do horário de trabalho (hora local, 0–24)",
+"Durata întâlnirii (minute)": "Duração da reunião (minutos)",
+"Căutare în următoarele (zile)": "Pesquisar nos próximos (dias)",
+"Caută intervale": "Procurar intervalos",
+"Dacă începi acum": "Se começares agora",
+"Întârziere {0}, dus-întors {1}. Ora locală: {2} la {3}; {4} la {5} la sosire.": "Atraso {0}, ida e volta {1}. Hora local: {2} em {3}; {4} em {5} à chegada.",
+"Niciun interval potrivit în următoarele {0} de zile. Încearcă un program mai larg, o întâlnire mai scurtă sau o căutare mai lungă.": "Nenhum intervalo adequado nos próximos {0} dias. Tenta um horário mais largo, uma reunião mais curta ou uma pesquisa mais longa.",
+"Intervale în care întâlnirea de {0} min încape la ambele capete": "Intervalos em que uma reunião de {0} min cabe nas duas extremidades",
+"Început posibil": "Início possível",
+"Se arată primele {0} intervale din {1}.": "A mostrar os primeiros {0} intervalos de {1}.",
+"Ora locală este ora solară medie a punctului ales (nu un fus civil); † = ritm cu origine convențională. Orientativ, cu precizia ferestrelor de mai sus; nu pentru operațiuni reale.": "A hora local é a hora solar média do ponto escolhido (não um fuso civil); † = ritmo com origem convencional. Indicativo, com a precisão das janelas acima; não para operações reais."
 }

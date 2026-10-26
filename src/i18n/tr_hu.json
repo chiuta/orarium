@@ -591,5 +591,19 @@
 "Conjuncție solară, legătură întreruptă: {0} ⇄ {1}": "Napkonjunkció, megszakadt kapcsolat: {0} ⇄ {1}",
 "Timp-lumină la început: {0}. Calcul orientativ din elemente kepleriene medii (precizie de ordinul minutelor); nu pentru operațiuni reale.": "Fényidő a kezdetkor: {0}. Tájékoztató számítás átlagos Kepler-elemekből (percnyi pontosság); valódi műveletekhez nem alkalmas.",
 "Nicio fereastră de exportat în următoarele {0} de zile.": "A következő {0} napban nincs exportálandó ablak.",
-"Timpul pe Lună, Marte și toate corpurile Sistemului Solar: un etalon, două formule, patru ceasuri. Fișier unic, offline.": "Az idő a Holdon, a Marson és a Naprendszer minden égitestén: egy etalon, két képlet, négy óra. Egyetlen fájl, offline."
+"Timpul pe Lună, Marte și toate corpurile Sistemului Solar: un etalon, două formule, patru ceasuri. Fișier unic, offline.": "Az idő a Holdon, a Marson és a Naprendszer minden égitestén: egy etalon, két képlet, négy óra. Egyetlen fájl, offline.",
+"Planificator de întâlniri": "Találkozótervező",
+"Pentru o întâlnire între două lumi (de exemplu Pământ–Marte): găsește momentele în care ambele capete sunt în programul de lucru al orei locale, iar legătura este deschisă (fără conjuncție solară), cu întârzierea semnalului inclusă. Folosește cele două corpuri și punctele alese mai sus.": "Két világ közötti találkozóhoz (például Föld–Mars): megkeresi azokat az időpontokat, amikor mindkét végpont a helyi munkaidőn belül van, és a kapcsolat nyitott (nincs napkonjunkció), a jelkésleltetéssel együtt. A fent kiválasztott két égitestet és pontot használja.",
+"Începutul programului de lucru (ora locală, 0–24)": "Munkaidő kezdete (helyi idő, 0–24)",
+"Sfârșitul programului de lucru (ora locală, 0–24)": "Munkaidő vége (helyi idő, 0–24)",
+"Durata întâlnirii (minute)": "A találkozó hossza (perc)",
+"Căutare în următoarele (zile)": "Keresés a következő (napokban)",
+"Caută intervale": "Időszakok keresése",
+"Dacă începi acum": "Ha most kezdesz",
+"Întârziere {0}, dus-întors {1}. Ora locală: {2} la {3}; {4} la {5} la sosire.": "Késleltetés {0}, oda-vissza {1}. Helyi idő: {2} itt: {3}; {4} itt: {5} érkezéskor.",
+"Niciun interval potrivit în următoarele {0} de zile. Încearcă un program mai larg, o întâlnire mai scurtă sau o căutare mai lungă.": "Nincs megfelelő időszak a következő {0} napban. Próbálj tágabb munkaidőt, rövidebb találkozót vagy hosszabb keresést.",
+"Intervale în care întâlnirea de {0} min încape la ambele capete": "Időszakok, amelyekbe egy {0} perces találkozó mindkét végponton belefér",
+"Început posibil": "Lehetséges kezdés",
+"Se arată primele {0} intervale din {1}.": "Az első {0} időszak látható {1} közül.",
+"Ora locală este ora solară medie a punctului ales (nu un fus civil); † = ritm cu origine convențională. Orientativ, cu precizia ferestrelor de mai sus; nu pentru operațiuni reale.": "A helyi idő a kiválasztott pont középnapideje (nem polgári időzóna); † = hagyományos kezdőpontú ritmus. Tájékoztató jellegű, a fenti ablakok pontosságával; nem valódi műveletekhez."
 }

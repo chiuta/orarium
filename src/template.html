@@ -1550,6 +1550,19 @@ Acces        1 − log₁₀(1 + timp-lumină minute)/log₁₀(301)</div>
 </div>
 </div>
 <div id="pk-out"></div>
+<div class="panel" id="mt-panel"><h3>Planificator de întâlniri</h3>
+<p>Pentru o întâlnire între două lumi (de exemplu Pământ–Marte): găsește momentele în care ambele capete sunt în programul de lucru al orei locale, iar legătura este deschisă (fără conjuncție solară), cu întârzierea semnalului inclusă. Folosește cele două corpuri și punctele alese mai sus.</p>
+<div class="row2">
+<div><label for="mt-h1">Începutul programului de lucru (ora locală, 0–24)</label><input type="number" id="mt-h1" value="8" step="0.5" min="0" max="24"></div>
+<div><label for="mt-h2">Sfârșitul programului de lucru (ora locală, 0–24)</label><input type="number" id="mt-h2" value="18" step="0.5" min="0" max="24"></div>
+</div>
+<div class="row2">
+<div><label for="mt-d">Durata întâlnirii (minute)</label><input type="number" id="mt-d" value="30" step="5" min="5" max="480"></div>
+<div><label for="mt-n">Căutare în următoarele (zile)</label><input type="number" id="mt-n" value="30" step="1" min="1" max="400"></div>
+</div>
+<button class="btn" id="mt-go" type="button">Caută intervale</button>
+<div id="mt-out" role="status" aria-live="polite"></div>
+</div>
 <div id="lk-out"></div>
 </section>
 
@@ -2660,7 +2673,7 @@ function pairIcs(a,b,ms){
  const bo=blackScan(t=>pairBlocked(a,b,t),ms);
  if(!bo.none&&bo.end>ms)ev.push({k:'b',s:Math.max(bo.start===null?ms:bo.start,ms),e:bo.end});
  ev.sort((x,y)=>x.s-y.s);
- const stamp=icsT(Date.now()),L=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//fara frontiere//ORARIUM 1.2.5//RO','CALSCALE:GREGORIAN','X-WR-CALNAME:'+icsEsc('ORARIUM '+nm(a)+' ⇄ '+nm(b))];
+ const stamp=icsT(Date.now()),L=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//fara frontiere//ORARIUM 2.0.0//RO','CALSCALE:GREGORIAN','X-WR-CALNAME:'+icsEsc('ORARIUM '+nm(a)+' ⇄ '+nm(b))];
  ev.forEach(x=>{
   const lt=pairGeom(a,b,x.s).lt;
   L.push('BEGIN:VEVENT','UID:orarium-'+a.id+'-'+b.id+'-'+x.k+'-'+icsT(x.s)+'@chiuta.github.io','DTSTAMP:'+stamp,'DTSTART:'+icsT(x.s),'DTEND:'+icsT(x.e),
@@ -2679,6 +2692,67 @@ function exportPairIcs(){
  if(window.FFF&&FFF.download)FFF.download(r.name,r.text,'text/calendar;charset=utf-8');
  else{const u=URL.createObjectURL(new Blob([r.text],{type:'text/calendar;charset=utf-8'})),x=document.createElement('a');x.href=u;x.download=r.name;document.body.appendChild(x);x.click();x.remove();setTimeout(()=>URL.revokeObjectURL(u),4000)}
 }
+
+// ----- planificator de întâlniri între două lumi -----
+const MT={h1:8,h2:18,d:30,n:30};
+function readMT(){
+ const g=(id,d,a,c)=>{const v=parseFloat($(id).value);return isFinite(v)?clamp(v,a,c):d};
+ MT.h1=g('mt-h1',8,0,24);MT.h2=g('mt-h2',18,0,24);MT.d=Math.round(g('mt-d',30,5,480));MT.n=Math.round(g('mt-n',30,1,400));
+}
+const hmStr=h=>{h=mod(h,24);let m=Math.round(h*60);m%=1440;return pad(Math.floor(m/60))+':'+pad(m%60)};
+const inWork=h=>MT.h1===MT.h2?true:MT.h1<MT.h2?(h>=MT.h1&&h<=MT.h2):(h>=MT.h1||h<=MT.h2);
+// ora locală este în programul de lucru pe toată durata [t, t+dur]; capetele fără model de orientare nu constrâng
+function workOk(x,lon,t,dur){
+ for(const k of [0,.5,1]){const r=localHour(x,t+k*dur,lon);if(!r)return true;if(!inWork(r.h))return false}
+ return true;
+}
+function planMeets(a,b,ms,maxN){
+ const dur=MT.d*60000,days=MT.n,step=days>60?1200000:600000,n=Math.floor(days*86400000/step),res=[];
+ let cur=null,total=0;
+ const close=()=>{if(cur){total++;if(res.length<maxN)res.push(cur);cur=null}};
+ for(let i=0;i<=n;i++){
+  const t=ms+i*step;let ok=workOk(a,PK.alo,t,dur);
+  if(ok){
+   const g=pairGeom(a,b,t);
+   if(!g||nrm3(g.v)<1)return null;
+   const tb=t+g.lt*1000;
+   ok=workOk(b,PK.blo,tb,dur)&&pairOk(a,b,t)===true&&pairOk(a,b,t+dur)===true&&pairBlocked(a,b,t)!==true&&pairBlocked(a,b,t+dur)!==true;
+   if(ok){if(cur)cur.e=t;else cur={s:t,e:t,lt:g.lt}}
+  }
+  if(!ok)close();
+ }
+ close();
+ return {list:res,total:total,days:days};
+}
+function mtLine(a,b,t,lt){
+ const ra=localHour(a,t,PK.alo),rb=localHour(b,t+lt*1000,PK.blo);
+ const fh=(r)=>r?hmStr(r.h)+(r.real?'':'†'):'—';
+ return T('Întârziere {0}, dus-întors {1}. Ora locală: {2} la {3}; {4} la {5} la sosire.',fmtSec(lt),fmtSec(2*lt),nm(a),fh(ra),nm(b),fh(rb));
+}
+function buildMeet(){
+ readMT();readLK();
+ const g=(id,d,a,c)=>{const v=parseFloat($(id).value);return isFinite(v)?clamp(v,a,c):d};
+ PK.ala=g('pk-ala',0,-90,90);PK.alo=g('pk-alo',0,-360,360);PK.bla=g('pk-bla',0,-90,90);PK.blo=g('pk-blo',0,-360,360);
+ const a=byId[$('pk-a').value],b=byId[$('pk-b').value],ms=NOW(),out=$('mt-out');
+ if(!a||!b||a.id===b.id){out.innerHTML='<div class="ln mut">'+T('Alege două corpuri diferite.')+'</div>';return}
+ const g0=pairGeom(a,b,ms);
+ if(!g0){out.innerHTML='<div class="ln mut">'+T('Unul dintre corpuri nu are efemeridă în aplicație.')+'</div>';return}
+ if(nrm3(g0.v)<1){out.innerHTML='<div class="ln mut">'+T('Cele două corpuri sunt în același sistem planetar: poziția lor relativă nu e modelată aici.')+'</div>';return}
+ let h='<div class="ln"><b>'+T('Dacă începi acum')+'</b>: '+mtLine(a,b,ms,g0.lt)+'</div>';
+ const r=planMeets(a,b,ms,8);
+ if(!r||!r.list.length)h+='<div class="ln mut">'+T('Niciun interval potrivit în următoarele {0} de zile. Încearcă un program mai larg, o întâlnire mai scurtă sau o căutare mai lungă.',nf(MT.n))+'</div>';
+ else{
+  h+='<div class="ln"><b>'+T('Intervale în care întâlnirea de {0} min încape la ambele capete',nf(MT.d))+'</b></div>';
+  h+=r.list.map((x,i)=>{
+   const lt=pairGeom(a,b,x.s).lt;
+   return '<div class="ln mt-slot" data-i="'+i+'"><b>'+T('Început posibil')+'</b>: '+whenStr(x.s)+(x.e>x.s?' → '+whenStr(x.e):'')+'<br><span class="mut">'+mtLine(a,b,x.s,lt)+'</span></div>';
+  }).join('');
+  if(r.total>r.list.length)h+='<div class="ln mut">'+T('Se arată primele {0} intervale din {1}.',nf(r.list.length),nf(r.total))+'</div>';
+ }
+ h+='<div class="ln mut" style="font-size:12.5px">'+T('Ora locală este ora solară medie a punctului ales (nu un fus civil); † = ritm cu origine convențională. Orientativ, cu precizia ferestrelor de mai sus; nu pentru operațiuni reale.')+'</div>';
+ out.innerHTML=h;
+}
+$('mt-go').onclick=buildMeet;
 function pkSoon(){clearTimeout(lkTimer);lkTimer=setTimeout(()=>{if(curView==='link'){buildPair()}},250)}
 ['pk-a','pk-b'].forEach(id=>$(id).onchange=pkSoon);
 ['pk-ala','pk-alo','pk-bla','pk-blo'].forEach(id=>$(id).addEventListener('input',pkSoon));
@@ -2696,7 +2770,7 @@ function lnkBuild(){
  if(openId)p.push('body='+openId);
  if(TFIX!==null)p.push('t='+new Date(TFIX).toISOString().slice(0,19)+'Z');
  if(curView==='link'||openId){readLK();p.push('station='+LK.lat.toFixed(4)+','+LK.lon.toFixed(4)+','+LK.mask);p.push('thr='+LK.thr);p.push('site='+LK.blat+','+LK.blon)}
- if(curView==='link'&&$('pk-a').value){p.push('a='+$('pk-a').value);p.push('b='+$('pk-b').value)}
+ if(curView==='link'&&$('pk-a').value){p.push('a='+$('pk-a').value);p.push('b='+$('pk-b').value);readMT();p.push('mt='+MT.h1+','+MT.h2+','+MT.d+','+MT.n)}
  return location.href.split('#')[0]+'#'+p.join('&');
 }
 function lnkApply(){
@@ -2713,6 +2787,8 @@ function lnkApply(){
  fillPair();
  fromBack(q.from,'orarium');
  const has=k=>typeof k==='string'&&Object.prototype.hasOwnProperty.call(byId,k);
+ const mq=/^(\d+(?:\.\d+)?),(\d+(?:\.\d+)?),(\d+),(\d+)$/.exec(q.mt||'');
+ if(mq){$('mt-h1').value=clamp(+mq[1],0,24);$('mt-h2').value=clamp(+mq[2],0,24);$('mt-d').value=clamp(+mq[3],5,480);$('mt-n').value=clamp(+mq[4],1,400)}
  if(has(q.a)&&q.a!=='soare')$('pk-a').value=q.a;
  if(has(q.b)&&q.b!=='soare')$('pk-b').value=q.b;
  if(v)show(v);

@@ -2,7 +2,7 @@
 
 **English** · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Version:** 1.2.8 · **Last updated:** 2026-10-26
+**Version:** 2.0.0 · **Last updated:** 2026-10-26
 
 **Live app:** [https://chiuta.github.io/orarium/](https://chiuta.github.io/orarium/)
 
@@ -39,6 +39,7 @@ P_sol = 1 / | 1/P_sid ∓ 1/P_year |
 - **TerRa link** — "↗ TerRa" buttons on every computed midnight / noon and in the body sheet: they open [TerRa](https://chiuta.github.io/TerRa/) at that moment, with the 3D globe for Earth or the sky seen from the chosen body (unique link). The link covers all 44 bodies (including Phobos, Charon, Ceres, Eris, Bennu, etc.), and the pair communication window also has a “↗ TerRa” link for each end.
 - **Unique link and two-way TerRa connection** — the "🔗 Unique link" button copies the current view (tab, body, fixed moment, station, body pair, solar threshold); [TerRa](https://chiuta.github.io/TerRa/) opens the body, the time and the transmission window from your location here.
 - **Bolta and .ics** — "↗ Bolta" opens the offline planetarium [Bolta](https://chiuta.github.io/apps/Bolta/) for the chosen station (at the fixed moment, or live); for any two bodies, "📅 Export windows as .ics" downloads the next communication windows and the solar-conjunction interruption as an RFC 5545 calendar (UTC) that imports into Orar or any calendar. "Now" links to TerRa no longer freeze the time.
+- **Meeting planner (2.0)** — for any pair of bodies (e.g. Earth–Mars): the slots in which a meeting of the chosen length fits within local working hours at both ends, with the link open (no solar conjunction) and signal delay (one-way and round-trip) included; shows each end's local time at departure and arrival. Indicative, not for real operations.
 - **Scenarios** — concrete examples (Apollo 11 site, Jezero, Titan, Bennu, Venus, Mercury, Pluto–Charon, round-trip table).
 - **Earth reference clock** — UTC or any IANA time zone (e.g. Bucharest), used throughout.
 

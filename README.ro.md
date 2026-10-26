@@ -2,7 +2,7 @@
 
 [English](README.md) · **Română** · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versiune:** 1.2.8 · **Ultima actualizare:** 2026-10-26
+**Versiune:** 2.0.0 · **Ultima actualizare:** 2026-10-26
 
 **Aplicația online:** [https://chiuta.github.io/orarium/](https://chiuta.github.io/orarium/)
 
@@ -39,6 +39,7 @@ P_sol = 1 / | 1/P_sid ∓ 1/P_year |
 - **Legătură cu TerRa** — butoane „↗ TerRa” la fiecare miez de noapte / amiază calculat și în fișa corpului: deschid [TerRa](https://chiuta.github.io/TerRa/) la momentul respectiv, cu globul 3D pentru Pământ sau cerul văzut de pe corpul ales (link unic). Legătura acoperă toate cele 44 de corpuri (inclusiv Phobos, Charon, Ceres, Eris, Bennu etc.), iar fereastra de comunicare dintre două corpuri are și ea „↗ TerRa” pentru fiecare capăt.
 - **Link unic și legătura cu TerRa din ambele părți** — butonul „🔗 Link unic” copiază vederea curentă (filă, corp, moment fixat, stație, pereche de corpuri, prag solar); [TerRa](https://chiuta.github.io/TerRa/) deschide aici corpul, ora și fereastra de transmisie din locația ta.
 - **Bolta și .ics** — „↗ Bolta” deschide planetariul offline [Bolta](https://chiuta.github.io/apps/Bolta/) pentru stația aleasă (la momentul fixat sau live); pentru orice pereche de corpuri, „📅 Exportă ferestrele în .ics” descarcă următoarele ferestre de comunicare și întreruperea prin conjuncție solară într-un calendar RFC 5545 (UTC), importabil în Orar sau în orice calendar. Linkurile „acum” spre TerRa nu mai îngheață ora.
+- **Planificator de întâlniri (2.0)** — pentru orice pereche de corpuri (de exemplu Pământ–Marte): intervalele în care o întâlnire de durata aleasă încape în programul de lucru al orei locale la ambele capete, cu legătura deschisă (fără conjuncție solară) și întârzierea semnalului (unidirecțional și dus-întors) inclusă; ora locală a fiecărui capăt la plecare și la sosire. Orientativ, nu pentru operațiuni reale.
 - **Scenarii** — exemple concrete (locul Apollo 11, Jezero, Titan, Bennu, Venus, Mercur, Pluto–Charon, tabel dus-întors).
 - **Ceasul Pământului de referință** — UTC sau orice fus IANA (de exemplu București), folosit peste tot.
 
@@ -71,6 +72,9 @@ node tools/exercise.js index.html fr   # doar o limbă
 - Valorile fizice sunt cele uzuale din literatura de specialitate, rotunjite. Datele despre colonizare sunt calitative și orientative.
 
 ## Istoric
+
+### 2.0.0 — 2026-10-26
+- Planificator de întâlniri între două lumi (programul de lucru local, fereastra de legătură, întârzierea semnalului); parametrii intră în „Link unic”.
 
 ### 1.2.7 — 2026-10-23
 

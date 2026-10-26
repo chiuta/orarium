@@ -591,5 +591,19 @@
 "Conjuncție solară, legătură întreruptă: {0} ⇄ {1}": "Solar conjunction, link interrupted: {0} ⇄ {1}",
 "Timp-lumină la început: {0}. Calcul orientativ din elemente kepleriene medii (precizie de ordinul minutelor); nu pentru operațiuni reale.": "Light time at the start: {0}. Indicative calculation from mean Keplerian elements (accuracy on the order of minutes); not for real operations.",
 "Nicio fereastră de exportat în următoarele {0} de zile.": "No window to export in the next {0} days.",
-"Timpul pe Lună, Marte și toate corpurile Sistemului Solar: un etalon, două formule, patru ceasuri. Fișier unic, offline.": "Time on the Moon, Mars and every body of the Solar System: one standard, two formulas, four clocks. Single file, offline."
+"Timpul pe Lună, Marte și toate corpurile Sistemului Solar: un etalon, două formule, patru ceasuri. Fișier unic, offline.": "Time on the Moon, Mars and every body of the Solar System: one standard, two formulas, four clocks. Single file, offline.",
+"Planificator de întâlniri": "Meeting planner",
+"Pentru o întâlnire între două lumi (de exemplu Pământ–Marte): găsește momentele în care ambele capete sunt în programul de lucru al orei locale, iar legătura este deschisă (fără conjuncție solară), cu întârzierea semnalului inclusă. Folosește cele două corpuri și punctele alese mai sus.": "For a meeting between two worlds (for example Earth–Mars): finds the moments when both ends are within local working hours and the link is open (no solar conjunction), signal delay included. It uses the two bodies and the points chosen above.",
+"Începutul programului de lucru (ora locală, 0–24)": "Working hours start (local time, 0–24)",
+"Sfârșitul programului de lucru (ora locală, 0–24)": "Working hours end (local time, 0–24)",
+"Durata întâlnirii (minute)": "Meeting length (minutes)",
+"Căutare în următoarele (zile)": "Search the next (days)",
+"Caută intervale": "Find slots",
+"Dacă începi acum": "If you start now",
+"Întârziere {0}, dus-întors {1}. Ora locală: {2} la {3}; {4} la {5} la sosire.": "Delay {0}, round trip {1}. Local time: {2} at {3}; {4} at {5} on arrival.",
+"Niciun interval potrivit în următoarele {0} de zile. Încearcă un program mai larg, o întâlnire mai scurtă sau o căutare mai lungă.": "No suitable slot in the next {0} days. Try wider working hours, a shorter meeting or a longer search.",
+"Intervale în care întâlnirea de {0} min încape la ambele capete": "Slots where a {0}-minute meeting fits at both ends",
+"Început posibil": "Possible start",
+"Se arată primele {0} intervale din {1}.": "Showing the first {0} slots of {1}.",
+"Ora locală este ora solară medie a punctului ales (nu un fus civil); † = ritm cu origine convențională. Orientativ, cu precizia ferestrelor de mai sus; nu pentru operațiuni reale.": "Local time is the mean solar time of the chosen point (not a civil time zone); † = rate with a conventional origin. Indicative, with the accuracy of the windows above; not for real operations."
 }

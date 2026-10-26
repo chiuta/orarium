@@ -591,5 +591,19 @@
 "Conjuncție solară, legătură întreruptă: {0} ⇄ {1}": "",
 "Timp-lumină la început: {0}. Calcul orientativ din elemente kepleriene medii (precizie de ordinul minutelor); nu pentru operațiuni reale.": "",
 "Nicio fereastră de exportat în următoarele {0} de zile.": "",
-"Timpul pe Lună, Marte și toate corpurile Sistemului Solar: un etalon, două formule, patru ceasuri. Fișier unic, offline.": ""
+"Timpul pe Lună, Marte și toate corpurile Sistemului Solar: un etalon, două formule, patru ceasuri. Fișier unic, offline.": "",
+"Planificator de întâlniri": "",
+"Pentru o întâlnire între două lumi (de exemplu Pământ–Marte): găsește momentele în care ambele capete sunt în programul de lucru al orei locale, iar legătura este deschisă (fără conjuncție solară), cu întârzierea semnalului inclusă. Folosește cele două corpuri și punctele alese mai sus.": "",
+"Începutul programului de lucru (ora locală, 0–24)": "",
+"Sfârșitul programului de lucru (ora locală, 0–24)": "",
+"Durata întâlnirii (minute)": "",
+"Căutare în următoarele (zile)": "",
+"Caută intervale": "",
+"Dacă începi acum": "",
+"Întârziere {0}, dus-întors {1}. Ora locală: {2} la {3}; {4} la {5} la sosire.": "",
+"Niciun interval potrivit în următoarele {0} de zile. Încearcă un program mai larg, o întâlnire mai scurtă sau o căutare mai lungă.": "",
+"Intervale în care întâlnirea de {0} min încape la ambele capete": "",
+"Început posibil": "",
+"Se arată primele {0} intervale din {1}.": "",
+"Ora locală este ora solară medie a punctului ales (nu un fus civil); † = ritm cu origine convențională. Orientativ, cu precizia ferestrelor de mai sus; nu pentru operațiuni reale.": ""
 }
