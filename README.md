@@ -2,15 +2,21 @@
 
 **English** · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Version:** 2.0.0 · **Last updated:** 2026-10-26
+**Version:** 2.0.1 · **Last updated:** 2026-10-27
+
+**Status:** stable · **Offline:** complete (works from `file://`; the “↗ TerRa” and “↗ Bolta” links open other online apps only if you click them)
 
 **Live app:** [https://chiuta.github.io/orarium/](https://chiuta.github.io/orarium/)
 
 **Time on every world**
 
-ORARIUM is a single-file, offline web app (`index.html`, no server, no account, no tracking) that proposes one consistent way to tell time on the Moon, Mars, all planets, dwarf planets, asteroids, comets and moons of the Solar System. It was inspired by the debate on lunar time (a ≈56 µs/day clock offset, the CGPM resolution on a lunar reference time scale, and the open questions on "altitude zero" and clock networks).
+**Short card:** Time on every world: one standard second, two formulas and four clocks for the Moon, Mars and the whole Solar System. Single file, offline, no account.
 
 Interface languages: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**.
+
+## Detailed description
+
+ORARIUM is a single-file, offline web app (`index.html`, no server, no account, no tracking) that proposes one consistent way to tell time on the Moon, Mars, all planets, dwarf planets, asteroids, comets and moons of the Solar System. It was inspired by the debate on lunar time (a ≈56 µs/day clock offset, the CGPM resolution on a lunar reference time scale, and the open questions on "altitude zero" and clock networks).
 
 ## The idea: four clocks, two formulas
 

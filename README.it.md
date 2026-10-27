@@ -2,15 +2,21 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · **Italiano** · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versione:** 2.0.0 · **Ultimo aggiornamento:** 2026-10-26
+**Versione:** 2.0.1 · **Ultimo aggiornamento:** 2026-10-27
+
+**Stato:** stabile · **Offline:** completo (nessuna rete richiesta; i link «↗ TerRa» e «↗ Bolta» aprono altre app online solo se li premi)
 
 **App online:** [https://chiuta.github.io/orarium/](https://chiuta.github.io/orarium/)
 
 **Il tempo su tutti i mondi**
 
-ORARIUM è un'app web in un unico file, offline (`index.html`, senza server, senza account, senza tracciamento), che propone un modo coerente di misurare il tempo sulla Luna, su Marte, su tutti i pianeti, i pianeti nani, gli asteroidi, le comete e le lune del Sistema Solare. Nasce dal dibattito sul tempo lunare (uno scarto dell'orologio di ≈56 µs/giorno, la risoluzione della CGPM su una scala di tempo di riferimento lunare e le questioni aperte sulla «quota zero» e sulle reti di orologi).
+**Scheda breve:** Il tempo su tutti i mondi: un campione, due formule e quattro orologi per la Luna, Marte e tutto il Sistema solare. File unico, offline, senza account.
 
 Lingue dell'interfaccia: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**.
+
+## Descrizione dettagliata
+
+ORARIUM è un'app web in un unico file, offline (`index.html`, senza server, senza account, senza tracciamento), che propone un modo coerente di misurare il tempo sulla Luna, su Marte, su tutti i pianeti, i pianeti nani, gli asteroidi, le comete e le lune del Sistema Solare. Nasce dal dibattito sul tempo lunare (uno scarto dell'orologio di ≈56 µs/giorno, la risoluzione della CGPM su una scala di tempo di riferimento lunare e le questioni aperte sulla «quota zero» e sulle reti di orologi).
 
 ## L'idea: quattro orologi, due formule
 

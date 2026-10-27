@@ -2,15 +2,21 @@
 
 [English](README.md) · [Română](README.ro.md) · **Français** · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Version :** 2.0.0 · **Dernière mise à jour :** 2026-10-26
+**Version :** 2.0.1 · **Dernière mise à jour :** 2026-10-27
+
+**État :** stable · **Hors ligne :** complet (aucun réseau requis ; les liens « ↗ TerRa » et « ↗ Bolta » ouvrent d'autres applications en ligne seulement si vous cliquez)
 
 **Application en ligne :** [https://chiuta.github.io/orarium/](https://chiuta.github.io/orarium/)
 
 **Le temps sur tous les mondes**
 
-ORARIUM est une application web autonome en un seul fichier, hors ligne (`index.html`, sans serveur, sans compte, sans pistage), qui propose une manière cohérente de mesurer le temps sur la Lune, sur Mars, sur toutes les planètes, planètes naines, astéroïdes, comètes et lunes du Système solaire. Elle s'inspire du débat sur l'heure lunaire (un décalage d'horloge d'environ 56 µs/jour, la résolution de la CGPM sur une échelle de temps de référence lunaire, et les questions ouvertes sur l'« altitude zéro » et les réseaux d'horloges).
+**Fiche courte:** Le temps sur tous les mondes : un étalon, deux formules et quatre horloges pour la Lune, Mars et tout le Système solaire. Fichier unique, hors ligne, sans compte.
 
 Langues de l'interface : **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**.
+
+## Description détaillée
+
+ORARIUM est une application web autonome en un seul fichier, hors ligne (`index.html`, sans serveur, sans compte, sans pistage), qui propose une manière cohérente de mesurer le temps sur la Lune, sur Mars, sur toutes les planètes, planètes naines, astéroïdes, comètes et lunes du Système solaire. Elle s'inspire du débat sur l'heure lunaire (un décalage d'horloge d'environ 56 µs/jour, la résolution de la CGPM sur une échelle de temps de référence lunaire, et les questions ouvertes sur l'« altitude zéro » et les réseaux d'horloges).
 
 ## L'idée : quatre horloges, deux formules
 
