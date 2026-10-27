@@ -2,7 +2,9 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · **Magyar**
 
-**Verzió:** 2.0.0 · **Utolsó frissítés:** 2026-10-26
+**Verzió:** 2.0.1 · **Utolsó frissítés:** 2026-10-27
+
+**Állapot:** stabil · **Offline:** teljes (nem igényel hálózatot; a „↗ TerRa” és „↗ Bolta” hivatkozások csak kattintásra nyitnak meg más online alkalmazásokat)
 
 A felület nyelvei: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -10,9 +12,13 @@ A felület nyelvei: **Română, English, Français, Italiano, Español, Portugu�
 
 **Idő minden világon**
 
-Az ORARIUM egyetlen fájlból álló, offline webalkalmazás (`index.html`, szerver, fiók és követés nélkül), amely egységes módot javasol az idő megadására a Holdon, a Marson, valamennyi bolygón, törpebolygón, aszteroidán, üstökösön és a Naprendszer holdjain. A holdidőről folyó vita ihlette (≈56 µs/nap óraeltérés, a CGPM határozata a holdi referencia-időskáláról, valamint a „nulla magasságról” és az órahálózatokról szóló nyitott kérdések).
+**Rövid ismertető:** Idő minden világon: egy etalon, két képlet és négy óra a Holdra, a Marsra és az egész Naprendszerre. Egyetlen fájl, offline, fiók nélkül.
 
 Kezelőfelületi nyelvek: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**.
+
+## Részletes leírás
+
+Az ORARIUM egyetlen fájlból álló, offline webalkalmazás (`index.html`, szerver, fiók és követés nélkül), amely egységes módot javasol az idő megadására a Holdon, a Marson, valamennyi bolygón, törpebolygón, aszteroidán, üstökösön és a Naprendszer holdjain. A holdidőről folyó vita ihlette (≈56 µs/nap óraeltérés, a CGPM határozata a holdi referencia-időskáláról, valamint a „nulla magasságról” és az órahálózatokról szóló nyitott kérdések).
 
 ## Az alapgondolat: négy óra, két képlet
 

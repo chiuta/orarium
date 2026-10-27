@@ -2673,7 +2673,7 @@ function pairIcs(a,b,ms){
  const bo=blackScan(t=>pairBlocked(a,b,t),ms);
  if(!bo.none&&bo.end>ms)ev.push({k:'b',s:Math.max(bo.start===null?ms:bo.start,ms),e:bo.end});
  ev.sort((x,y)=>x.s-y.s);
- const stamp=icsT(Date.now()),L=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//fara frontiere//ORARIUM 2.0.0//RO','CALSCALE:GREGORIAN','X-WR-CALNAME:'+icsEsc('ORARIUM '+nm(a)+' ⇄ '+nm(b))];
+ const stamp=icsT(Date.now()),L=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//fara frontiere//ORARIUM 2.0.1//RO','CALSCALE:GREGORIAN','X-WR-CALNAME:'+icsEsc('ORARIUM '+nm(a)+' ⇄ '+nm(b))];
  ev.forEach(x=>{
   const lt=pairGeom(a,b,x.s).lt;
   L.push('BEGIN:VEVENT','UID:orarium-'+a.id+'-'+b.id+'-'+x.k+'-'+icsT(x.s)+'@chiuta.github.io','DTSTAMP:'+stamp,'DTSTART:'+icsT(x.s),'DTEND:'+icsT(x.e),

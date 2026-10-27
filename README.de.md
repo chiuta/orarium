@@ -2,15 +2,21 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · **Deutsch** · [Magyar](README.hu.md)
 
-**Version:** 2.0.0 · **Zuletzt aktualisiert:** 2026-10-26
+**Version:** 2.0.1 · **Zuletzt aktualisiert:** 2026-10-27
+
+**Status:** stabil · **Offline:** vollständig (kein Netz nötig; die Links „↗ TerRa“ und „↗ Bolta“ öffnen andere Online-Apps nur bei Klick)
 
 **Online-App:** [https://chiuta.github.io/orarium/](https://chiuta.github.io/orarium/)
 
 **Zeit auf allen Welten**
 
-ORARIUM ist eine Web-App in einer einzigen Datei, offline nutzbar (`index.html`, ohne Server, ohne Konto, ohne Tracking), die eine einheitliche Art vorschlägt, die Zeit auf dem Mond, dem Mars, allen Planeten, Zwergplaneten, Asteroiden, Kometen und Monden des Sonnensystems anzugeben. Anlass war die Debatte über die Mondzeit (ein Uhrenversatz von ≈56 µs/Tag, die CGPM-Resolution zu einer lunaren Referenzzeitskala sowie die offenen Fragen zur „Nullhöhe“ und zu Uhrennetzen).
+**Kurzprofil:** Zeit auf allen Welten: ein Normal, zwei Formeln und vier Uhren für Mond, Mars und das ganze Sonnensystem. Eine Datei, offline, ohne Konto.
 
 Oberflächensprachen: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**.
+
+## Ausführliche Beschreibung
+
+ORARIUM ist eine Web-App in einer einzigen Datei, offline nutzbar (`index.html`, ohne Server, ohne Konto, ohne Tracking), die eine einheitliche Art vorschlägt, die Zeit auf dem Mond, dem Mars, allen Planeten, Zwergplaneten, Asteroiden, Kometen und Monden des Sonnensystems anzugeben. Anlass war die Debatte über die Mondzeit (ein Uhrenversatz von ≈56 µs/Tag, die CGPM-Resolution zu einer lunaren Referenzzeitskala sowie die offenen Fragen zur „Nullhöhe“ und zu Uhrennetzen).
 
 ## Die Idee: vier Uhren, zwei Formeln
 
