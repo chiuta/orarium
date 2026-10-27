@@ -2,7 +2,7 @@
 
 [English](README.md) · **Română** · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versiune:** 2.0.1 · **Ultima actualizare:** 2026-10-27
+**Versiune:** 2.1.0 · **Ultima actualizare:** 2026-10-27
 
 **Stare:** stabil · **Offline:** complet (nu cere internet; legăturile „↗ TerRa” și „↗ Bolta” deschid alte aplicații online doar dacă le apeși)
 
@@ -77,7 +77,21 @@ node tools/exercise.js index.html fr   # doar o limbă
 - Orientările polilor și meridianelor de origine: IAU WGCCRE 2009. Elemente kepleriene medii: JPL (Standish). Timpul marțian MSD/MTC: Allison și McEwen. Seria pentru distanța Pământ–Lună: J. Meeus, *Astronomical Algorithms*.
 - Valorile fizice sunt cele uzuale din literatura de specialitate, rotunjite. Datele despre colonizare sunt calitative și orientative.
 
+## Sursa de build resincronizată (2.1.0)
+
+`src/template.html` rămăsese în urma lui `index.html` (versiune 1.2.5 față de 2.0.x și module vechi ale fff-kit), deci un `npm run build` ar fi regenerat un `index.html` mai vechi. Șablonul a fost regenerat din `index.html` (dicționarul de traduceri și meta CSP înlocuite cu marcajele lor), iar `index.html` este **identic** cu ce produce `tools/build.py` din el (verificat; diferă doar meta CSP, generată de unelte).
+
+- `tools/check_template.py` (nou, fără fff-kit; `npm run check:template`): verifică faptul că șablonul + `src/i18n/tr_*.json` dau `index.html`, ignorând CSP, blocul `fff-info` și `data-fff-hash`.
+- `tools/check_fresh.py`: ignoră acum și meta CSP la comparație.
+- Aplicația nu s-a schimbat funcțional.
+
+**Neschimbat și motiv:** `tools/exercise.js` (jsdom) nu a putut fi rulat: jsdom nu este instalat în sesiune. Testele Playwright rămân cele existente.
+
 ## Istoric
+
+### 2.1.0 — 2026-10-27
+- `src/template.html` resincronizat cu `index.html`; verificare nouă `tools/check_template.py`.
+
 
 ### 2.0.0 — 2026-10-26
 - Planificator de întâlniri între două lumi (programul de lucru local, fereastra de legătură, întârzierea semnalului); parametrii intră în „Link unic”.

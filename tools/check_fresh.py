@@ -8,6 +8,7 @@ def norm(t):
     t = re.sub(r'\sdata-fff-hash="[0-9a-f]*"', '', t)
     t = re.sub(r'<!--fff:info:start-->.*?<!--fff:info:end-->\n?', '', t, flags=re.S)
     t = re.sub(r'<!--fff:pwa:start[^>]*-->', '<!--fff:pwa:start-->', t)  # lista `made` din marcaj depinde de fișierele deja existente
+    t = re.sub(r'<meta http-equiv="Content-Security-Policy"[^>]*>', '<!--CSP-->', t)  # generat de build.py + pwa.mjs + fixcsp: se ignoră la comparație
     return t
 committed = open(idx, encoding='utf-8').read()
 backup = tempfile.mktemp()

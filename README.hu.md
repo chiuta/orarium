@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · **Magyar**
 
-**Verzió:** 2.0.1 · **Utolsó frissítés:** 2026-10-27
+**Verzió:** 2.1.0 · **Utolsó frissítés:** 2026-10-27
 
 **Állapot:** stabil · **Offline:** teljes (nem igényel hálózatot; a „↗ TerRa” és „↗ Bolta” hivatkozások csak kattintásra nyitnak meg más online alkalmazásokat)
 
@@ -77,7 +77,23 @@ node tools/exercise.js index.html fr   # one language only
 - A pólusok és a kezdőmeridiánok tájolása: IAU WGCCRE 2009. Átlagos Kepler-féle pályaelemek: JPL (Standish). Marsi idő MSD/MTC: Allison & McEwen. Holdtávolság-sorozat: J. Meeus, *Astronomical Algorithms*.
 - A fizikai értékek a szokásos, kerekített szakirodalmi adatok. A kolonizációs adatok kvalitatívak és tájékoztató jellegűek.
 
+## Build source resynchronised (2.1.0)
+
+_(English only; not yet translated into this language. Machine translation intentionally not added to avoid errors in technical statements.)_
+
+`src/template.html` had fallen behind `index.html` (version 1.2.5 versus 2.0.x and older fff-kit modules), so an `npm run build` would have regenerated an older `index.html`. The template was regenerated from `index.html` (translation dictionary and CSP meta replaced by their markers), and `index.html` is **identical** to what `tools/build.py` produces from it (verified; only the tool-generated CSP meta differs).
+
+- `tools/check_template.py` (new, no fff-kit needed; `npm run check:template`): checks that the template plus `src/i18n/tr_*.json` yield `index.html`, ignoring the CSP, the `fff-info` block and `data-fff-hash`.
+- `tools/check_fresh.py`: now also ignores the CSP meta when comparing.
+- No functional change to the app.
+
+**Unchanged and why:** `tools/exercise.js` (jsdom) could not be run: jsdom is not installed in this session. The existing Playwright tests are the ones kept.
+
 ## Előzmények
+
+### 2.1.0 — 2026-10-27
+- `src/template.html` resynchronised with `index.html`; new check `tools/check_template.py`.
+
 
 ### 1.2.5 — 2026-10-22
 - fff-kit 1.1.4: érintési célpontok és minimális szövegméret; érintési célpontok/szöveg javítva

@@ -2,6 +2,15 @@
 
 Format: SemVer (MAJOR.MINOR.PATCH). Intrările mai vechi sunt copiate din README (secțiunea „History / Changelog”), neschimbate.
 
+## 2.1.0 — 2026-10-27 (anterior: 2.0.1)
+
+Resincronizarea sursei de build:
+- `src/template.html` regenerat din `index.html` (rămăsese la 1.2.5 și la module vechi ale fff-kit; un `npm run build` ar fi produs un `index.html` mai vechi). `tools/build.py` pe noul șablon reproduce `index.html` (diferă doar meta CSP, generată de unelte).
+- `tools/check_template.py` nou (fără fff-kit) și `npm run check:template`; `tools/check_fresh.py` ignoră meta CSP. Verificat și lanțul complet build + pwa.mjs apply (check_fresh trece).
+- Aplicația nu s-a schimbat funcțional. `tools/exercise.js` (jsdom) neexecutat: jsdom lipsește din sesiune.
+
+---
+
 ## 2.0.1 — 2026-10-27 (anterior: 2.0.0)
 
 Recenzie (doar texte, fără modificări de logică):
