@@ -2,7 +2,7 @@
 
 **English** · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Version:** 2.0.1 · **Last updated:** 2026-10-27
+**Version:** 2.1.0 · **Last updated:** 2026-10-27
 
 **Status:** stable · **Offline:** complete (works from `file://`; the “↗ TerRa” and “↗ Bolta” links open other online apps only if you click them)
 
@@ -77,7 +77,21 @@ node tools/exercise.js index.html fr   # one language only
 - Pole and prime-meridian orientations: IAU WGCCRE 2009. Mean Keplerian elements: JPL (Standish). Martian time MSD/MTC: Allison & McEwen. Lunar distance series: J. Meeus, *Astronomical Algorithms*.
 - Physical values are the usual literature figures, rounded. Colonization data are qualitative and indicative.
 
+## Build source resynchronised (2.1.0)
+
+`src/template.html` had fallen behind `index.html` (version 1.2.5 versus 2.0.x and older fff-kit modules), so an `npm run build` would have regenerated an older `index.html`. The template was regenerated from `index.html` (translation dictionary and CSP meta replaced by their markers), and `index.html` is **identical** to what `tools/build.py` produces from it (verified; only the tool-generated CSP meta differs).
+
+- `tools/check_template.py` (new, no fff-kit needed; `npm run check:template`): checks that the template plus `src/i18n/tr_*.json` yield `index.html`, ignoring the CSP, the `fff-info` block and `data-fff-hash`.
+- `tools/check_fresh.py`: now also ignores the CSP meta when comparing.
+- No functional change to the app.
+
+**Unchanged and why:** `tools/exercise.js` (jsdom) could not be run: jsdom is not installed in this session. The existing Playwright tests are the ones kept.
+
 ## Changelog
+
+### 2.1.0 — 2026-10-27
+- `src/template.html` resynchronised with `index.html`; new check `tools/check_template.py`.
+
 
 ### 1.2.7 — 2026-10-23
 

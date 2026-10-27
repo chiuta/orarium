@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · **Italiano** · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versione:** 2.0.1 · **Ultimo aggiornamento:** 2026-10-27
+**Versione:** 2.1.0 · **Ultimo aggiornamento:** 2026-10-27
 
 **Stato:** stabile · **Offline:** completo (nessuna rete richiesta; i link «↗ TerRa» e «↗ Bolta» aprono altre app online solo se li premi)
 
@@ -75,7 +75,23 @@ node tools/exercise.js index.html fr   # one language only
 - Orientamenti dei poli e dei meridiani di riferimento: IAU WGCCRE 2009. Elementi kepleriani medi: JPL (Standish). Tempo marziano MSD/MTC: Allison & McEwen. Serie delle distanze lunari: J. Meeus, *Astronomical Algorithms*.
 - I valori fisici sono le consuete cifre di letteratura, arrotondate. I dati sulla colonizzazione sono qualitativi e indicativi.
 
+## Build source resynchronised (2.1.0)
+
+_(English only; not yet translated into this language. Machine translation intentionally not added to avoid errors in technical statements.)_
+
+`src/template.html` had fallen behind `index.html` (version 1.2.5 versus 2.0.x and older fff-kit modules), so an `npm run build` would have regenerated an older `index.html`. The template was regenerated from `index.html` (translation dictionary and CSP meta replaced by their markers), and `index.html` is **identical** to what `tools/build.py` produces from it (verified; only the tool-generated CSP meta differs).
+
+- `tools/check_template.py` (new, no fff-kit needed; `npm run check:template`): checks that the template plus `src/i18n/tr_*.json` yield `index.html`, ignoring the CSP, the `fff-info` block and `data-fff-hash`.
+- `tools/check_fresh.py`: now also ignores the CSP meta when comparing.
+- No functional change to the app.
+
+**Unchanged and why:** `tools/exercise.js` (jsdom) could not be run: jsdom is not installed in this session. The existing Playwright tests are the ones kept.
+
 ## Cronologia
+
+### 2.1.0 — 2026-10-27
+- `src/template.html` resynchronised with `index.html`; new check `tools/check_template.py`.
+
 
 ### 1.2.5 — 2026-10-22
 - fff-kit 1.1.4: bersagli touch e testo minimo; bersagli touch/testo corretti

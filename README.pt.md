@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · **Português** · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versão:** 2.0.1 · **Última atualização:** 2026-10-27
+**Versão:** 2.1.0 · **Última atualização:** 2026-10-27
 
 **Estado:** estável · **Offline:** completo (não requer rede; as ligações «↗ TerRa» e «↗ Bolta» abrem outras aplicações online apenas se clicares)
 
@@ -75,7 +75,23 @@ node tools/exercise.js index.html fr   # one language only
 - Orientações do polo e do meridiano de referência: IAU WGCCRE 2009. Elementos keplerianos médios: JPL (Standish). Tempo marciano MSD/MTC: Allison & McEwen. Série de distâncias lunares: J. Meeus, *Astronomical Algorithms*.
 - Os valores físicos são os números habituais da literatura, arredondados. Os dados de colonização são qualitativos e indicativos.
 
+## Build source resynchronised (2.1.0)
+
+_(English only; not yet translated into this language. Machine translation intentionally not added to avoid errors in technical statements.)_
+
+`src/template.html` had fallen behind `index.html` (version 1.2.5 versus 2.0.x and older fff-kit modules), so an `npm run build` would have regenerated an older `index.html`. The template was regenerated from `index.html` (translation dictionary and CSP meta replaced by their markers), and `index.html` is **identical** to what `tools/build.py` produces from it (verified; only the tool-generated CSP meta differs).
+
+- `tools/check_template.py` (new, no fff-kit needed; `npm run check:template`): checks that the template plus `src/i18n/tr_*.json` yield `index.html`, ignoring the CSP, the `fff-info` block and `data-fff-hash`.
+- `tools/check_fresh.py`: now also ignores the CSP meta when comparing.
+- No functional change to the app.
+
+**Unchanged and why:** `tools/exercise.js` (jsdom) could not be run: jsdom is not installed in this session. The existing Playwright tests are the ones kept.
+
 ## Histórico
+
+### 2.1.0 — 2026-10-27
+- `src/template.html` resynchronised with `index.html`; new check `tools/check_template.py`.
+
 
 ### 1.2.5 — 2026-10-22
 - fff-kit 1.1.4: alvos táteis e texto mínimo; alvos táteis/texto corrigidos
