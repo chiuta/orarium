@@ -16,8 +16,8 @@
     "orarium.lang",
     "orarium.ref"
   ],
-  "sizeBytes": 805311,
-  "sha256": "d4a5f2972351e96ae6ccab35b64231ceb89ce13a57de54fb8f4a7992bd223a44",
+  "sizeBytes": 805354,
+  "sha256": "a8aece3d7949383a7b378466d46d9f0625f61523ce0f018742347fc2c798e0ab",
   "csp": {
     "present": true,
     "directives": {
