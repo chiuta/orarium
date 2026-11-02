@@ -16,8 +16,8 @@
     "orarium.lang",
     "orarium.ref"
   ],
-  "sizeBytes": 805354,
-  "sha256": "a8aece3d7949383a7b378466d46d9f0625f61523ce0f018742347fc2c798e0ab",
+  "sizeBytes": 945788,
+  "sha256": "f31c7aa698c46c6f998d9de5164dd5e8042247032d05bc04a13587882d07e9ef",
   "csp": {
     "present": true,
     "directives": {
@@ -57,6 +57,10 @@
       "dialog",
       "label",
       "bundle",
+      "qr",
+      "p2p",
+      "sync",
+      "history",
       "bridge"
     ]
   },
@@ -68,6 +72,10 @@
       "dialog",
       "label",
       "bundle",
+      "qr",
+      "p2p",
+      "sync",
+      "history",
       "bridge"
     ]
   },
