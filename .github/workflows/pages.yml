@@ -18,7 +18,14 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
+      - name: Hubul fff-kit (pentru verificarea de actualitate)
+        uses: actions/checkout@v4
+        with:
+          repository: chiuta/chiuta.github.io
+          path: .hub
       - name: Validate translations and check index.html is up to date
+        env:
+          FFF_HUB: ${{ github.workspace }}/.hub
         run: |
           python3 tools/validate.py
           python3 tools/check_fresh.py
