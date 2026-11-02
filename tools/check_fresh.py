@@ -16,7 +16,7 @@ shutil.copy(idx, backup)
 try:
     subprocess.run([sys.executable, os.path.join(root, 'tools', 'build.py')], check=True, stdout=subprocess.DEVNULL)
     # PWA (manifest + sw.js + pictograme) se aplică după build, ca în `npm run build`
-    subprocess.run(['node', os.path.join(root, '..', 'chiuta.github.io', 'fff-kit', 'pwa', 'pwa.mjs'), 'apply', root, '--slug', 'orarium', '--name', 'ORARIUM', '--categories', 'education,utilities'], check=True, stdout=subprocess.DEVNULL)
+    subprocess.run(['node', os.path.join(os.environ.get('FFF_HUB') or os.path.join(root, '..', 'chiuta.github.io'), 'fff-kit', 'pwa', 'pwa.mjs'), 'apply', root, '--slug', 'orarium', '--name', 'ORARIUM', '--categories', 'education,utilities'], check=True, stdout=subprocess.DEVNULL)
     rebuilt = open(idx, encoding='utf-8').read()
 finally:
     shutil.copy(backup, idx); os.remove(backup)
