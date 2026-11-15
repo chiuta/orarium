@@ -13,10 +13,10 @@ out = t.replace('/*__DICT__*/{}', js)
 # CSP: hash-uri sha256 pentru toate scripturile inline (calculate DUPĂ asamblare)
 import re, hashlib, base64
 def _h(x): return "'sha256-" + base64.b64encode(hashlib.sha256(x.encode('utf8')).digest()).decode() + "'"
-# Modulele comune (<script id="fff-mod-...">, ex. fff-texturi) sunt injectate în index.html de uneltele comune (inject-shared.mjs), nu construite din src/:
+# Modulele comune (<script id="fff-mod-...">, ex. fff-texturi, și plicul <script id="fff-envelope">) sunt injectate în index.html de uneltele comune (inject-shared.mjs), nu construite din src/:
 # se preiau neschimbate din index.html comis, după blocul fff:info, ca o reconstrucție (și verificarea CI „index.html e actual”) să nu le piardă; hash-urile CSP se calculează mai jos.
 _prev = os.path.join(root, 'index.html')
-_mods = ''.join(m.group(0) for m in re.finditer(r'<script id="fff-mod-[a-z0-9-]+">[\s\S]*?</script>\n?', open(_prev, encoding='utf-8').read())) if os.path.exists(_prev) else ''
+_mods = ''.join(m.group(0) for m in re.finditer(r'<script id="fff-(?:mod-[a-z0-9-]+|envelope)">[\s\S]*?</script>\n?', open(_prev, encoding='utf-8').read())) if os.path.exists(_prev) else ''
 _at = max(out.find('<!--fff:info:end-->'), out.find('<!--fff:kit:end-->'))
 if _mods and _at >= 0:
     _at = out.index('\n', _at) + 1

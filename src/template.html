@@ -3,8 +3,8 @@
 <html lang="ro" data-fff-hash="6a90e007dad2f630e8edb610537a1b4dcc75160c665da575aa3fe05d9c4f266a">
 <head>
 <!--CSP-->
-<meta name="application-version" content="2.2.8">
-<meta name="last-updated" content="2026-11-02">
+<meta name="application-version" content="2.2.9">
+<meta name="last-updated" content="2026-11-15">
 <meta name="description" content="Timpul pe Lună, Marte și toate corpurile Sistemului Solar: un etalon, două formule, patru ceasuri. Fișier unic, offline.">
 <meta charset="utf-8">
 <!--fff:kit:start v=1 modules=core,store,dialog,exit,view,ux,label,bundle,qr,p2p,sync,history,bridge-->
@@ -4848,7 +4848,7 @@ Acces        1 − log₁₀(1 + timp-lumină minute)/log₁₀(301)</div>
 
 <section id="v-scen" class="view"><div id="scen"></div></section>
 </main>
-<footer><span id="app-version" style="display:block;font-size:12px;opacity:.7;min-height:24px;line-height:24px">v 2.1.0 · 2026-10-27</span><span id="foot-src">Surse și metodă: articolul <a href="https://www.stiripesurse.ro/cat-este-ceasul-pe-luna_3928805" target="_blank" rel="noopener">„Cât este ceasul pe Lună…”</a> (AFP/Agerpres, 18.10.2026); orientări IAU WGCCRE 2009; elemente orbitale kepleriene medii (JPL, Standish); MTC/MSD marțian (Allison & McEwen). Valorile fizice ale corpurilor sunt cele uzuale din literatura de specialitate, rotunjite. Aplicația este trade-free: fără rețea, fără cont, fără urmărire.</span></footer>
+<footer><span id="app-version" style="display:block;font-size:12px;opacity:.7;min-height:24px;line-height:24px">v 2.2.9 · 2026-11-15</span><span id="foot-src">Surse și metodă: articolul <a href="https://www.stiripesurse.ro/cat-este-ceasul-pe-luna_3928805" target="_blank" rel="noopener">„Cât este ceasul pe Lună…”</a> (AFP/Agerpres, 18.10.2026); orientări IAU WGCCRE 2009; elemente orbitale kepleriene medii (JPL, Standish); MTC/MSD marțian (Allison & McEwen). Valorile fizice ale corpurilor sunt cele uzuale din literatura de specialitate, rotunjite. Aplicația este trade-free: fără rețea, fără cont, fără urmărire.</span></footer>
 
 <div id="ov"><div class="sheet"><button id="x" aria-label="Închide">×</button><div id="det"></div></div></div>
 
@@ -5953,7 +5953,7 @@ function pairIcs(a,b,ms){
  const bo=blackScan(t=>pairBlocked(a,b,t),ms);
  if(!bo.none&&bo.end>ms)ev.push({k:'b',s:Math.max(bo.start===null?ms:bo.start,ms),e:bo.end});
  ev.sort((x,y)=>x.s-y.s);
- const stamp=icsT(Date.now()),L=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//fara frontiere//ORARIUM 2.1.0//RO','CALSCALE:GREGORIAN','X-WR-CALNAME:'+icsEsc('ORARIUM '+nm(a)+' ⇄ '+nm(b))];
+ const stamp=icsT(Date.now()),L=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//fara frontiere//ORARIUM 2.2.3//RO','CALSCALE:GREGORIAN','X-WR-CALNAME:'+icsEsc('ORARIUM '+nm(a)+' ⇄ '+nm(b))];
  ev.forEach(x=>{
   const lt=pairGeom(a,b,x.s).lt;
   L.push('BEGIN:VEVENT','UID:orarium-'+a.id+'-'+b.id+'-'+x.k+'-'+icsT(x.s)+'@chiuta.github.io','DTSTAMP:'+stamp,'DTSTART:'+icsT(x.s),'DTEND:'+icsT(x.e),
@@ -6170,6 +6170,16 @@ var FFF_REG = [
   FFF.bridge.auto({slug:slug,registry:FFF_REG,accepts:false?[]:(me.accepts||[])});
 })();
 
+</script>
+<script id="fff-envelope-adapter">(function(){if(!(window.FFF&&window.FFF.envelope))return;window.FFF.envelope.registry=[{"slug":"orar","name":"Orar","url":"https://orar.chiuta.ro/","accepts":["events/ics","agenda/fff"],"produces":["events/ics","agenda/fff"]},{"slug":"clepsidra","name":"CLEPSIDRA","url":"https://clepsidra.chiuta.ro/","accepts":["agenda/fff","events/ics"],"produces":["table/csv","agenda/fff"]},{"slug":"orarium","name":"ORARIUM","url":"https://orarium.chiuta.ro/","accepts":[],"produces":["events/ics"]}];})();
+/* Locația comună FFF (fff-place) · ORARIUM: fusul orar al locației comune devine fusul de referință al aplicației (setRef). */
+(function () {
+  var P = window.FFF && FFF.place; if (!P) return;
+  P.configure({ corner: 'br' }); /* bl e ocupat de butonul „înapoi” (from=) */
+  function push(c) { try { if (c && c.tz && typeof window.setRef === 'function' && typeof REF !== 'undefined' && REF !== c.tz) window.setRef(c.tz); } catch (e) { /* aplicația rămâne neschimbată */ } }
+  function go() { setTimeout(function () { P.onChange(push); }, 0); }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', go); else go();
+})();
 </script>
 </body>
 </html>

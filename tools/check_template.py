@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Verificare fără fff-kit: src/template.html + src/i18n/tr_*.json (cum le asamblează build.py) == index.html,
-ignorând doar metaeticheta CSP (generată de build.py/pwa.mjs/fixcsp). Nu scrie nimic. Cod de ieșire 1 dacă derivă."""
+ignorând metaeticheta CSP (generată de build.py/pwa.mjs/fixcsp), blocul fff-info, modulele fff-mod-* și plicul fff-envelope (injectate de uneltele comune). Nu scrie nimic. Cod de ieșire 1 dacă derivă."""
 import glob, json, os, re, sys
 root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 t = open(os.path.join(root, 'src', 'template.html'), encoding='utf-8').read()
@@ -14,6 +14,8 @@ idx = open(os.path.join(root, 'index.html'), encoding='utf-8').read()
 def csp(s):  # ignoră ce generează uneltele: CSP, blocul fff-info (sha256/dimensiune) și data-fff-hash
     s = re.sub(r'<meta http-equiv="Content-Security-Policy"[^>]*>|<!--CSP-->', '', s)
     s = re.sub(r'<script type="application/json" id="fff-info">.*?</script>', '', s, flags=re.S)
+    s = re.sub(r'<script id="fff-(?:mod-[a-z0-9-]+|envelope)">.*?</script>\n?', '', s, flags=re.S)   # module/plic injectate de uneltele comune (build.py le preia din index.html)
+    s = re.sub(r'<!--fff:(?:info|pwa):(?:start|end)[^>]*-->\n?', '', s)                              # marcajele puse de `info` și de pwa.mjs
     return re.sub(r'\sdata-fff-hash="[0-9a-f]*"', '', s)
 if csp(built) != csp(idx):
     a, b = csp(built), csp(idx); i = next((k for k in range(min(len(a), len(b))) if a[k] != b[k]), min(len(a), len(b)))
