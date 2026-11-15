@@ -12,6 +12,7 @@
     "serviceWorker",
     "localStorage",
     "Web Crypto",
+    "WebGL",
     "BroadcastChannel"
   ],
   "storageKeys": [
@@ -19,13 +20,13 @@
     "orarium.lang",
     "orarium.ref"
   ],
-  "sizeBytes": 1136522,
-  "sha256": "7fcf88e2e09d048a81d60a5e5b90fb00440e818c085dd0fdad8db3e9803acc9e",
+  "sizeBytes": 1188589,
+  "sha256": "6faa6b18c1f9207c0aab6f9e6c5540cf99b0dfb61a0335f2364af260ef371172",
   "csp": {
     "present": true,
     "directives": {
       "default-src": "'none'",
-      "script-src": "sha256×7",
+      "script-src": "sha256×8",
       "style-src": "'unsafe-inline'",
       "img-src": "'self' data: blob:",
       "worker-src": "'self' blob:",
