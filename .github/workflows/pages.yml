@@ -12,7 +12,7 @@ concurrency:
   cancel-in-progress: true
 jobs:
   validate-and-deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -30,7 +30,7 @@ jobs:
           python3 tools/validate.py
           python3 tools/check_fresh.py
       - name: Prepare site
-        run: mkdir _site && cp index.html LICENSE _site/
+        run: mkdir _site && cp index.html LICENSE manifest.webmanifest sw.js app.json icon-192.png icon-512.png icon-maskable-512.png _site/
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
