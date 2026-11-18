@@ -22,7 +22,10 @@ if _mods and _at >= 0:
     _at = out.index('\n', _at) + 1
     out = out[:_at] + _mods + out[_at:]
 _sc = [b for a, b in re.findall(r'<script(?![^>]*\bsrc=)([^>]*)>(.*?)</script>', out, flags=re.S) if 'json' not in a]
-_csp = "default-src 'none'; script-src " + ' '.join(_h(x) for x in _sc) + "; style-src 'unsafe-inline'; img-src data: blob:; worker-src blob:; connect-src 'none'; base-uri 'none'; form-action 'none'"
+# Dacă pagina are blocul PWA (fff:pwa), CSP-ul trebuie să admită 'self' pentru manifest, service worker și icoane (exact ce pune `fff-kit/pwa/pwa.mjs apply`);
+# altfel browserul blochează sw.js și icon-192.png (verificat pe http://127.0.0.1) și aplicația nu se instalează / nu merge offline.
+_pwa = '<!--fff:pwa:start' in out
+_csp = ("default-src 'none'; script-src " + ' '.join(_h(x) for x in _sc) + "; style-src 'unsafe-inline'; img-src " + ("'self' " if _pwa else '') + "data: blob:; worker-src " + ("'self' " if _pwa else '') + "blob:; connect-src 'none'; base-uri 'none'; form-action 'none'" + ("; manifest-src 'self'" if _pwa else ''))
 assert out.count('<!--CSP-->') == 1
 out = out.replace('<!--CSP-->', '<meta http-equiv="Content-Security-Policy" content="' + _csp + '">')
 open(os.path.join(root, 'index.html'), 'w', encoding='utf-8').write(out)

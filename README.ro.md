@@ -2,7 +2,7 @@
 
 [English](README.md) · **Română** · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versiune:** 2.3.2 · **Ultima actualizare:** 2026-11-17
+**Versiune:** 2.3.3 · **Ultima actualizare:** 2026-11-18
 
 **Stare:** stabil · **Offline:** complet (nu cere internet; legăturile „↗ TerRa” și „↗ Bolta” deschid alte aplicații online doar dacă le apeși)
 
@@ -51,7 +51,7 @@ P_sol = 1 / | 1/P_sid ∓ 1/P_year |
 
 ## Limite oneste
 
-Model de ordinul întâi pentru rata ceasului (de exemplu ≈488 µs/zi pentru Marte, față de ≈477 µs/zi în modelele complete); orele locale „reale” folosesc orientări IAU medii și efemeride kepleriene simplificate (eroare de ordinul minutelor, verificată pe Marte față de Mars24); timpul-lumină are o precizie de ≈0,5 %; hărțile sunt schematice; indicele de colonizare este orientativ, nu o evaluare științifică. Pentru navigație reală se folosesc efemeride numerice complete.
+Calculul e de ordinul întâi (Soare + planeta-mamă + suprafață + rotație, orbite circulare în medie). Pentru Marte obține ≈488 µs/zi, iar modelele complete din literatură dau ≈477 µs/zi, cu variații periodice de sute de µs din cauza excentricității. Orele „reale” folosesc orientări IAU medii (fără librații) și efemeride kepleriene simplificate. Verificate față de formula Mars24 și față de biblioteca astronomică astronomy-engine: ora solară de pe Marte are abatere maximă ≈0,5 min în 1900–2100 (sub 1 min în 1800–2200, ≈5 min în anii 1000–3000); timpul-lumină e exact la ≈0,5 % în 1900–2200 (până la ≈2 % spre anul 3000); elevațiile stațiilor de pe Pământ diferă cu cel mult ≈0,04° pentru Marte și Venus și ≈0,3° pentru Jupiter, Saturn și Lună (2020–2100). TT − UTC = 32,184 s + (TAI − UTC): din 1972 se folosește tabelul secundelor intercalare (69,184 s din 2017, presupunând că nu mai urmează altele), înainte de 1972 ΔT după Espenak–Meeus. Hărțile sunt schematice. Indicele de colonizare este orientativ, nu o evaluare științifică. Pentru navigație reală se folosesc efemeride numerice complete.
 
 ## Utilizare
 
@@ -66,6 +66,7 @@ python3 tools/validate.py     # traduceri: aceleași chei, aceleași variabile {
 python3 tools/build.py        # regenerează index.html (pasul 1 din 2; singur, șterge blocul fff-info)
 node ../chiuta.github.io/fff-kit/build.mjs info . --slug orarium   # pasul 2: rescrie fff-info/data-fff-hash în index.html și app.json (sha256, mărime)
 npm install && npm test       # parcurge cu jsdom fiecare ecran/corp (pe limbă), raportează chei lipsă/erori/NaN
+node tests/regression.test.mjs   # teste de regresie: date/ani, ICS, PWA/service worker, linkul unic
 node tools/exercise.js index.html fr   # doar o limbă
 ```
 
@@ -73,49 +74,25 @@ node tools/exercise.js index.html fr   # doar o limbă
 
 ## Surse și mulțumiri
 
-- Articolul care a declanșat proiectul: „Cât este ceasul pe Lună…” (AFP/Agerpres, stiripesurse.ro, 18.10.2026).
+- Articolul care a declanșat proiectul: „[Cât este ceasul pe Lună…](https://www.stiripesurse.ro/cat-este-ceasul-pe-luna_3928805)” (în română; AFP/Agerpres, stiripesurse.ro, 18.10.2026).
 - Orientările polilor și meridianelor de origine: IAU WGCCRE 2009. Elemente kepleriene medii: JPL (Standish). Timpul marțian MSD/MTC: Allison și McEwen. Seria pentru distanța Pământ–Lună: J. Meeus, *Astronomical Algorithms*.
 - Valorile fizice sunt cele uzuale din literatura de specialitate, rotunjite. Datele despre colonizare sunt calitative și orientative.
 
-## Sursa de build resincronizată (2.1.0)
-
-`src/template.html` rămăsese în urma lui `index.html` (versiune 1.2.5 față de 2.0.x și module vechi ale fff-kit), deci un `npm run build` ar fi regenerat un `index.html` mai vechi. Șablonul a fost regenerat din `index.html` (dicționarul de traduceri și meta CSP înlocuite cu marcajele lor), iar `index.html` este **identic** cu ce produce `tools/build.py` din el (verificat; diferă doar meta CSP, generată de unelte).
-
-- `tools/check_template.py` (nou, fără fff-kit; `npm run check:template`): verifică faptul că șablonul + `src/i18n/tr_*.json` dau `index.html`, ignorând CSP, blocul `fff-info` și `data-fff-hash`.
-- `tools/check_fresh.py`: ignoră acum și meta CSP la comparație.
-- Aplicația nu s-a schimbat funcțional.
-
-**Neschimbat și motiv:** `tools/exercise.js` (jsdom) nu a putut fi rulat: jsdom nu este instalat în sesiune. Testele Playwright rămân cele existente.
-
 ## Istoric
 
-### 2.1.0 — 2026-10-27
-- `src/template.html` resincronizat cu `index.html`; verificare nouă `tools/check_template.py`.
+### 2.3.3 — 2026-11-18
 
+Audit comparativ adversarial (față de astronomy-engine și formula Mars24, teste diferențiale, parcurs în toate cele 8 limbi) și remedieri:
+- Elevațiile stațiilor includ acum precesia echinocțiilor (erau greșite cu 0,3–1,5°; acum ≲ 0,04° pentru Marte și Venus, ≲ 0,3° pentru Jupiter, Saturn și Lună).
+- TT − UTC: tabelul secundelor intercalare din 1972 și, înainte, ΔT (Espenak–Meeus), nu constanta 69,184 s pentru orice dată.
+- Anii 1–99 erau calculați în tăcere ca 1901–1999, iar datele peste limita acceptată (anul 275760 și după) dădeau excepție; ambele cazuri sunt tratate, iar convertorul spune „Data aleasă e în afara intervalului acceptat.”
+- Fișierele .ics: `PRODID` conține versiunea (ORARIUM 2.3.3).
+- Numerele din linkul unic se scriu zecimal simplu, ca să poată fi citite înapoi (notația cu exponent se pierdea).
+- PWA: CSP-ul paginii nu permitea manifestul web, service worker-ul și iconițele, deci aplicația nu putea fi instalată sau folosită offline; remediat (`manifest-src`, `worker-src 'self'`, `img-src 'self'`) și acoperit de un test care servește aplicația prin HTTP și înregistrează service worker-ul.
+- „Limite oneste” indică acum precizia măsurată.
+- Test de regresie nou `tests/regression.test.mjs` (51 de verificări; pică pe 2.3.2).
 
-### 2.0.0 — 2026-10-26
-- Planificator de întâlniri între două lumi (programul de lucru local, fereastra de legătură, întârzierea semnalului); parametrii intră în „Link unic”.
-
-### 1.2.7 — 2026-10-23
-
-Audit: o valoare `orarium-anchor` coruptă din stocarea locală nu mai produce ore `NaN` și nu mai înlocuiește prototipul obiectului-ancoră (se acceptă doar numere finite); rotația siderală a lui Marte este 1,02595675 zile, deci solul mediu este 88 775,243 s (Mars24: 88 775,244 s; era 88 775,265 s).
-
-### 1.2.5 — 2026-10-22
-- fff-kit 1.1.4: ținte tactile și text minim; ținte tactile/text corectate
-
-### 1.2.4 — 2026-10-22
-- fff-kit 1.1.2: PBKDF2 600 000 de iterații, protecție anti-clickjacking.
-
-### 1.2.3 — 2026-10-22
-- Offline pe bune: au fost adăugate un service worker (cache-first, cache pe versiune), un manifest web și pictograme, astfel încât aplicația se deschide fără rețea după prima vizită și poate fi instalată (promisiunea „offline” din catalog e acum adevărată). Lanțul de build (`npm run build`) aplică fișierele PWA și reîmprospătează eticheta de transparență.
-- Accesibilitate: cele 19 câmpuri din convertor, legătura de comunicație și fereastra pe perechi au acum etichete asociate programatic cu câmpurile.
-- Mobil: corectat depășirea orizontală de 10 px la cardurile „Acum” (eticheta cu numele corpului nu mai iese din card); textul mic (etichete, note) are cel puțin 12 px.
-
-### 1.2.2 — 2026-10-22
-- Eticheta de accesibilitate a hărții schematice este tradusă încă de la început (rămânea în română până la deschiderea filei Hartă), iar titlul articolului citat din subsol este redat și în franceză, germană și maghiară.
-
-### 1.2.1 — 2026-10-22
-- Subsolul „Surse și metodă”, meta descrierea și panoul de transparență fff-kit (nume și descriere) urmează acum limba interfeței.
+Versiunile anterioare: [`CHANGELOG.md`](CHANGELOG.md).
 
 ## Licență
 

@@ -33,7 +33,7 @@
 "<b>Rețea de ceasuri?</b> Propunerea ORARIUM: un ansamblu (≥3 ceasuri atomice la sol + relee pe orbită) cu medie ponderată, ca UTC, care produce TLS. Fiecare corp cu prezență umană primește propriul ansamblu.": "",
 "<b>Sincronizare?</b> Propunerea ORARIUM, prin Ceasul-Punte: (TLS, UTC, ρ) în fiecare pachet, plus timp-lumină (dus și dus-întors) din efemeridă.": "",
 "Limite oneste": "",
-"Calculul e de ordinul întâi (Soare + planeta-mamă + suprafață + rotație, orbite circulare în medie). Pentru Marte obține ≈488 µs/zi, iar modelele complete din literatură dau ≈477 µs/zi, cu variații periodice de sute de µs din cauza excentricității. Orele „reale” folosesc orientări IAU medii (fără librații) și efemeride kepleriene simplificate: ordinul de mărime al erorii e de minute (verificat pe Marte față de formula Mars24, abatere maximă ≈4 min), nu de secunde. Timpul-lumină e exact la ≈0,5 %. TT = UTC + 69,184 s presupune că nu s-au mai introdus secunde intercalare după 2017. Pentru navigație reală se folosesc efemeride numerice complete.": "",
+"Calculul e de ordinul întâi (Soare + planeta-mamă + suprafață + rotație, orbite circulare în medie). Pentru Marte obține ≈488 µs/zi, iar modelele complete din literatură dau ≈477 µs/zi, cu variații periodice de sute de µs din cauza excentricității. Orele „reale” folosesc orientări IAU medii (fără librații) și efemeride kepleriene simplificate. Verificate față de formula Mars24 și față de biblioteca astronomică astronomy-engine: ora solară de pe Marte are abatere maximă ≈0,5 min în 1900–2100 (sub 1 min în 1800–2200, ≈5 min în anii 1000–3000); timpul-lumină e exact la ≈0,5 % în 1900–2200 (până la ≈2 % spre anul 3000); elevațiile stațiilor de pe Pământ diferă cu cel mult ≈0,04° pentru Marte și Venus și ≈0,3° pentru Jupiter, Saturn și Lună (2020–2100). TT − UTC = 32,184 s + (TAI − UTC): din 1972 se folosește tabelul secundelor intercalare (69,184 s din 2017, presupunând că nu mai urmează altele), înainte de 1972 ΔT după Espenak–Meeus. Pentru navigație reală se folosesc efemeride numerice complete.": "",
 "Ce oră e acolo când aici e…?": "",
 "Data și ora": "",
 "Fusul orar": "",
@@ -605,5 +605,6 @@
 "Intervale în care întâlnirea de {0} min încape la ambele capete": "",
 "Început posibil": "",
 "Se arată primele {0} intervale din {1}.": "",
-"Ora locală este ora solară medie a punctului ales (nu un fus civil); † = ritm cu origine convențională. Orientativ, cu precizia ferestrelor de mai sus; nu pentru operațiuni reale.": ""
+"Ora locală este ora solară medie a punctului ales (nu un fus civil); † = ritm cu origine convențională. Orientativ, cu precizia ferestrelor de mai sus; nu pentru operațiuni reale.": "",
+"Data aleasă e în afara intervalului acceptat.": ""
 }

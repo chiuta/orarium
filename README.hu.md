@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · **Magyar**
 
-**Verzió:** 2.3.2 · **Utolsó frissítés:** 2026-11-17
+**Verzió:** 2.3.3 · **Utolsó frissítés:** 2026-11-18
 
 **Állapot:** stabil · **Offline:** teljes (nem igényel hálózatot; a „↗ TerRa” és „↗ Bolta” hivatkozások csak kattintásra nyitnak meg más online alkalmazásokat)
 
@@ -46,12 +46,14 @@ P_sol = 1 / | 1/P_sid ∓ 1/P_year |
 - **Kommunikáció égitestek között** — bármely égitestpárra (nemcsak a Földdel): a kommunikációs ablak, amikor mindkettő látja a másikat a horizont felett, a fényidő és a napkonjunkció időszakai; ezen kívül minden égitest mostantól a helyi délét (12:00) is mutatja.
 - **Kapcsolat a TerRával** — „↗ TerRa” gombok minden kiszámolt éjfélnél / délnél és az égitestlapon: megnyitják a [TerRát](https://chiuta.github.io/TerRa/) az adott pillanatban, a Földnél a 3D-s földgömbbel, másoknál a kiválasztott égitestről látott éggel (egyedi link). A kapcsolat mind a 44 égitestet lefedi (pl. Phobos, Charon, Ceres, Eris, Bennu), és a két égitest közötti kommunikációs ablaknál is van „↗ TerRa” mindkét végponthoz.
 - **Egyedi link és kétirányú kapcsolat a TerRával** — a „🔗 Egyedi link” gomb a jelenlegi nézetet másolja (fül, égitest, rögzített pillanat, állomás, égitestpár, napküszöb); a [TerRa](https://chiuta.github.io/TerRa/) itt nyitja meg az égitestet, az időt és a helyedről számolt adási ablakot.
+- **Bolta és .ics** — a „↗ Bolta” megnyitja a [Bolta](https://chiuta.github.io/apps/Bolta/) offline planetáriumot a kiválasztott állomásra (a rögzített időpontra vagy élőben); bármely két égitestre a „📅 Ablakok exportálása .ics-be” letölti a következő kommunikációs ablakokat és a napkonjunkció okozta megszakítást RFC 5545 naptárként (UTC), amely importálható az Orarba vagy bármely naptárba. A „Most” fül TerRa-hivatkozásai már nem fagyasztják be az időt.
+- **Találkozótervező (2.0)** — bármely két égitestre (pl. Föld–Mars): azok a sávok, amelyekben a választott hosszúságú találkozó belefér mindkét vég helyi munkaidejébe, nyitott összeköttetéssel (napkonjunkció nélkül) és a jelkésleltetéssel (egyirányú és oda-vissza) együtt; megmutatja mindkét vég helyi idejét az indulásnál és az érkezésnél. Tájékoztató jellegű, valós műveletekhez nem alkalmas.
 - **Forgatókönyvek** — konkrét példák (az Apollo–11 helyszíne, Jezero, Titán, Bennu, Vénusz, Merkúr, Plútó–Charon, oda-vissza táblázat).
 - **Referencia földi idő** — UTC vagy bármely IANA-időzóna (pl. Bukarest), mindenhol ezt használja.
 
 ## Őszinte korlátok
 
-Elsőrendű óraráta-modell (pl. a Marsra ≈488 µs/nap, szemben a teljes modellek ≈477 µs/napjával); a „valós” helyi idők átlagos IAU-tájolásokat és egyszerűsített Kepler-féle efemeridákat használnak (a hiba nagyságrendje percekben mérhető, a Marson a Mars24-hez képest ellenőrizve); a fényidő ≈0,5 %-ra pontos; a térképek sematikusak; a kolonizációs index tájékoztató jellegű, nem tudományos értékelés. Valós navigációhoz teljes numerikus efemeridákat kell használni.
+A számítás elsőrendű (Nap + anyabolygó + felszín + forgás, átlagosan körpályák). A Marsra ≈488 µs/napot ad, a szakirodalom teljes modelljei pedig ≈477 µs/napot, a pálya excentricitása miatti, több száz µs-os periodikus ingadozásokkal. A „valós” idők átlagos IAU-tájolásokat (libráció nélkül) és egyszerűsített Kepler-féle efemeridákat használnak. A Mars24 képlettel és az astronomy-engine csillagászati függvénykönyvtárral összevetve: a Mars helyi szoláris ideje legfeljebb ≈0,5 percet tér el 1900–2100 között (1 percnél kevesebbet 1800–2200 között, ≈5 percet az 1000–3000 közötti években); a fényidő ≈0,5 %-ra pontos 1900–2200 között (a 3000. év felé akár ≈2 %-ig); a földi állomások magassága legfeljebb ≈0,04°-kal tér el a Mars és a Vénusz esetében, és ≈0,3°-kal a Jupiternél, a Szaturnusznál és a Holdnál (2020–2100). TT − UTC = 32,184 s + (TAI − UTC): 1972-től a szökőmásodperc-táblázatot használja (2017 óta 69,184 s, feltéve, hogy nem jön több), 1972 előtt az Espenak–Meeus-féle ΔT-t. A térképek sematikusak. A kolonizációs index tájékoztató jellegű, nem tudományos értékelés. Valós navigációhoz teljes numerikus efemeridákat használnak.
 
 ## Használat
 
@@ -66,6 +68,7 @@ python3 tools/validate.py     # translations: same keys, {n} placeholders and HT
 python3 tools/build.py        # regenerates index.html (step 1 of 2; on its own it drops the fff-info block)
 node ../chiuta.github.io/fff-kit/build.mjs info . --slug orarium   # step 2: rewrites fff-info / data-fff-hash in index.html and app.json (sha256, size); needs the fff-kit from chiuta.github.io
 npm install && npm test       # jsdom walk-through of every screen/body (per language), reports missing keys/errors/NaN
+node tests/regression.test.mjs   # regression tests: dates/years, ICS, PWA/service worker, unique link
 node tools/exercise.js index.html fr   # one language only
 ```
 
@@ -77,40 +80,21 @@ node tools/exercise.js index.html fr   # one language only
 - A pólusok és a kezdőmeridiánok tájolása: IAU WGCCRE 2009. Átlagos Kepler-féle pályaelemek: JPL (Standish). Marsi idő MSD/MTC: Allison & McEwen. Holdtávolság-sorozat: J. Meeus, *Astronomical Algorithms*.
 - A fizikai értékek a szokásos, kerekített szakirodalmi adatok. A kolonizációs adatok kvalitatívak és tájékoztató jellegűek.
 
-## Build source resynchronised (2.1.0)
-
-_(English only; not yet translated into this language. Machine translation intentionally not added to avoid errors in technical statements.)_
-
-`src/template.html` had fallen behind `index.html` (version 1.2.5 versus 2.0.x and older fff-kit modules), so an `npm run build` would have regenerated an older `index.html`. The template was regenerated from `index.html` (translation dictionary and CSP meta replaced by their markers), and `index.html` is **identical** to what `tools/build.py` produces from it (verified; only the tool-generated CSP meta differs).
-
-- `tools/check_template.py` (new, no fff-kit needed; `npm run check:template`): checks that the template plus `src/i18n/tr_*.json` yield `index.html`, ignoring the CSP, the `fff-info` block and `data-fff-hash`.
-- `tools/check_fresh.py`: now also ignores the CSP meta when comparing.
-- No functional change to the app.
-
-**Unchanged and why:** `tools/exercise.js` (jsdom) could not be run: jsdom is not installed in this session. The existing Playwright tests are the ones kept.
-
 ## Előzmények
 
-### 2.1.0 — 2026-10-27
-- `src/template.html` resynchronised with `index.html`; new check `tools/check_template.py`.
+### 2.3.3 — 2026-11-18
 
+Ellenséges összehasonlító audit (az astronomy-engine-nel és a Mars24 képlettel szemben, differenciális tesztek, végigjárás mind a 8 nyelven) és javítások:
+- Az állomások magassági szögei mostantól tartalmazzák a napéjegyenlőségek precesszióját (korábban 0,3–1,5°-kal tévedtek; most ≲ 0,04° a Marsnál és a Vénusznál, ≲ 0,3° a Jupiternél, a Szaturnuszánál és a Holdnál).
+- TT − UTC: 1972-től a szökőmásodperc-táblázat, előtte a ΔT (Espenak–Meeus) a minden dátumra érvényes 69,184 s állandó helyett.
+- Az 1–99. éveket csendben 1901–1999-ként számolta, a támogatott tartományon túli dátumok (275760. év és később) pedig kivételt okoztak; mindkettő kezelve van, és az átváltó ezt jelzi: „A kiválasztott dátum a támogatott tartományon kívül esik.”
+- .ics fájlok: a `PRODID` tartalmazza a verziót (ORARIUM 2.3.3).
+- Az egyedi link számai egyszerű tizedes alakban íródnak, hogy visszaolvashatók legyenek (a hatványkitevős alak elveszett).
+- PWA: az oldal CSP-je nem engedte a webes jegyzéket, a service workert és az ikonokat, így az alkalmazás nem volt telepíthető és offline sem használható; javítva (`manifest-src`, `worker-src 'self'`, `img-src 'self'`), és lefedi egy teszt, amely HTTP-n szolgálja ki az alkalmazást és regisztrálja a service workert.
+- Az „Őszinte korlátok” mostantól a mért pontosságot adja meg.
+- Új regressziós teszt: `tests/regression.test.mjs` (51 ellenőrzés; a 2.3.2-n elbukik).
 
-### 1.2.5 — 2026-10-22
-- fff-kit 1.1.4: érintési célpontok és minimális szövegméret; érintési célpontok/szöveg javítva
-
-### 1.2.4 — 2026-10-22
-- fff-kit 1.1.2: PBKDF2 600 000 iterációval, clickjacking elleni védelem.
-
-### 1.2.3 — 2026-10-22
-- Valóban offline: service worker (előbb gyorsítótár, verziónkénti gyorsítótár), webes manifest és ikonok kerültek az alkalmazásba, így az első látogatás után hálózat nélkül is megnyílik, és telepíthető (a katalógus „offline” ígérete mostantól igaz). A build-lánc (`npm run build`) alkalmazza a PWA-fájlokat és frissíti az átláthatósági címkét.
-- Akadálymentesség: az átváltó, a kommunikációs kapcsolat és a párablak 19 mezőjéhez most programozottan hozzárendelt címkék tartoznak.
-- Mobil: javítva a „Most” kártyák 10 px-es vízszintes túlcsordulása (a égitest nevét jelölő címke már nem lóg ki a kártyából); a kis szöveg (címkék, jegyzetek) legalább 12 px.
-
-### 1.2.2 — 2026-10-22
-- A sematikus térkép hozzáférhetőségi címkéje az elejétől fogva le van fordítva (korábban a térkép fül megnyitásáig román maradt), a láblécben idézett cikk címe pedig franciául, németül és magyarul is fordítva jelenik meg.
-
-### 1.2.1 — 2026-10-22
-- A „Források és módszer” lábléc, a meta leírás és az fff-kit átláthatósági panel (név és leírás) mostantól a felület nyelvét követi.
+Korábbi verziók: [`CHANGELOG.md`](CHANGELOG.md).
 
 ## Licenc
 

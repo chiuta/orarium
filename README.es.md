@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · **Español** · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versión:** 2.3.2 · **Última actualización:** 2026-11-17
+**Versión:** 2.3.3 · **Última actualización:** 2026-11-18
 
 **Estado:** estable · **Sin conexión:** completo (no requiere red; los enlaces «↗ TerRa» y «↗ Bolta» abren otras aplicaciones en línea solo si los pulsas)
 
@@ -44,12 +44,14 @@ P_sol = 1 / | 1/P_sid ∓ 1/P_year |
 - **Comunicación entre cuerpos** — para cualquier par de cuerpos (no solo con la Tierra): la ventana de comunicación en la que cada uno ve al otro sobre el horizonte, el tiempo luz y los periodos de conjunción solar; además, cada cuerpo muestra ahora también su mediodía local (12:00).
 - **Enlace con TerRa** — botones «↗ TerRa» en cada medianoche / mediodía calculado y en la ficha del cuerpo: abren [TerRa](https://chiuta.github.io/TerRa/) en ese momento, con el globo 3D para la Tierra o el cielo visto desde el cuerpo elegido (enlace único). El enlace cubre los 44 cuerpos (incluidos Fobos, Caronte, Ceres, Eris, Bennu, etc.), y la ventana de comunicación entre dos cuerpos también tiene «↗ TerRa» para cada extremo.
 - **Enlace único y conexión bidireccional con TerRa** — el botón «🔗 Enlace único» copia la vista actual (pestaña, cuerpo, momento fijado, estación, par de cuerpos, umbral solar); [TerRa](https://chiuta.github.io/TerRa/) abre aquí el cuerpo, la hora y la ventana de transmisión desde tu ubicación.
+- **Bolta y .ics** — «↗ Bolta» abre el planetario sin conexión [Bolta](https://chiuta.github.io/apps/Bolta/) para la estación elegida (en el momento fijado o en vivo); para cualquier par de cuerpos, «📅 Exportar las ventanas a .ics» descarga las próximas ventanas de comunicación y la interrupción por conjunción solar como calendario RFC 5545 (UTC) que se importa en Orar o en cualquier calendario. Los enlaces de «Ahora» a TerRa ya no congelan la hora.
+- **Planificador de reuniones (2.0)** — para cualquier par de cuerpos (p. ej. Tierra–Marte): las franjas en las que cabe una reunión de la duración elegida dentro del horario laboral local de ambos extremos, con el enlace abierto (sin conjunción solar) y el retardo de la señal (de ida y de ida y vuelta) incluido; muestra la hora local de cada extremo a la salida y a la llegada. Orientativo, no para operaciones reales.
 - **Escenarios** — ejemplos concretos (emplazamiento del Apolo 11, Jezero, Titán, Bennu, Venus, Mercurio, Plutón–Caronte, tabla de ida y vuelta).
 - **Reloj de referencia terrestre** — UTC o cualquier huso horario IANA (p. ej., Bucarest), usado en toda la aplicación.
 
 ## Límites honestos
 
-Modelo de primer orden de la tasa del reloj (p. ej., ≈488 µs/día para Marte frente a ≈477 µs/día en los modelos completos); las horas locales «reales» usan orientaciones medias de la UAI y efemérides keplerianas simplificadas (error del orden de minutos, comprobado con Mars24 para Marte); tiempo de luz ≈0,5 %; los mapas son esquemáticos; el índice de colonización es orientativo, no una evaluación científica. Para la navegación real, usa efemérides numéricas completas.
+El cálculo es de primer orden (Sol + planeta madre + superficie + rotación, órbitas circulares en promedio). Para Marte obtiene ≈488 µs/día, mientras que los modelos completos de la literatura dan ≈477 µs/día, con variaciones periódicas de cientos de µs debidas a la excentricidad. Las horas «reales» usan orientaciones IAU medias (sin libraciones) y efemérides keplerianas simplificadas. Verificado frente a la fórmula Mars24 y a la biblioteca astronómica astronomy-engine: la hora solar en Marte se desvía como máximo ≈0,5 min en 1900–2100 (menos de 1 min en 1800–2200, ≈5 min en los años 1000–3000); el tiempo de luz es exacto hasta ≈0,5 % en 1900–2200 (hasta ≈2 % hacia el año 3000); las elevaciones de las estaciones en la Tierra difieren como máximo ≈0,04° para Marte y Venus y ≈0,3° para Júpiter, Saturno y la Luna (2020–2100). TT − UTC = 32,184 s + (TAI − UTC): desde 1972 se usa la tabla de segundos intercalares (69,184 s desde 2017, suponiendo que no seguirán otros); antes de 1972, el ΔT de Espenak–Meeus. Los mapas son esquemáticos. El índice de colonización es orientativo, no una evaluación científica. Para la navegación real se usan efemérides numéricas completas.
 
 ## Uso
 
@@ -64,6 +66,7 @@ python3 tools/validate.py     # translations: same keys, {n} placeholders and HT
 python3 tools/build.py        # regenerates index.html (step 1 of 2; on its own it drops the fff-info block)
 node ../chiuta.github.io/fff-kit/build.mjs info . --slug orarium   # step 2: rewrites fff-info / data-fff-hash in index.html and app.json (sha256, size); needs the fff-kit from chiuta.github.io
 npm install && npm test       # jsdom walk-through of every screen/body (per language), reports missing keys/errors/NaN
+node tests/regression.test.mjs   # regression tests: dates/years, ICS, PWA/service worker, unique link
 node tools/exercise.js index.html fr   # one language only
 ```
 
@@ -75,40 +78,21 @@ node tools/exercise.js index.html fr   # one language only
 - Orientaciones del polo y del meridiano origen: IAU WGCCRE 2009. Elementos keplerianos medios: JPL (Standish). Tiempo marciano MSD/MTC: Allison y McEwen. Serie de distancias lunares: J. Meeus, *Astronomical Algorithms*.
 - Los valores físicos son las cifras habituales de la literatura, redondeadas. Los datos de colonización son cualitativos y orientativos.
 
-## Build source resynchronised (2.1.0)
-
-_(English only; not yet translated into this language. Machine translation intentionally not added to avoid errors in technical statements.)_
-
-`src/template.html` had fallen behind `index.html` (version 1.2.5 versus 2.0.x and older fff-kit modules), so an `npm run build` would have regenerated an older `index.html`. The template was regenerated from `index.html` (translation dictionary and CSP meta replaced by their markers), and `index.html` is **identical** to what `tools/build.py` produces from it (verified; only the tool-generated CSP meta differs).
-
-- `tools/check_template.py` (new, no fff-kit needed; `npm run check:template`): checks that the template plus `src/i18n/tr_*.json` yield `index.html`, ignoring the CSP, the `fff-info` block and `data-fff-hash`.
-- `tools/check_fresh.py`: now also ignores the CSP meta when comparing.
-- No functional change to the app.
-
-**Unchanged and why:** `tools/exercise.js` (jsdom) could not be run: jsdom is not installed in this session. The existing Playwright tests are the ones kept.
-
 ## Historial
 
-### 2.1.0 — 2026-10-27
-- `src/template.html` resynchronised with `index.html`; new check `tools/check_template.py`.
+### 2.3.3 — 2026-11-18
 
+Auditoría comparativa adversarial (frente a astronomy-engine y la fórmula Mars24, pruebas diferenciales, recorrido en los 8 idiomas) y correcciones:
+- Las elevaciones de las estaciones incluyen ahora la precesión de los equinoccios (antes fallaban entre 0,3 y 1,5°; ahora ≲ 0,04° para Marte y Venus, ≲ 0,3° para Júpiter, Saturno y la Luna).
+- TT − UTC: tabla de segundos intercalares desde 1972 y ΔT (Espenak–Meeus) antes, en lugar de la constante 69,184 s para cualquier fecha.
+- Los años 1–99 se calculaban en silencio como 1901–1999, y las fechas fuera del rango admitido (año 275760 y posteriores) provocaban una excepción; ambos casos se tratan ya, y el conversor indica «La fecha elegida está fuera del rango admitido.»
+- Archivos .ics: `PRODID` lleva la versión (ORARIUM 2.3.3).
+- Los números del enlace único se escriben en decimal simple para poder leerlos de nuevo (la notación exponencial se perdía).
+- PWA: la CSP de la página no permitía el manifiesto web, el service worker ni los iconos, por lo que la aplicación no podía instalarse ni usarse sin conexión; corregido (`manifest-src`, `worker-src 'self'`, `img-src 'self'`) y cubierto por una prueba que sirve la aplicación por HTTP y registra el service worker.
+- «Límites honestos» indica ahora la precisión medida.
+- Nueva prueba de regresión `tests/regression.test.mjs` (51 comprobaciones; falla en la 2.3.2).
 
-### 1.2.5 — 2026-10-22
-- fff-kit 1.1.4: objetivos táctiles y texto mínimo; objetivos táctiles/texto corregidos
-
-### 1.2.4 — 2026-10-22
-- fff-kit 1.1.2: PBKDF2 con 600.000 iteraciones, protección anti-clickjacking.
-
-### 1.2.3 — 2026-10-22
-- Sin conexión de verdad: se añadieron un service worker (caché primero, caché por versión), un manifiesto web e iconos, de modo que la aplicación se abre sin red tras la primera visita y se puede instalar (la promesa «sin conexión» del catálogo ahora es cierta). La cadena de compilación (`npm run build`) aplica los archivos PWA y actualiza la etiqueta de transparencia.
-- Accesibilidad: los 19 campos del conversor, del enlace de comunicación y de la ventana por pares tienen ahora etiquetas asociadas mediante programación a sus campos.
-- Móvil: corregido el desbordamiento horizontal de 10 px en las tarjetas «Ahora» (la etiqueta con el nombre del cuerpo ya no sobresale de la tarjeta); el texto pequeño (etiquetas, notas) mide al menos 12 px.
-
-### 1.2.2 — 2026-10-22
-- La etiqueta de accesibilidad del mapa esquemático se traduce desde el inicio (permanecía en rumano hasta abrir la pestaña del mapa) y el título del artículo citado en el pie se muestra también en francés, alemán y húngaro.
-
-### 1.2.1 — 2026-10-22
-- El pie de página «Fuentes y método», la meta descripción y el panel de transparencia fff-kit (nombre y descripción) siguen ahora el idioma de la interfaz.
+Versiones anteriores: [`CHANGELOG.md`](CHANGELOG.md).
 
 ## Licencia
 

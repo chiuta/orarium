@@ -3,8 +3,8 @@
 <html lang="ro" data-fff-hash="6a90e007dad2f630e8edb610537a1b4dcc75160c665da575aa3fe05d9c4f266a">
 <head>
 <!--CSP-->
-<meta name="application-version" content="2.3.2">
-<meta name="last-updated" content="2026-11-17">
+<meta name="application-version" content="2.3.3">
+<meta name="last-updated" content="2026-11-18">
 <meta name="description" content="Timpul pe Lună, Marte și toate corpurile Sistemului Solar: un etalon, două formule, patru ceasuri. Fișier unic, offline.">
 <meta charset="utf-8">
 <!--fff:kit:start v=1 modules=core,store,dialog,exit,view,a11y,share,ux,label,bundle,qr,p2p,sync,history,bridge-->
@@ -6223,7 +6223,7 @@ input[type=range]{padding:0;accent-color:var(--acc2)}
 </ul>
 </div>
 <div class="panel"><h3>Limite oneste</h3>
-<p>Calculul e de ordinul întâi (Soare + planeta-mamă + suprafață + rotație, orbite circulare în medie). Pentru Marte obține ≈488 µs/zi, iar modelele complete din literatură dau ≈477 µs/zi, cu variații periodice de sute de µs din cauza excentricității. Orele „reale” folosesc orientări IAU medii (fără librații) și efemeride kepleriene simplificate: ordinul de mărime al erorii e de minute (verificat pe Marte față de formula Mars24, abatere maximă ≈4 min), nu de secunde. Timpul-lumină e exact la ≈0,5 %. TT = UTC + 69,184 s presupune că nu s-au mai introdus secunde intercalare după 2017. Pentru navigație reală se folosesc efemeride numerice complete.</p></div>
+<p>Calculul e de ordinul întâi (Soare + planeta-mamă + suprafață + rotație, orbite circulare în medie). Pentru Marte obține ≈488 µs/zi, iar modelele complete din literatură dau ≈477 µs/zi, cu variații periodice de sute de µs din cauza excentricității. Orele „reale” folosesc orientări IAU medii (fără librații) și efemeride kepleriene simplificate. Verificate față de formula Mars24 și față de biblioteca astronomică astronomy-engine: ora solară de pe Marte are abatere maximă ≈0,5 min în 1900–2100 (sub 1 min în 1800–2200, ≈5 min în anii 1000–3000); timpul-lumină e exact la ≈0,5 % în 1900–2200 (până la ≈2 % spre anul 3000); elevațiile stațiilor de pe Pământ diferă cu cel mult ≈0,04° pentru Marte și Venus și ≈0,3° pentru Jupiter, Saturn și Lună (2020–2100). TT − UTC = 32,184 s + (TAI − UTC): din 1972 se folosește tabelul secundelor intercalare (69,184 s din 2017, presupunând că nu mai urmează altele), înainte de 1972 ΔT după Espenak–Meeus. Pentru navigație reală se folosesc efemeride numerice complete.</p></div>
 </section>
 
 <section id="v-conv" class="view">
@@ -6324,7 +6324,7 @@ Acces        1 − log₁₀(1 + timp-lumină minute)/log₁₀(301)</div>
 
 <section id="v-scen" class="view"><div id="scen"></div></section>
 </main>
-<footer><span id="app-version" style="display:block;font-size:12px;opacity:.7;min-height:24px;line-height:24px">v 2.3.2 · 2026-11-17</span><span id="foot-src">Surse și metodă: articolul <a href="https://www.stiripesurse.ro/cat-este-ceasul-pe-luna_3928805" target="_blank" rel="noopener">„Cât este ceasul pe Lună…”</a> (AFP/Agerpres, 18.10.2026); orientări IAU WGCCRE 2009; elemente orbitale kepleriene medii (JPL, Standish); MTC/MSD marțian (Allison & McEwen). Valorile fizice ale corpurilor sunt cele uzuale din literatura de specialitate, rotunjite. Aplicația este trade-free: fără rețea, fără cont, fără urmărire.</span></footer>
+<footer><span id="app-version" style="display:block;font-size:12px;opacity:.7;min-height:24px;line-height:24px">v 2.3.3 · 2026-11-18</span><span id="foot-src">Surse și metodă: articolul <a href="https://www.stiripesurse.ro/cat-este-ceasul-pe-luna_3928805" target="_blank" rel="noopener">„Cât este ceasul pe Lună…”</a> (AFP/Agerpres, 18.10.2026); orientări IAU WGCCRE 2009; elemente orbitale kepleriene medii (JPL, Standish); MTC/MSD marțian (Allison & McEwen). Valorile fizice ale corpurilor sunt cele uzuale din literatura de specialitate, rotunjite. Aplicația este trade-free: fără rețea, fără cont, fără urmărire.</span></footer>
 
 <div id="ov"><div class="sheet"><button id="x" aria-label="Închide">×</button><div id="det"></div></div></div>
 
@@ -6405,7 +6405,20 @@ const anchor={};
 let TFIX=null;const NOW=()=>TFIX===null?Date.now():TFIX; // TFIX: moment fixat din link (ms UTC)
 function mod(x,m){return ((x%m)+m)%m}
 function frac(x){return x-Math.floor(x)}
-function jdTT(ms){return ms/86400000+2440587.5+69.184/86400}
+// TT − UTC (s). Din 1972: 32,184 + (TAI − UTC) după tabelul secundelor intercalare (ultima, 1 ian 2017 → 69,184 s; se presupune că nu mai urmează altele).
+// Înainte de 1972: ΔT = TT − UT1 după polinoamele Espenak–Meeus (UTC ≈ UT1 la ±1 s); sub 1900 se păstrează valoarea din 1900.
+const LEAPS=[[1972,1,10],[1972,7,11],[1973,1,12],[1974,1,13],[1975,1,14],[1976,1,15],[1977,1,16],[1978,1,17],[1979,1,18],[1980,1,19],[1981,7,20],[1982,7,21],[1983,7,22],[1985,7,23],[1988,1,24],[1990,1,25],[1991,1,26],[1992,7,27],[1993,7,28],[1994,7,29],[1996,1,30],[1997,7,31],[1999,1,32],[2006,1,33],[2009,1,34],[2012,7,35],[2015,7,36],[2017,1,37]].map(x=>[Date.UTC(x[0],x[1]-1,1),x[2]]);
+const LEAP_LAST=LEAPS[LEAPS.length-1][0];
+function ttUtc(ms){
+ if(ms>=LEAP_LAST)return 69.184;
+ if(ms>=LEAPS[0][0]){let v=LEAPS[0][1];for(let i=1;i<LEAPS.length&&ms>=LEAPS[i][0];i++)v=LEAPS[i][1];return 32.184+v}
+ const y=Math.max(1900,1970+ms/31556952000);let t;
+ if(y<1920){t=y-1900;return -2.79+1.494119*t-0.0598939*t*t+0.0061966*t*t*t-0.000197*t*t*t*t}
+ if(y<1941){t=y-1920;return 21.20+0.84493*t-0.076100*t*t+0.0020936*t*t*t}
+ if(y<1961){t=y-1950;return 29.07+0.407*t-t*t/233+t*t*t/2547}
+ t=y-1975;return 45.45+1.067*t-t*t/260-t*t*t/718;
+}
+function jdTT(ms){return ms/86400000+2440587.5+ttUtc(ms)/86400}
 function helio(el,T){
  const a=el[0]+el[1]*T,e=el[2]+el[3]*T,I=(el[4]+el[5]*T)*D2R,L=el[6]+el[7]*T,w=el[8]+el[9]*T,O=(el[10]+el[11]*T)*D2R;
  const M=mod(L-w,360)*D2R;
@@ -6540,8 +6553,17 @@ function linkGeom(b,t){ // t = momentul emisiei (ms UTC); corpul e luat la momen
  }
  return {v:eqVec(v),lt:lt};
 }
-function stationEl(v,t){
- const th=(gmstDeg(t)+LK.lon)*D2R,a=LK.lat*D2R,ca=Math.cos(a);
+// vector ecuatorial J2000 -> ecuator și echinocțiu medii ale datei (precesia IAU 1976, Meeus cap. 21). Timpul sideral e „al datei”:
+// fără rotația aceasta elevația iese greșită cu ≈0,014° pentru fiecare an scurs de la J2000 (≈0,4° în 2050, ≈1,3° în 2100)
+function precJ2000(v,t){
+ const T=(jdTT(t)-J2000)/36525,s=Math.PI/648000;
+ const ze=(2306.2181*T+0.30188*T*T+0.017998*T*T*T)*s,zz=(2306.2181*T+1.09468*T*T+0.018203*T*T*T)*s,th=(2004.3109*T-0.42665*T*T-0.041833*T*T*T)*s;
+ const c1=Math.cos(ze),s1=Math.sin(ze),x1=v[0]*c1-v[1]*s1,y1=v[0]*s1+v[1]*c1;
+ const ct=Math.cos(th),st=Math.sin(th),B=ct*x1-st*v[2],C=st*x1+ct*v[2],c2=Math.cos(zz),s2=Math.sin(zz);
+ return [B*c2-y1*s2,B*s2+y1*c2,C];
+}
+function stationEl(v0,t){
+ const v=precJ2000(v0,t),th=(gmstDeg(t)+LK.lon)*D2R,a=LK.lat*D2R,ca=Math.cos(a);
  const up=[ca*Math.cos(th),ca*Math.sin(th),Math.sin(a)];
  const q=[v[0]-RE*up[0],v[1]-RE*up[1],v[2]-RE*up[2]];
  return Math.asin(clamp(dot3(q,up)/nrm3(q),-1,1))/D2R;
@@ -7039,19 +7061,24 @@ function setRef(z){
  if(curView==='map')tickMap();
 }
 const TZ_PRESETS={luna:[['Meridian 0 (sub-terestru)',0],['Marea Liniștii · Apollo 11',23.47],['Chang’e 4 · Bazinul Aitken',177.6]],marte:[['Meridian 0 (Airy-0)',0],['Jezero · Perseverance',77.45],['Gale · Curiosity',137.44],['Elysium · InSight',135.62]]};
+// Date.UTC(y,…) tratează anii 0–99 ca 1900–1999; aici anul e cel real (setUTCFullYear nu are această capcană)
+function utcMs(y,mo,d,h,mi,s){const t=new Date(0);t.setUTCFullYear(y,mo,d);t.setUTCHours(h,mi,s,0);return t.getTime()}
 function tzOff(ms,tz){
- const fm=new Intl.DateTimeFormat('en-US',{timeZone:tz,hourCycle:'h23',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit'});
+ const fm=new Intl.DateTimeFormat('en-US',{timeZone:tz,hourCycle:'h23',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',era:'short'});
  const p={};fm.formatToParts(ms).forEach(x=>p[x.type]=x.value);
- return Date.UTC(+p.year,+p.month-1,+p.day,+p.hour,+p.minute,+p.second)-Math.floor(ms/1000)*1000;
+ const y=p.era==='B'||p.era==='BC'?1-+p.year:+p.year;
+ return utcMs(y,+p.month-1,+p.day,+p.hour,+p.minute,+p.second)-Math.floor(ms/1000)*1000;
 }
+const MS_MAX=8.64e15; // limita obiectului Date (±275760 ani); marja de 2 zile păstrează calculele tzOff(wall±1 zi) în interval
 function wallInfo(str,tz){
  const a=str.split('T'),d=a[0].split('-').map(Number),t=a[1].split(':').map(Number);
- const wall=Date.UTC(d[0],d[1]-1,d[2],t[0],t[1],t[2]||0);
+ const wall=utcMs(d[0],d[1]-1,d[2],t[0],t[1],t[2]||0);
+ if(!isFinite(wall)||Math.abs(wall)>MS_MAX-2*864e5)return null;
  const cand=[tzOff(wall-864e5,tz),tzOff(wall+864e5,tz)].filter((o,i,arr)=>arr.indexOf(o)===i).filter(o=>tzOff(wall-o,tz)===o);
  let g=wall;for(let i=0;i<3;i++)g=wall-tzOff(g,tz);
  return {ms:cand.length?wall-cand[0]:g,gap:cand.length===0,amb:cand.length>1};
 }
-function wallToUTC(str,tz){return wallInfo(str,tz).ms}
+function wallToUTC(str,tz){const w=wallInfo(str,tz);return w?w.ms:NaN}
 function zoneNowStr(tz,ms,hm){
  const fm=new Intl.DateTimeFormat('en-CA',{timeZone:tz,hourCycle:'h23',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'});
  const p={};fm.formatToParts(ms).forEach(x=>p[x.type]=x.value);
@@ -7084,11 +7111,13 @@ function fillPresets(){
 }
 function convCalc(){
  const v=$('cv-t').value;if(!v)return;
- const wi=wallInfo(v,$('cv-z').value),ms=wi.ms,b=byId[$('cv-b').value],lon=+$('cv-l').value||0;
+ const wi=wallInfo(v,$('cv-z').value);
+ if(!wi||Math.abs(wi.ms)>MS_MAX-2*864e5){$('cv-out').innerHTML='<div class="note">'+T('Data aleasă e în afara intervalului acceptat.')+'</div>';$('cv-all').innerHTML='';return}
+ const ms=wi.ms,b=byId[$('cv-b').value],lon=+$('cv-l').value||0;
  const u=new Date(ms),r=localHour(b,ms,lon);
  const sync=Date.UTC(2026,0,1),dd=(ms-sync)/86400000,drift=b.rho*dd;
  const l=lightLive(b,ms),lr=lightRange(b);
- let h=(wi.gap?'<div class="note">'+T('Ora aleasă nu există în fusul ales (salt de oră de vară); calculul folosește cea mai apropiată oră validă.')+'</div>':wi.amb?'<div class="note">'+T('Ora aleasă apare de două ori în fusul ales (trecerea la ora de iarnă); calculul folosește prima apariție.')+'</div>':'')+'<div class="mut" style="margin-top:12px">UTC: '+u.toISOString().replace('T',' ').slice(0,19)+' · TT = UTC + '+f(69.184,3)+' '+U('s')+'</div>'+(REF!=='UTC'?'<div class="mut">'+refLabel()+' ('+offStr(ms,REF)+'): '+refFull(ms)+'</div>':'');
+ let h=(wi.gap?'<div class="note">'+T('Ora aleasă nu există în fusul ales (salt de oră de vară); calculul folosește cea mai apropiată oră validă.')+'</div>':wi.amb?'<div class="note">'+T('Ora aleasă apare de două ori în fusul ales (trecerea la ora de iarnă); calculul folosește prima apariție.')+'</div>':'')+'<div class="mut" style="margin-top:12px">UTC: '+u.toISOString().replace('T',' ').slice(0,19)+' · TT = UTC + '+f(ttUtc(ms),3)+' '+U('s')+'</div>'+(REF!=='UTC'?'<div class="mut">'+refLabel()+' ('+offStr(ms,REF)+'): '+refFull(ms)+'</div>':'');
  h+='<div class="big">'+(r?hms(r.h):'—')+'</div><div class="mut">'+T('ora locală pe {0}',nm(b))+' '+(lon?T('(longitudine {0}° E)',f(lon,2)):T('(meridianul 0)'))+' · '+(r?(r.real?T('fază reală'):T('ritm, origine convențională')):T('fără zi stabilă'))+'</div>';
  h+='<table style="margin-top:8px">';
  h+='<tr><th>'+T('Rata ceasului față de Pământ')+'</th><td class="r '+cls(b.rho)+'">'+fmtRate(b.rho)+'</td></tr>';
@@ -7415,6 +7444,7 @@ function buildPair(){
 }
 // ----- export .ics: ferestre de comunicare (maximum 20) + întreruperea prin conjuncție solară; toate orele în UTC (fără fus orar/DST de tratat) -----
 const icsEsc=s=>String(s).replace(/\\/g,'\\\\').replace(/;/g,'\\;').replace(/,/g,'\\,').replace(/\r?\n/g,'\\n');
+const APPV=(document.querySelector('meta[name="application-version"]')||{}).content||'';  // versiunea aplicației (o singură sursă: meta application-version)
 const icsT=ms=>new Date(ms).toISOString().replace(/[-:]/g,'').slice(0,15)+'Z';
 function icsFold(l){   // RFC 5545: linii de cel mult 75 de octeți UTF-8; continuarea începe cu un spațiu
  const enc=new TextEncoder();if(enc.encode(l).length<=75)return l;
@@ -7429,7 +7459,7 @@ function pairIcs(a,b,ms){
  const bo=blackScan(t=>pairBlocked(a,b,t),ms);
  if(!bo.none&&bo.end>ms)ev.push({k:'b',s:Math.max(bo.start===null?ms:bo.start,ms),e:bo.end});
  ev.sort((x,y)=>x.s-y.s);
- const stamp=icsT(Date.now()),L=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//fara frontiere//ORARIUM 2.2.3//RO','CALSCALE:GREGORIAN','X-WR-CALNAME:'+icsEsc('ORARIUM '+nm(a)+' ⇄ '+nm(b))];
+ const stamp=icsT(Date.now()),L=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//fara frontiere//ORARIUM'+(APPV?' '+APPV:'')+'//RO','CALSCALE:GREGORIAN','X-WR-CALNAME:'+icsEsc('ORARIUM '+nm(a)+' ⇄ '+nm(b))];
  ev.forEach(x=>{
   const lt=pairGeom(a,b,x.s).lt;
   L.push('BEGIN:VEVENT','UID:orarium-'+a.id+'-'+b.id+'-'+x.k+'-'+icsT(x.s)+'@chiuta.github.io','DTSTAMP:'+stamp,'DTSTART:'+icsT(x.s),'DTEND:'+icsT(x.e),
@@ -7522,17 +7552,17 @@ function tfixBanner(){
  $('tfix-x').onclick=()=>{TFIX=null;tfixBanner();tickBoard();tickDetail();if(curView==='link'){buildLink();buildPair()}if(curView==='scen')buildScen();if(openId)openDetail(openId)};
 }
 function lnkBuild(){
- const p=['view='+curView];
+ const p=['view='+curView],nx=x=>String(+(+x).toFixed(6));  // fără 1e-7: lnkApply nu acceptă notația exponențială
  if(openId)p.push('body='+openId);
  if(TFIX!==null)p.push('t='+new Date(TFIX).toISOString().slice(0,19)+'Z');
- if(curView==='link'||openId){readLK();p.push('station='+LK.lat.toFixed(4)+','+LK.lon.toFixed(4)+','+LK.mask);p.push('thr='+LK.thr);p.push('site='+LK.blat+','+LK.blon)}
- if(curView==='link'&&$('pk-a').value){p.push('a='+$('pk-a').value);p.push('b='+$('pk-b').value);readMT();p.push('mt='+MT.h1+','+MT.h2+','+MT.d+','+MT.n)}
+ if(curView==='link'||openId){readLK();p.push('station='+LK.lat.toFixed(4)+','+LK.lon.toFixed(4)+','+nx(LK.mask));p.push('thr='+nx(LK.thr));p.push('site='+nx(LK.blat)+','+nx(LK.blon))}
+ if(curView==='link'&&$('pk-a').value){p.push('a='+$('pk-a').value);p.push('b='+$('pk-b').value);readMT();p.push('mt='+[MT.h1,MT.h2,MT.d,MT.n].map(nx).join(','))}
  return location.href.split('#')[0]+'#'+p.join('&');
 }
 function lnkApply(){
  const hs=location.hash.replace(/^#/,'');if(!hs)return;
  const q={};hs.split('&').forEach(x=>{const i=x.indexOf('=');if(i>0){try{q[x.slice(0,i)]=decodeURIComponent(x.slice(i+1))}catch(e){}}});
- if(q.t&&/^\d{4}-\d\d-\d\dT\d\d:\d\d(:\d\d)?Z?$/.test(q.t)){const d=new Date(/Z$/.test(q.t)?q.t:q.t+'Z');if(!isNaN(d))TFIX=d.getTime()}
+ if(q.t&&/^\d{4}-\d\d-\d\dT\d\d:\d\d(:\d\d)?Z?$/.test(q.t)){const d=new Date(/Z$/.test(q.t)?q.t:q.t+'Z');if(!isNaN(d)&&d.getUTCFullYear()>=1)TFIX=d.getTime()}
  const st=/^(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?)(?:,(\d+(?:\.\d+)?))?$/.exec(q.station||'');
  if(st&&Math.abs(+st[1])<=90&&Math.abs(+st[2])<=180){$('lk-sla').value=+st[1];$('lk-slo').value=+st[2];$('lk-s').value='';if(st[3])$('lk-m').value=clamp(+st[3],0,60)}
  if(q.thr&&isFinite(+q.thr))$('lk-t').value=clamp(+q.thr,0.5,20);

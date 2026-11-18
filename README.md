@@ -2,7 +2,7 @@
 
 **English** · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Version:** 2.3.2 · **Last updated:** 2026-11-17
+**Version:** 2.3.3 · **Last updated:** 2026-11-18
 
 **Status:** stable · **Offline:** complete (works from `file://`; the “↗ TerRa” and “↗ Bolta” links open other online apps only if you click them)
 
@@ -51,7 +51,7 @@ P_sol = 1 / | 1/P_sid ∓ 1/P_year |
 
 ## Honest limits
 
-First-order clock-rate model (e.g. ≈488 µs/day for Mars vs ≈477 µs/day in full models); "real" local hours use mean IAU orientations and simplified Keplerian ephemerides (error of the order of minutes, checked against Mars24 for Mars); light time ≈0.5 %; maps are schematic; colonization index is indicative, not a scientific assessment. For real navigation use full numerical ephemerides.
+The calculation is first-order (Sun + parent planet + surface + rotation, orbits circular on average). For Mars it gives ≈488 µs/day, while the full models in the literature give ≈477 µs/day, with periodic variations of hundreds of µs due to eccentricity. The “real” times use mean IAU orientations (without librations) and simplified Keplerian ephemerides. Checked against the Mars24 formula and the astronomy-engine astronomical library: the solar time on Mars deviates by at most ≈0.5 min in 1900–2100 (under 1 min in 1800–2200, ≈5 min in the years 1000–3000); the light time is accurate to ≈0.5% in 1900–2200 (up to ≈2% towards the year 3000); station elevations on Earth differ by at most ≈0.04° for Mars and Venus and ≈0.3° for Jupiter, Saturn and the Moon (2020–2100). TT − UTC = 32.184 s + (TAI − UTC): from 1972 the leap-second table is used (69.184 s since 2017, assuming no more follow), before 1972 ΔT after Espenak–Meeus. Maps are schematic. Colonization index is indicative, not a scientific assessment. For real navigation, full numerical ephemerides are used.
 
 ## Use
 
@@ -66,6 +66,7 @@ python3 tools/validate.py     # translations: same keys, {n} placeholders and HT
 python3 tools/build.py        # regenerates index.html (step 1 of 2; on its own it drops the fff-info block)
 node ../chiuta.github.io/fff-kit/build.mjs info . --slug orarium   # step 2: rewrites fff-info / data-fff-hash in index.html and app.json (sha256, size); needs the fff-kit from chiuta.github.io
 npm install && npm test       # jsdom walk-through of every screen/body (per language), reports missing keys/errors/NaN
+node tests/regression.test.mjs   # regression tests: dates/years, ICS, PWA/service worker, unique link
 node tools/exercise.js index.html fr   # one language only
 ```
 
@@ -77,42 +78,21 @@ node tools/exercise.js index.html fr   # one language only
 - Pole and prime-meridian orientations: IAU WGCCRE 2009. Mean Keplerian elements: JPL (Standish). Martian time MSD/MTC: Allison & McEwen. Lunar distance series: J. Meeus, *Astronomical Algorithms*.
 - Physical values are the usual literature figures, rounded. Colonization data are qualitative and indicative.
 
-## Build source resynchronised (2.1.0)
-
-`src/template.html` had fallen behind `index.html` (version 1.2.5 versus 2.0.x and older fff-kit modules), so an `npm run build` would have regenerated an older `index.html`. The template was regenerated from `index.html` (translation dictionary and CSP meta replaced by their markers), and `index.html` is **identical** to what `tools/build.py` produces from it (verified; only the tool-generated CSP meta differs).
-
-- `tools/check_template.py` (new, no fff-kit needed; `npm run check:template`): checks that the template plus `src/i18n/tr_*.json` yield `index.html`, ignoring the CSP, the `fff-info` block and `data-fff-hash`.
-- `tools/check_fresh.py`: now also ignores the CSP meta when comparing.
-- No functional change to the app.
-
-**Unchanged and why:** `tools/exercise.js` (jsdom) could not be run: jsdom is not installed in this session. The existing Playwright tests are the ones kept.
-
 ## Changelog
 
-### 2.1.0 — 2026-10-27
-- `src/template.html` resynchronised with `index.html`; new check `tools/check_template.py`.
+### 2.3.3 — 2026-11-18
 
+Adversarial comparative audit (against astronomy-engine and the Mars24 formula, differential tests, a walkthrough in all 8 languages) and fixes:
+- Station elevations now include the precession of the equinoxes (they were off by 0.3–1.5°; now ≲ 0.04° for Mars and Venus, ≲ 0.3° for Jupiter, Saturn and the Moon).
+- TT − UTC: the leap-second table from 1972 and ΔT (Espenak–Meeus) before it, instead of the constant 69.184 s for every date.
+- Years 1–99 were silently computed as 1901–1999, and dates beyond the supported range (year 275760 and later) raised an exception; both are now handled, and the converter says “The chosen date is outside the supported range.”
+- .ics files: `PRODID` carries the version (ORARIUM 2.3.3).
+- Numbers in the unique link are written as plain decimals so they can be read back (exponent notation was lost).
+- PWA: the page's CSP did not allow the web manifest, the service worker and the icons, so the app could not be installed or used offline; fixed (`manifest-src`, `worker-src 'self'`, `img-src 'self'`) and covered by a test that serves the app over HTTP and registers the service worker.
+- “Honest limits” now states the measured accuracy.
+- New regression test `tests/regression.test.mjs` (51 checks; it fails on 2.3.2).
 
-### 1.2.7 — 2026-10-23
-
-Audit: a corrupted `orarium-anchor` value in local storage no longer produces `NaN` hours or replaces the anchor object's prototype (only finite numbers are accepted); Mars sidereal rotation is now 1.02595675 d, so the mean sol is 88 775.243 s (Mars24: 88 775.244 s; it was 88 775.265 s).
-
-### 1.2.5 — 2026-10-22
-- fff-kit 1.1.4: touch targets and minimum text size; touch targets/text fixed
-
-### 1.2.4 — 2026-10-22
-- fff-kit 1.1.2: PBKDF2 600,000 iterations, anti-clickjacking protection.
-
-### 1.2.3 — 2026-10-22
-- Offline for real: a service worker (cache-first, per-version cache), a web manifest and icons were added, so the app opens without network after the first visit and can be installed (the catalogue promise “offline” is now true). The build chain (`npm run build`) applies the PWA files and refreshes the transparency label.
-- Accessibility: the 19 converter, communication-link and pair-window fields now have labels programmatically associated with their inputs.
-- Mobile: fixed the 10 px horizontal overflow on the “Now” cards (body-name tag no longer sticks out of the card); small text (tags, notes) is at least 12 px.
-
-### 1.2.2 — 2026-10-22
-- The accessibility label of the schematic map is now translated from the start (it was Romanian until the map tab was opened), and the cited article title in the sources footer is rendered in French, German and Hungarian like in the other languages.
-
-### 1.2.1 — 2026-10-22
-- The sources-and-method footer, the meta description and the fff-kit transparency panel (name and description) now follow the interface language.
+Earlier versions: [`CHANGELOG.md`](CHANGELOG.md).
 
 ## License
 

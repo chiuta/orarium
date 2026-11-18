@@ -2,6 +2,19 @@
 
 Format: SemVer (MAJOR.MINOR.PATCH). Intrările mai vechi sunt copiate din README (secțiunea „History / Changelog”), neschimbate.
 
+## 2.3.3 — 2026-11-18
+
+Audit comparativ adversarial (față de biblioteca astronomy-engine și formula Mars24, teste diferențiale, parcurs în toate cele 8 limbi) și remedieri / Adversarial comparative audit (against astronomy-engine and the Mars24 formula, differential tests, a walkthrough in all 8 languages) and fixes:
+
+- **Elevații / elevations:** efemeridele stațiilor omiteau precesia echinocțiilor (de la J2000), deci elevațiile erau greșite cu 0,3–1,5°; acum diferența față de astronomy-engine este ≲ 0,04° pentru Marte și Venus, ≲ 0,14° Jupiter, ≲ 0,31° Saturn, ≲ 0,21° Lună (2020–2100). / the station ephemerides omitted the precession of the equinoxes (from J2000), so elevations were off by 0.3–1.5°; the difference against astronomy-engine is now ≲ 0.04° for Mars and Venus, ≲ 0.14° Jupiter, ≲ 0.31° Saturn, ≲ 0.21° Moon (2020–2100).
+- **TT − UTC:** constanta 69,184 s se aplica oricărei date; acum tabelul secundelor intercalare din 1972 (37 s TAI−UTC din 2017) și ΔT după Espenak–Meeus înainte de 1972. / the constant 69.184 s was applied to every date; now the leap-second table from 1972 (TAI−UTC 37 s since 2017) and ΔT after Espenak–Meeus before 1972.
+- **Date / dates:** anii 1–99 erau calculați în tăcere ca 1901–1999 (`Date.UTC`), iar anul 275760 și după dădeau excepție în convertor; acum corect, cu mesajul „Data aleasă e în afara intervalului acceptat.” (8 limbi). / years 1–99 were silently computed as 1901–1999 (`Date.UTC`) and year 275760 onwards raised an exception in the converter; now correct, with the message “The chosen date is outside the supported range.” (8 languages).
+- **.ics:** `PRODID` purta o versiune veche; acum `ORARIUM <versiunea aplicației>`. / `PRODID` carried a stale version; now `ORARIUM <app version>`.
+- **Link unic / unique link:** numerele mici se scriau cu exponent (`1e-7`) și nu puteau fi citite înapoi; acum zecimal simplu (6 zecimale). / small numbers were written with an exponent (`1e-7`) and could not be read back; now plain decimals (6 places).
+- **PWA:** `tools/build.py` regenera CSP-ul fără `manifest-src`/`worker-src 'self'`/`img-src 'self'`, deci manifestul, service worker-ul și iconițele erau blocate la servirea prin HTTP(S); acum CSP-ul se reconstruiește cu directivele PWA când blocul `fff:pwa` este prezent. / `tools/build.py` regenerated the CSP without `manifest-src`/`worker-src 'self'`/`img-src 'self'`, so the manifest, service worker and icons were blocked when served over HTTP(S); the CSP is now rebuilt with the PWA directives when the `fff:pwa` block is present.
+- **Documentație / documentation:** „Limite oneste” indică precizia măsurată (ora solară pe Marte ≈ 0,5 min în 1900–2100, < 1 min în 1800–2200, ≈ 5 min în 1000–3000; timp-lumină ≈ 0,5 % în 1900–2200, ≈ 2 % spre 3000), în toate cele 8 limbi (înainte: „≈ 4 min”, nemăsurat); README în fr/de/es/it/pt/hu: lipseau punctele „Bolta și .ics” și „Planificator de întâlniri”, iar istoricul era în engleză; README-urile au acum aceeași structură (11 secțiuni) și trimit la acest fișier pentru versiunile anterioare. / “Honest limits” states the measured accuracy in all 8 languages; the fr/de/es/it/pt/hu READMEs lacked the “Bolta and .ics” and “Meeting planner” items and had the history in English; the READMEs now share one structure (11 sections) and point here for earlier versions.
+- **Teste / tests:** `tests/regression.test.mjs` nou (51 de verificări: ani 1–99, 275760, ICS, PWA/service worker prin HTTP, linkul unic, eliminarea excepțiilor); pică pe 2.3.2 (verificat pe copia build-ului vechi). Verificate fără defecte: conversii de fus orar, formula MTC, ora solară pe Marte, durata zilei și rata ceasului, formatul ICS (RFC 5545) în 8 limbi, fuzz de hash/câmpuri, absența rămășițelor românești în traduceri. / new `tests/regression.test.mjs` (51 checks: years 1–99, 275760, ICS, PWA/service worker over HTTP, unique link, no exceptions); it fails on 2.3.2 (checked on a copy of the old build). Checked, no defects: time-zone conversions, MTC formula, Mars solar time, day length and clock rate, ICS format (RFC 5545) in 8 languages, hash/field fuzz, no Romanian leftovers in the translations.
+
 ## 2.3.2 — 2026-11-17
 
 - Compatibilitate cu browsere mai vechi (Chrome/Edge 55+, Firefox 52+, Safari 10.1+/iOS 10.3+): kitul 1.8.0 aduce stratul de compatibilitate (rezerve pentru API-urile care lipsesc în motoarele vechi), iar sintaxa JavaScript mai nouă decât ES2017 a fost înlocuită cu forme echivalente acolo unde exista; expresiile regulate noi și `import()` trec prin rezerve. Fără modificări de funcționalitate intenționate. Verificat cu parser ES2017 și într-un motor vechi simulat, nu pe dispozitive reale.
@@ -58,6 +71,9 @@ Recenzie (doar texte, fără modificări de logică):
 ---
 
 ## Istoric anterior (din README.md)
+
+#### 2.0.0 — 2026-10-26
+- Planificator de întâlniri între două lumi (programul de lucru local, fereastra de legătură, întârzierea semnalului); parametrii intră în „Link unic”. / Meeting planner between two worlds (local working hours, link window, signal delay); the parameters go into the “Unique link”.
 
 #### 1.2.7 — 2026-10-23
 
