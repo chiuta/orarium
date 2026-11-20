@@ -2,7 +2,7 @@
 
 **English** · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Version:** 2.3.3 · **Last updated:** 2026-11-18
+**Version:** 2.3.4 · **Last updated:** 2026-11-19
 
 **Status:** stable · **Offline:** complete (works from `file://`; the “↗ TerRa” and “↗ Bolta” links open other online apps only if you click them)
 

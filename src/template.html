@@ -2,11 +2,11 @@
 <!-- ORARIUM — Copyright (c) 2026 Alexandru-Ionuț Chiuță (Alexio). SPDX-License-Identifier: MIT -->
 <html lang="ro" data-fff-hash="6a90e007dad2f630e8edb610537a1b4dcc75160c665da575aa3fe05d9c4f266a">
 <head>
-<!--CSP-->
-<meta name="application-version" content="2.3.3">
-<meta name="last-updated" content="2026-11-18">
-<meta name="description" content="Timpul pe Lună, Marte și toate corpurile Sistemului Solar: un etalon, două formule, patru ceasuri. Fișier unic, offline.">
 <meta charset="utf-8">
+<!--CSP-->
+<meta name="application-version" content="2.3.4">
+<meta name="last-updated" content="2026-11-19">
+<meta name="description" content="Timpul pe Lună, Marte și toate corpurile Sistemului Solar: un etalon, două formule, patru ceasuri. Fișier unic, offline.">
 <!--fff:kit:start v=1 modules=core,store,dialog,exit,view,a11y,share,ux,label,bundle,qr,p2p,sync,history,bridge-->
 <meta name="fff-app" content="orarium">
 <meta name="fff-modules" content="core,store,dialog,exit,view,a11y,share,ux,label,bundle,qr,p2p,sync,history,bridge">
@@ -253,7 +253,7 @@ html.fff-no-flexgap .fff-share>*+*,html.fff-no-flexgap .fff-share-list>*+*{margi
 html.fff-oldsel:not([data-fff-ux="off"]) a,html.fff-oldsel:not([data-fff-ux="off"]) button,html.fff-oldsel:not([data-fff-ux="off"]) input,html.fff-oldsel:not([data-fff-ux="off"]) select,html.fff-oldsel:not([data-fff-ux="off"]) textarea,html.fff-oldsel:not([data-fff-ux="off"]) summary,html.fff-oldsel:not([data-fff-ux="off"]) label,html.fff-oldsel:not([data-fff-ux="off"]) [role=button],html.fff-oldsel:not([data-fff-ux="off"]) [role=tab],html.fff-oldsel:not([data-fff-ux="off"]) [role=menuitem],html.fff-oldsel:not([data-fff-ux="off"]) [role=switch],html.fff-oldsel:not([data-fff-ux="off"]) [role=checkbox]{touch-action:manipulation}
 html.fff-oldsel:not([data-fff-ux="off"]) button,html.fff-oldsel:not([data-fff-ux="off"]) [role=button],html.fff-oldsel:not([data-fff-ux="off"]) [role=tab],html.fff-oldsel:not([data-fff-ux="off"]) summary{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;-webkit-touch-callout:none}
 html.fff-oldsel:not([data-fff-ux="off"]){-webkit-text-size-adjust:100%;text-size-adjust:100%}</style>
-<script id="fff-compat">/* fff-compat 1.8.0 — ES5, rulează înaintea kitului */
+<script id="fff-compat">/* fff-compat 1.8.1 — ES5, rulează înaintea kitului */
 /* fff-kit · compat — strat de compatibilitate cu browsere mai vechi.
  * ES5 pur (fără let/const/săgeți/șabloane, fără sintaxă nouă): rulează ca script separat, ÎNAINTEA restului kitului, ca să poată
  * semnala problema și în browsere care nu pot rula kitul. Fără rețea, fără eval/new Function, fără stiluri inline (doar CSSOM).
@@ -945,7 +945,7 @@ html.fff-oldsel:not([data-fff-ux="off"]){-webkit-text-size-adjust:100%;text-size
 })(window, document);
 </script>
 <script type="module" id="fff-imp">window.__fffImp=function(u){return import(u)};</script>
-<script id="fff-kit">/* fff-kit 1.8.0 */
+<script id="fff-kit">/* fff-kit 1.8.1 */
 /* ---- fff-kit/core ---- */
 /* fff-kit · core · v1.2.0 — fără rețea, fără dependențe. Definește window.FFF. */
 (function () {
@@ -1001,7 +1001,51 @@ html.fff-oldsel:not([data-fff-ux="off"]){-webkit-text-size-adjust:100%;text-size
       }
     }
   } catch (e3) {}
-  var KIT_VERSION = '1.8.0';
+  /* ---------- stocare indisponibilă → stocare în memorie (1.8.1) ----------
+   * Cu „blochează toate cookie-urile / datele site-urilor”, într-un WebView fără DOM storage sau într-un iframe fără allow-same-origin,
+   * `window.localStorage` aruncă SecurityError (sau lipsește), iar o aplicație care îl folosește direct se oprea la pornire (pagină goală).
+   * Punem în loc o stocare doar în memorie (dispare la închiderea paginii), cu aceeași interfață — inclusiv `localStorage.cheie = valoare`,
+   * `in`, `delete`, `Object.keys` când există Proxy. Nu atinge o stocare care funcționează. `FFF.storageVolatile` devine true.
+   * Pentru `localStorage`, modulele kitului (FFF.store, observatorul de chei, copia de siguranță) lucrează pe aceeași memorie: vezi `memShim` mai jos. */
+  var memShim = null;
+  (function () {
+    ['localStorage', 'sessionStorage'].forEach(function (name) {
+      var bad = false;
+      try { var s0 = window[name]; if (!s0 || typeof s0.getItem !== 'function') bad = true; else s0.getItem('fff.__probe'); } catch (e) { bad = true; }
+      if (!bad) return;
+      var has = Object.prototype.hasOwnProperty, data = {};
+      var api = {
+        getItem: function (k) { k = String(k); return has.call(data, k) ? data[k] : null; },
+        setItem: function (k, v) { data[String(k)] = String(v); },
+        removeItem: function (k) { delete data[String(k)]; },
+        clear: function () { data = {}; },
+        key: function (i) { var ks = Object.keys(data); i = +i; return i >= 0 && i < ks.length ? ks[i] : null; }
+      };
+      try { Object.defineProperty(api, 'length', {configurable: true, get: function () { return Object.keys(data).length; }}); } catch (e1) { /* ignorat */ }
+      var store = api;
+      if (typeof Proxy === 'function') {
+        try {
+          store = new Proxy(api, {
+            get: function (t, p) {
+              if (p in t) return t[p];
+              return typeof p === 'string' && has.call(data, p) ? data[p] : undefined;
+            },
+            set: function (t, p, v) { if (typeof p === 'string') data[p] = String(v); return true; },
+            has: function (t, p) { return p in t || (typeof p === 'string' && has.call(data, p)); },
+            deleteProperty: function (t, p) { if (typeof p === 'string') delete data[p]; return true; },
+            ownKeys: function () { return Object.keys(data); },
+            getOwnPropertyDescriptor: function (t, p) { return typeof p === 'string' && has.call(data, p) ? {value: data[p], writable: true, enumerable: true, configurable: true} : undefined; }
+          });
+        } catch (e2) { store = api; }
+      }
+      try { Object.defineProperty(window, name, {configurable: true, enumerable: true, get: function () { return store; }}); }
+      catch (e3) { try { window[name] = store; } catch (e4) { /* ignorat */ } }
+      (window.FFF = window.FFF || {}).storageVolatile = true;
+      if (name === 'localStorage') memShim = {api: api};
+      try { if (window.console && console.warn) console.warn('[fff] ' + name + ' indisponibil în acest browser: modificările se păstrează doar până la închiderea paginii'); } catch (e5) { /* ignorat */ }
+    });
+  })();
+  var KIT_VERSION = '1.8.1';
   var F = (window.FFF = window.FFF || {});
   if (F.core && F.core.version) return; // idempotent la dublă încărcare
   var SUP = ['ro', 'en', 'fr', 'it', 'es', 'pt', 'hu', 'de'];
@@ -1096,6 +1140,7 @@ html.fff-oldsel:not([data-fff-ux="off"]){-webkit-text-size-adjust:100%;text-size
   var LS = null;
   try { LS = window.localStorage; } catch (e) { LS = null; }
   var P = window.Storage ? window.Storage.prototype : null;
+  if (memShim) P = memShim.api;   // stocare în memorie: observatorul și freeze() lucrează pe metodele ei, nu pe cele ale Storage.prototype (care nu se aplică pe ea)
   var origGet = P && P.getItem, origSet = P && P.setItem, origRem = P && P.removeItem, origClr = P && P.clear;
 
   F.lang = function () {
@@ -1288,7 +1333,7 @@ html.fff-oldsel:not([data-fff-ux="off"]){-webkit-text-size-adjust:100%;text-size
     frozen: function () { return frozen; },
     forget: function (k) { if (observing) untrack(k); },
     remember: function (k) { if (observing) track(k); },
-    available: function () { return lsOk(); },
+    available: function () { return lsOk() && !memShim; },   // „disponibilă” = durabilă: pe stocarea în memorie întoarce false (vezi FFF.storageVolatile)
     observing: function () { return observing; }
   };
   F.store = store;
@@ -2112,7 +2157,7 @@ html.fff-oldsel:not([data-fff-ux="off"]){-webkit-text-size-adjust:100%;text-size
       } catch (e) { /* ignorat */ }
     }
   }
-  /* Corecția are două căi, ambele fără element <style> nou (un `style-src` strict, doar pe hash-uri, îl blochează și îl raportează ca încălcare CSP):
+  /* Corecția are două căi, ambele fără un element nou de tip style (un `style-src` strict, doar pe hash-uri, îl blochează și îl raportează ca încălcare CSP):
    *  1) foaie CONSTRUIBILĂ (adoptedStyleSheets: Chrome 73+, Firefox 101+, Safari 16.4+) cu copiile regulilor; vine după toate foile paginii, deci bate regulile aplicației;
    *  2) în browserele mai vechi, regulile existente se rescriu PE LOC prin CSSOM (rule.style.setProperty — permis de CSP): valoarea învelită cu --fff-zinv e identică cu
    *     originalul la zoom 1 (var(--fff-zinv,1)), deci nu trebuie restaurată, iar cascada rămâne neatinsă. */
@@ -3150,9 +3195,12 @@ html.fff-oldsel:not([data-fff-ux="off"]){-webkit-text-size-adjust:100%;text-size
     return n >= 8;
   }
   function undo(e) { e.style.removeProperty('min-height'); e.style.removeProperty('min-width'); e.removeAttribute('data-fff-sz'); }
+  /* lățimea paginii: și body.scrollWidth, fiindcă aplicațiile cu «html,body{overflow-x:hidden}» nu derulează, deci de.scrollWidth rămâne la lățimea ecranului
+   * chiar dacă un rând de butoane iese din ecran (butoanele de la capăt ar fi tăiate fără să se vadă nicio eroare) */
+  function pageW() { return Math.max(de.scrollWidth, doc.body ? doc.body.scrollWidth : 0); }
   function sizePass() {
     if (OFF || !coarse() || doc.documentElement.hasAttribute('data-fff-nosz')) return;
-    var vw = innerWidth, base = Math.max(de.scrollWidth, vw);
+    var vw = innerWidth, base = Math.max(pageW(), vw);
     var els = doc.querySelectorAll('a[href],button,input:not([type=hidden]):not([type=checkbox]):not([type=radio]):not([type=range]):not([type=color]):not([type=file]),select,textarea,summary,[role=button],[role=tab],[role=menuitem],[role=link]');
     var groups = [], seen = [];
     for (var i = 0; i < els.length && i < 800; i++) {
@@ -3168,13 +3216,15 @@ html.fff-oldsel:not([data-fff-ux="off"]){-webkit-text-size-adjust:100%;text-size
       groups[k].push({e: e, h: r.height, w: r.width});
     }
     for (var g = 0; g < groups.length; g++) {                       // pe grupuri de frați: dacă mărirea lor ar lărgi pagina, doar grupul acela rămâne neatins
-      var grp = groups[g];
+      var grp = groups[g], par = grp[0].e.parentElement, pBefore = par ? par.scrollWidth - par.clientWidth : 0;
       grp.forEach(function (o) {
         if (o.h < 44) o.e.style.setProperty('min-height', '44px', 'important');
         if (o.w < 44 && o.e.tagName !== 'INPUT' && o.e.tagName !== 'SELECT' && o.e.tagName !== 'TEXTAREA') o.e.style.setProperty('min-width', '44px', 'important');
         o.e.setAttribute('data-fff-sz', '1');
       });
-      if (de.scrollWidth > base + 1) grp.forEach(function (o) { undo(o.e); o.e.setAttribute('data-fff-nosz', '1'); });
+      var pOver = false;                                            // părintele (fără derulare proprie) nu trebuie să aibă conținut mai lat decât el
+      try { pOver = !!par && /^(visible|hidden|clip)$/.test(getComputedStyle(par).overflowX) && (par.scrollWidth - par.clientWidth) > pBefore + 1; } catch (e) { /* ignorat */ }
+      if (pageW() > base + 1 || pOver) grp.forEach(function (o) { undo(o.e); o.e.setAttribute('data-fff-nosz', '1'); });
       else grp.forEach(function (o) { sized.push(o.e); });
     }
   }
@@ -6324,7 +6374,7 @@ Acces        1 − log₁₀(1 + timp-lumină minute)/log₁₀(301)</div>
 
 <section id="v-scen" class="view"><div id="scen"></div></section>
 </main>
-<footer><span id="app-version" style="display:block;font-size:12px;opacity:.7;min-height:24px;line-height:24px">v 2.3.3 · 2026-11-18</span><span id="foot-src">Surse și metodă: articolul <a href="https://www.stiripesurse.ro/cat-este-ceasul-pe-luna_3928805" target="_blank" rel="noopener">„Cât este ceasul pe Lună…”</a> (AFP/Agerpres, 18.10.2026); orientări IAU WGCCRE 2009; elemente orbitale kepleriene medii (JPL, Standish); MTC/MSD marțian (Allison & McEwen). Valorile fizice ale corpurilor sunt cele uzuale din literatura de specialitate, rotunjite. Aplicația este trade-free: fără rețea, fără cont, fără urmărire.</span></footer>
+<footer><span id="app-version" style="display:block;font-size:12px;opacity:.7;min-height:24px;line-height:24px">v 2.3.4 · 2026-11-19</span><span id="foot-src">Surse și metodă: articolul <a href="https://www.stiripesurse.ro/cat-este-ceasul-pe-luna_3928805" target="_blank" rel="noopener">„Cât este ceasul pe Lună…”</a> (AFP/Agerpres, 18.10.2026); orientări IAU WGCCRE 2009; elemente orbitale kepleriene medii (JPL, Standish); MTC/MSD marțian (Allison & McEwen). Valorile fizice ale corpurilor sunt cele uzuale din literatura de specialitate, rotunjite. Aplicația este trade-free: fără rețea, fără cont, fără urmărire.</span></footer>
 
 <div id="ov"><div class="sheet"><button id="x" aria-label="Închide">×</button><div id="det"></div></div></div>
 

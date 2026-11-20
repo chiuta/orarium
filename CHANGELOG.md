@@ -2,6 +2,10 @@
 
 Format: SemVer (MAJOR.MINOR.PATCH). Intrările mai vechi sunt copiate din README (secțiunea „History / Changelog”), neschimbate.
 
+## 2.3.4 — 2026-11-19
+
+- `<meta charset>` este acum primul element din `<head>`, în primii 1024 de octeți, cum cere specificația HTML; înainte venea după eticheta lungă cu politica CSP (la ~1,3 KB de început), deci în afara ferestrei pe care browserele o citesc înainte de analiză (constatat de scanarea tuturor fișierelor HTML din depozite, 19 noiembrie 2026; nu s-a observat o afișare greșită în Chrome)
+
 ## 2.3.3 — 2026-11-18
 
 Audit comparativ adversarial (față de biblioteca astronomy-engine și formula Mars24, teste diferențiale, parcurs în toate cele 8 limbi) și remedieri / Adversarial comparative audit (against astronomy-engine and the Mars24 formula, differential tests, a walkthrough in all 8 languages) and fixes:

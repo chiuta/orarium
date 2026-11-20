@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · **Italiano** · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versione:** 2.3.3 · **Ultimo aggiornamento:** 2026-11-18
+**Versione:** 2.3.4 · **Ultimo aggiornamento:** 2026-11-19
 
 **Stato:** stabile · **Offline:** completo (nessuna rete richiesta; i link «↗ TerRa» e «↗ Bolta» aprono altre app online solo se li premi)
 
