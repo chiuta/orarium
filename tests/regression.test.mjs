@@ -1,4 +1,4 @@
-// ORARIUM — teste de regresie din auditul comparativ (v2.3.4). Playwright, Chromium headless.
+// ORARIUM — teste de regresie din auditul comparativ (v2.3.3). Playwright, Chromium headless.
 // Acoperă: ani 0001–0099 în convertor, limita obiectului Date, TT−UTC (tabelul secundelor intercalare + ΔT),
 // PRODID din .ics, precesia în elevațiile stațiilor (valori de referință din astronomy-engine), numere recitibile în link,
 // și CSP-ul care trebuie să lase service worker-ul, manifestul și icoanele să se încarce (verificat pe http://127.0.0.1).
